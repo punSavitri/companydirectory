@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Company Directory</title>
+    <!-- fontawesome -->
+    <script
+      src="https://kit.fontawesome.com/062aaa8831.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- bootstrap CSS file -->
+    <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+  </head>
+
+  <body>
+    <div class="container my-5">
+      <h2>Employee search</h2>
+      <div class="col-xs-4">
+        <input
+          type="text"
+          class="form-control"
+          id="search"
+          autocomplete="off"
+          placeholder="Enter Employee id"
+        />
+      </div>
+
+      <button type="button" class="btn btn-dark mt-2" id="searchBtn">
+        Search
+      </button>
+      <div class="container mt-2">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table-bordered text-center" width="900px">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+                      <th>Job Title</th>
+                      <th>Department ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td id="id"></td>
+                      <td id="firstName"></td>
+                      <td id="lastName"></td>
+                      <td id="jobtitle"></td>
+                      <td id="email"></td>
+                      <td id="departmentId"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      <span>Select Location</span>
+      <select id="select_location" class="form-select shadow-sm"></select>
+    </div>
+    <div class="container my-5">
+      <span>Select Departments</span>
+      <select id="select_department" class="form-select shadow-sm"></select>
+    </div>
+
+    <!-- bootstrap js file -->
+    <script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="libs/jquery/jquery-3.6.3.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
