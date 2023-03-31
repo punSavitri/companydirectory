@@ -35,25 +35,57 @@ $(document).ready(function () {
     },
   });
 
+  //showing on table all personnel record
+  $.ajax({
+    type: "GET",
+    url: "php/getAllPersonnel.php",
+    dataType: "json",
+    success: function (result) {
+      console.log(result);
+      for (var i = 0; i < result.data.length; i++) {
+        $("#pId").append(result.data[i].id);
+        $("#pfirstName").append(result.data[i].firstName);
+        $("#plastName").append(result.data[i].lastName);
+        $("#pEmail").append(result.data[i].email);
+        $("#pdepartmentId").append(result.data[i].departmentID);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
+
   //get  personnel details by ID
   $("#search").keyup(function () {
     var input = $(this).val();
     // alert(input);
     $("#searchBtn").click(function () {
       //checking if the input field is empty
+
       if (input != "") {
         $.ajax({
           url: "php/getPersonnelByID.php",
           method: "GET",
-          success: function (data) {
-            console.log(data);
+          data: {
+            id: input,
           },
+          success: function (output) {
+            console.log(output);
+
+            $("#id").append(output.data.personnel[0]["id"]);
+            $("#firstName").append(output.data.personnel[0]["firstName"]);
+            $("#lastName").append(output.data.personnel[0]["lastName"]);
+            $("#email").append(output.data.personnel[0]["email"]);
+            $("#departmentId").append(output.data.personnel[0]["departmentID"]);
+            $("#search").val("");
+          },
+
           error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR.textStatus);
           },
         });
       } else {
-        // console.log("No data found")
+        //  console.log("No data found");
       }
     });
   });

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Company Directory</title>
+    <!-- fontawesome -->
+    <script
+      src="https://kit.fontawesome.com/062aaa8831.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- bootstrap CSS file -->
+    <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+  </head>
+
+  <body>
+    <nav class="navbar bg-body-tertiary">
+      <h4 class="mx-2">Company Directory</h4>
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="index.html">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="department.html">Department</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="location.html">Location</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="container d-flex justify-content-center align-items-center">
+      <form id="form" role="search">
+        <img src="images/search.png" class="p-2" width="40px" height="40px" />
+        <input
+          type="search"
+          placeholder="Search..."
+          id="q"
+          aria-label="Search throught the site content"
+        />
+      </form>
+    </div>
+
+    <div class="container my-5">
+      <span>Select Departments</span>
+      <select id="select_department" class="form-select shadow-sm"></select>
+    </div>
+
+    <!-- bootstrap js file -->
+    <script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="libs/jquery/jquery-3.6.3.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

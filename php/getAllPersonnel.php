@@ -33,7 +33,7 @@ if (mysqli_connect_errno()) {
 
 // SQL does not accept parameters and so is not prepared
 
-$query = 'SELECT id, firstName lastName, email, jobTitle, departmentID FROM personnel ORDER BY lastName';
+$query = 'SELECT id, firstName, lastName, email, jobTitle, departmentID FROM personnel ORDER BY firstName';
 
 $result = $conn->query($query);
 
