@@ -43,11 +43,19 @@ $(document).ready(function () {
     success: function (result) {
       console.log(result);
       for (var i = 0; i < result.data.length; i++) {
-        $("#pId").append(result.data[i].id);
-        $("#pfirstName").append(result.data[i].firstName);
-        $("#plastName").append(result.data[i].lastName);
-        $("#pEmail").append(result.data[i].email);
-        $("#pdepartmentId").append(result.data[i].departmentID);
+        $("#output").append(
+          "<tr><td>" +
+            result.data[i].id +
+            "</td><td>" +
+            result.data[i].firstName +
+            "</td><td>" +
+            result.data[i].lastName +
+            "</td><td>" +
+            result.data[i].email +
+            "</td><td>" +
+            result.data[i].departmentID +
+            "</td><td><a href='' class='btn mx-1 btn-warning  btn-sm edit'>Edit</a><a href='' class='btn mx-1 btn-danger  btn-sm delete'>Delete</a></tr>"
+        );
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {

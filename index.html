@@ -18,7 +18,7 @@
   <body>
     <!-- navigation  -->
     <nav class="navbar bg-body-tertiary">
-      <h4 class="mx-2">Company Directory</h4>
+      <h4 class="m-3">Company Directory</h4>
       <ul class="nav">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="index.html"
@@ -45,25 +45,56 @@
         />
       </form>
     </div>
+    <!-- add/update user info -->
+    <!-- <div class="row"> -->
+    <form id="myform" class="m-5 w-50" action="" method="POST">
+      <h3 class="alert-warning text-center p-2">Add/Update User Info</h3>
+      <div>
+        First Name
+        <input type="text" class="form-control" id="firstname" />
+      </div>
+      <div>
+        Last Name
+        <input type="text" class="form-control" id="lastname" />
+      </div>
+      <div>
+        Email
+        <input type="email" class="form-control" id="emailid" />
+      </div>
+      <div>
+        Department Id
+        <input type="text" class="form-control" id="departmentid" />
+      </div>
+      <div class="mt-4 p-1">
+        <input type="submit" id="btnadd" value="Add" />
+      </div>
+    </form>
+    <div id="form-output">
+      <p>Message Display Here</p>
+    </div>
+    <a href="userInfo.php">Reset</a>
+    <!-- </div> -->
+
     <!-- employee search bar -->
     <div class="container my-5">
       <h2>Employee search</h2>
-      <div class="col-xs-4">
+      <form class="d-flex w-25" role="search">
         <input
-          type="text"
-          class="form-control"
           id="search"
+          class="form-control"
+          type="search"
+          placeholder="Search employee by ID"
+          aria-label="Search"
           autocomplete="off"
-          placeholder="Enter Employee id"
         />
-
-        <button type="button" class="btn btn-dark mt-2" id="searchBtn">
+        <button class="btn btn-dark p-2" type="button" id="searchBtn">
           Search
         </button>
-      </div>
+      </form>
 
+      <!-- showing personnel record by id on table -->
       <div class="table-responsive-sm mt-3">
-        <table class="table table-hover table-light table-bordered">
+        <table class="table table-hover table-light table-bordered text-center">
           <thead class="table-dark">
             <tr>
               <th class="th-sm">ID</th>
@@ -85,9 +116,11 @@
         </table>
       </div>
 
-      <!-- showing result of personnel details in table -->
+      <!-- showing result of all personnel details in table -->
       <div class="table-responsive-sm mt-3">
-        <table class="table table-hover table-light table-bordered">
+        <table
+          class="table table-hover table-striped table-bordered text-center"
+        >
           <thead class="table-dark">
             <tr>
               <th class="th-sm">ID</th>
@@ -95,16 +128,11 @@
               <th class="th-sm">Last Name</th>
               <th class="th-sm">Email</th>
               <th class="th-sm">Department ID</th>
+              <th class="th-sm">Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td id="pId"></td>
-              <td id="pfirstName"></td>
-              <td id="plastName"></td>
-              <td id="pEmail"></td>
-              <td id="pdepartmentId"></td>
-            </tr>
+          <tbody id="output">
+            <!--insert data from database-->
           </tbody>
         </table>
       </div>
