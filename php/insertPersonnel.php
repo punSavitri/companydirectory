@@ -37,7 +37,7 @@ if (mysqli_connect_errno()) {
 // SQL statement accepts parameters and so is prepared to avoid SQL injection.
 // $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
-$query = $conn->prepare('INSERT INTO personnel (firstName,lastName, jobTitle,email, departmentID) VALUES(?,?,?,?,?)');
+$query = $conn->prepare('INSERT INTO personnel (firstname, lastname, jobtitle,email, departmentID) VALUES (?,?,?,?,?)');
 
 $query->bind_param("ssssi", $_REQUEST['firstName'], $_REQUEST['lastName'], $_REQUEST['jobTitle'], $_REQUEST['email'], $_REQUEST['departmentID']);
 

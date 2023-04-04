@@ -2,7 +2,7 @@
 
 	// example use from browser
 	// use insertDepartment.php first to create new dummy record and then specify it's id in the command below
-	// http://localhost/companydirectory/libs/php/deleteDepartmentByID.php?id=<id>
+	// http://localhost/companydirectory/libs/php/deletePersonnelByID.php?id=<id>
 
 	// remove next two lines for production
 	
@@ -65,6 +65,4 @@
 	
 	mysqli_close($conn);
 
-	echo json_encode($output); 
-
-?>
+	echo json_encode($output);

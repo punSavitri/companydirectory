@@ -30,21 +30,12 @@
         </li>
       </ul>
     </nav>
-    <div class="container d-flex justify-content-center align-items-center">
-      <form id="form" role="search">
-        <img src="images/search.png" class="p-2" width="40px" height="40px" />
-        <input
-          type="search"
-          placeholder="Search..."
-          id="q"
-          aria-label="Search throught the site content"
-        />
-      </form>
-    </div>
-
-    <div class="container my-5">
-      <span>Select Location</span>
-      <select id="select_location" class="form-select shadow-sm"></select>
+    <div class="container d-flex">
+      <div class="col-md-3 m-3">
+        <span>Select Location</span>
+        <select id="select_location" class="form-select shadow-sm"></select>
+      </div>
+      <button type="submit" id="addBtn">Add location</button>
     </div>
 
     <!-- bootstrap js file -->
