@@ -3,7 +3,7 @@
 
 // connection details for MySQL database
 
-$cd_host = "localhost";
+$cd_host = "127.0.0.1";
 $cd_port = 3306;
 $cd_socket = "";
 

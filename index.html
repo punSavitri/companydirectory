@@ -18,20 +18,27 @@
   <body>
     <!-- navigation  -->
     <nav class="navbar bg-body-tertiary">
-      <h4 class="m-3">Company Directory</h4>
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.html"
-            >Contact</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="department.html">Department</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="location.html">Location</a>
-        </li>
-      </ul>
+      <div class="container d-flex justify-content-center align-items-center">
+        <h4>Company Directory</h4>
+
+        <!-- <div
+          class="container d-flex justify-content-end align-items-end position-absolute top-4 end-0"
+        > -->
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html"
+              >Contact</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="department.html">Department</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="location.html">Location</a>
+          </li>
+        </ul>
+        <!-- </div> -->
+      </div>
     </nav>
     <!-- search bar -->
     <div class="container d-flex justify-content-center align-items-center">
@@ -45,10 +52,11 @@
         />
       </form>
     </div>
-    <!-- add/update user info -->
+    <!-- add user info -->
     <!-- <div class="row"> -->
     <form id="myform" class="m-5 w-50" action="" method="POST">
-      <h3 class="alert-warning text-center p-2">Add/Update User Info</h3>
+      <h3 class="alert alert alert-warning text-center p-2">Add New User</h3>
+      <p id="message"><!--display message here if any input field empty--></p>
       <div>
         First Name
         <input type="text" class="form-control" id="firstname" />

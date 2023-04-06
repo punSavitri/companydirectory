@@ -1,40 +1,5 @@
 $(document).ready(function () {
-  //populate location
-  $.ajax({
-    type: "GET",
-    url: "php/getAllLocations.php",
-    dataType: "json",
-    success: function (output) {
-      console.log(output);
-      for (var i = 0; i < output.data.length; i++) {
-        $("#select_location").append(
-          `<option value="${output.data[i].id}">${output.data[i].name}</option>`
-        );
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
-  });
-
-  //populate department drop down list
-  $.ajax({
-    type: "GET",
-    url: "php/getAllDepartments.php",
-    dataType: "json",
-    success: function (result) {
-      console.log(result);
-      for (var i = 0; i < result.data.length; i++) {
-        $("#select_department").append(
-          `<option value="${result.data[i].id}">${result.data[i].name}</option>`
-        );
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
-  });
-
+  //personnel table
   //showing on table all personnel record
   $.ajax({
     type: "GET",
@@ -87,14 +52,97 @@ $(document).ready(function () {
             $("#departmentId").append(output.data.personnel[0]["departmentID"]);
             $("#search").val("");
           },
-
           error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR.textStatus);
           },
         });
       } else {
-        //  console.log("No data found");
+        $("#message").html("*Please fill all required field.");
       }
     });
+  });
+
+  // department table
+  //populate department drop down list
+  function loadTable() {
+    $.ajax({
+      type: "GET",
+      url: "php/getAllDepartments.php",
+      dataType: "json",
+      success: function (result) {
+        console.log(result);
+        for (var i = 0; i < result.data.length; i++) {
+          $("#load-data").append(
+            "<tr><td>" +
+              result.data[i].id +
+              "</td><td>" +
+              result.data[i].name +
+              "</td><td>" +
+              result.data[i].locationID +
+              "</td><td><a href='' id='editBtn'class='line-dark'><i class='fa-solid fa-pen-to-square  fs-5 me-3'  style='color:orange'></i></a><a href='' class='line-dark'><i class='fa-solid fa-trash fs-5'style='color:red'></i></a> </td></tr>"
+          );
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
+  }
+  //display table on page load
+  loadTable();
+
+  $("#add-button").on("click", function (e) {
+    e.preventDefault();
+    var departName = $("#departName").val();
+    var locationid = $("#locationID").val();
+
+    if (departName == "" || locationid == "") {
+      $("#message-error").html("*Please fill all required field.");
+    } else {
+      $.ajax({
+        url: "php/insertDepartment.php",
+        type: "POST",
+        data: {
+          name: departName,
+          locationID: locationid,
+        },
+        success: function (data) {
+          console.log(data);
+          //check form validation
+          loadTable();
+          $("#message-success").html("*Data successfully inserted. ");
+
+          $("#addForm").trigger("reset");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR.textStatus);
+        },
+      });
+    }
+  });
+
+  //edit records
+
+  $("#editBtn").on("click", function () {
+    $("#editModal").show();
+  });
+
+  //Table =>location
+  //populate location
+  $.ajax({
+    type: "GET",
+    url: "php/getAllLocations.php",
+    dataType: "json",
+    success: function (output) {
+      console.log(output);
+      for (var i = 0; i < output.data.length; i++) {
+        $("#select_location").append(
+          `<option value="${output.data[i].id}">${output.data[i].name}</option>`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
   });
 });

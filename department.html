@@ -14,37 +14,140 @@
     <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/custom.css" />
   </head>
-
   <body>
-    <nav class="navbar bg-body-tertiary">
-      <h4 class="mx-2">Company Directory</h4>
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="index.html">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="department.html">Department</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="location.html">Location</a>
-        </li>
-      </ul>
+    <!-- navigation  -->
+    <nav class="navbar bg-secondary">
+      <div class="container d-flex justify-content-center mt-2">
+        <h4>Company Directory</h4>
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html"
+              >Contact</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="department.html">Department</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="location.html">Location</a>
+          </li>
+        </ul>
+      </div>
     </nav>
-    <div class="container d-flex justify-content-center align-items-center">
-      <form id="form" role="search">
-        <img src="images/search.png" class="p-2" width="40px" height="40px" />
-        <input
-          type="search"
-          placeholder="Search..."
-          id="q"
-          aria-label="Search throught the site content"
-        />
-      </form>
+    <div class="bg-info mt-4 mb-4 p-2 text-center">
+      <h4>List of Department Name</h4>
+    </div>
+    <div class="container">
+      <p class="text-muted text-center">
+        Complete the form below to add a new department
+      </p>
+      <div class="d-flex justify-content-evenly mb-5 mx-1">
+        <form id="addForm">
+          <label for="departName"
+            >Department Name:<input
+              type="text"
+              id="departName"
+              class="form-control" /></label
+          >&nbsp;
+          <label for="locationID"
+            >Location ID:<input
+              type="number"
+              id="locationID"
+              class="form-control"
+          /></label>
+          <button type="submit" id="add-button" class="btn btn-success">
+            Add New Department
+          </button>
+        </form>
+      </div>
     </div>
 
-    <div class="container my-5">
-      <span>Select Departments</span>
-      <select id="select_department" class="form-select shadow-sm"></select>
+    <div id="message-error" class="text-danger text-center fs-4 mt-4"></div>
+    <div id="message-success" class="text-success text-center fs-4 mt-4"></div>
+
+    <!-- inserting  department list  in table -->
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center">
+        <table
+          class="table table-hover table-striped table-bordered text-center"
+        >
+          <thead class="table-dark">
+            <tr>
+              <th class="th-sm">ID</th>
+              <th class="th-sm">Department Name</th>
+              <th class="th-sm">Location ID</th>
+              <th class="th-sm">Action</th>
+            </tr>
+          </thead>
+          <tbody id="load-data"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div
+      class="modal fade"
+      id="editModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">
+              Update Department
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id=" update-message" class="text-dark">
+              <!--display message here -->
+            </p>
+            <form>
+              <input
+                type="hidden"
+                class="form-control my-2"
+                placeholder="department id"
+                id="depart_ID"
+              />
+              <input
+                type="text"
+                class="form-control my-2"
+                placeholder="department name"
+                id="depart_name"
+              />
+              <input
+                type="number"
+                class="form-control my-2"
+                placeholder="location id"
+                id="location_ID"
+              />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="update_btn">
+              Update Now
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-dismiss="modal"
+              id="btn_close"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- bootstrap js file -->
