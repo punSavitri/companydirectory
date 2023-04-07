@@ -1,31 +1,85 @@
 $(document).ready(function () {
   //personnel table
-  //showing on table all personnel record
-  $.ajax({
-    type: "GET",
-    url: "php/getAllPersonnel.php",
-    dataType: "json",
-    success: function (result) {
-      console.log(result);
-      for (var i = 0; i < result.data.length; i++) {
-        $("#output").append(
-          "<tr><td>" +
-            result.data[i].id +
-            "</td><td>" +
-            result.data[i].firstName +
-            "</td><td>" +
-            result.data[i].lastName +
-            "</td><td>" +
-            result.data[i].email +
-            "</td><td>" +
-            result.data[i].departmentID +
-            "</td><td><a href='' class='btn mx-1 btn-warning  btn-sm edit'>Edit</a><a href='' class='btn mx-1 btn-danger  btn-sm delete'>Delete</a></tr>"
-        );
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
+  //show personnel database as page load
+  function loadPersonnelTable() {
+    $.ajax({
+      type: "GET",
+      url: "php/getAllPersonnel.php",
+      dataType: "json",
+      success: function (result) {
+        console.log(result);
+        for (var i = 0; i < result.data.length; i++) {
+          $("#output").append(
+            "<tr><td>" +
+              result.data[i].id +
+              "</td><td>" +
+              result.data[i].firstName +
+              "</td><td>" +
+              result.data[i].lastName +
+              "</td><td>" +
+              result.data[i].email +
+              "</td><td>" +
+              result.data[i].departmentID +
+              "</td><td><a href='' id='editPersonnel' class='line-dark'><i class='fa-solid fa-pen-to-square  fs-5 me-3'  style='color:orange'></i></a><a href='' id='deletePersonnel' class='line-dark'><i class='fa-solid fa-trash fs-5'style='color:red'></i></a> </td></tr>"
+          );
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
+  }
+  loadPersonnelTable();
+
+  //insert personnel details
+  //insert personnel  on personnel table
+  $("#addpersonnelBtn").on("click", function (e) {
+    e.preventDefault();
+    $("#addpersonnelModal").modal("show");
+
+    //get input field value from user
+    var firstname = $("#firstname").val();
+    var lastname = $("#lastname").val();
+    var jobtitle = $("#jobtitle").val();
+    var emailid = $("#emailid").val();
+    var departmentid = $("#departmentid").val();
+
+    //check form validation
+    if (
+      firstname == "" &&
+      lastname == "" &&
+      jobtitle == "" &&
+      emailid == "" &&
+      departmentid == ""
+    ) {
+      $("#messageError").html("*Please fill all required field.");
+    } else {
+      $.ajax({
+        url: "php/insertPersonnel.php",
+        type: "GET",
+        dataType: "json",
+        data: {
+          firstName: firstname,
+          lastName: lastname,
+          jobTitle: jobtitle,
+          email: emailid,
+          departmentID: departmentid,
+        },
+        success: function (data) {
+          console.log(data);
+
+          // //check form validation
+          loadPersonnelTable();
+
+          $("#messageSuccess").html("*Data successfully inserted. ");
+
+          $("#addpersonnelForm").trigger("reset");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR.textStatus);
+        },
+      });
+    }
   });
 
   //get  personnel details by ID
@@ -50,6 +104,7 @@ $(document).ready(function () {
             $("#lastName").append(output.data.personnel[0]["lastName"]);
             $("#email").append(output.data.personnel[0]["email"]);
             $("#departmentId").append(output.data.personnel[0]["departmentID"]);
+            $("#personnelModal").modal("show");
             $("#search").val("");
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -63,7 +118,7 @@ $(document).ready(function () {
   });
 
   // department table
-  //populate department drop down list
+  //load department database as page load
   function loadTable() {
     $.ajax({
       type: "GET",
@@ -91,35 +146,36 @@ $(document).ready(function () {
   //display table on page load
   loadTable();
 
-  $("#add-button").on("click", function (e) {
-    e.preventDefault();
-    var departName = $("#departName").val();
-    var locationid = $("#locationID").val();
+  //insert department on database
+  // $("#add-button").on("click", function (e) {
+  //   e.preventDefault();
+  //   var departName = $("#departName").val();
+  //   var locationid = $("#locationID").val();
 
-    if (departName == "" || locationid == "") {
-      $("#message-error").html("*Please fill all required field.");
-    } else {
-      $.ajax({
-        url: "php/insertDepartment.php",
-        type: "POST",
-        data: {
-          name: departName,
-          locationID: locationid,
-        },
-        success: function (data) {
-          console.log(data);
-          //check form validation
-          loadTable();
-          $("#message-success").html("*Data successfully inserted. ");
+  //   if (departName == "" || locationid == "") {
+  //     $("#message-error").html("*Please fill all required field.");
+  //   } else {
+  //     $.ajax({
+  //       url: "php/insertDepartment.php",
+  //       type: "POST",
+  //       data: {
+  //         name: departName,
+  //         locationID: locationid,
+  //       },
+  //       success: function (data) {
+  //         console.log(data);
+  //         //check form validation
+  //         loadTable();
+  //         $("#message-success").html("*Data successfully inserted. ");
 
-          $("#addForm").trigger("reset");
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
-        },
-      });
-    }
-  });
+  //         $("#addForm").trigger("reset");
+  //       },
+  //       error: function (jqXHR, textStatus, errorThrown) {
+  //         console.log(jqXHR.textStatus);
+  //       },
+  //     });
+  // }
+  // });
 
   //edit records
 

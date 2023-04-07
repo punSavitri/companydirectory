@@ -1,4 +1,7 @@
-#form {
+body {
+  font-size: 16px;
+}
+/* #form {
   background-color: #cfd0d4;
   width: 800px;
   height: 44px;
@@ -22,7 +25,7 @@
   color: #fff;
   opacity: 0.7; 
 }
-
+ */
 
 
 /* media query */
@@ -30,6 +33,7 @@
   table {
     width:auto;
     text-align: center;
+    font-size:16px;
   }
 }
  
