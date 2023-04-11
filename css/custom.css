@@ -1,6 +1,9 @@
 body {
   font-size: 16px;
 }
+.cards-wrapper{
+  column-gap: 20px;
+}
 /* #form {
   background-color: #cfd0d4;
   width: 800px;

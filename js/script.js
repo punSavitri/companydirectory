@@ -56,7 +56,7 @@ $(document).ready(function () {
     } else {
       $.ajax({
         url: "php/insertPersonnel.php",
-        type: "GET",
+        type: "POST",
         dataType: "json",
         data: {
           firstName: firstname,
@@ -134,7 +134,7 @@ $(document).ready(function () {
               result.data[i].name +
               "</td><td>" +
               result.data[i].locationID +
-              "</td><td><a href='' id='editBtn'class='line-dark'><i class='fa-solid fa-pen-to-square  fs-5 me-3'  style='color:orange'></i></a><a href='' class='line-dark'><i class='fa-solid fa-trash fs-5'style='color:red'></i></a> </td></tr>"
+              "</td><td><a href='#' id='editBtn'class='line-dark'><i class='fa-solid fa-pen-to-square  fs-5 me-3'  style='color:orange'></i></a><a href='#' class='line-dark'><i class='fa-solid fa-trash fs-5'style='color:red'></i></a> </td></tr>"
           );
         }
       },
@@ -147,35 +147,35 @@ $(document).ready(function () {
   loadTable();
 
   //insert department on database
-  // $("#add-button").on("click", function (e) {
-  //   e.preventDefault();
-  //   var departName = $("#departName").val();
-  //   var locationid = $("#locationID").val();
+  $("#adddepartmentBtn").on("click", function (e) {
+    e.preventDefault();
+    $("#adddepartmentModal").modal("show");
+    var departName = $("#depart_name").val();
+    var locationid = $("#location_id").val();
 
-  //   if (departName == "" || locationid == "") {
-  //     $("#message-error").html("*Please fill all required field.");
-  //   } else {
-  //     $.ajax({
-  //       url: "php/insertDepartment.php",
-  //       type: "POST",
-  //       data: {
-  //         name: departName,
-  //         locationID: locationid,
-  //       },
-  //       success: function (data) {
-  //         console.log(data);
-  //         //check form validation
-  //         loadTable();
-  //         $("#message-success").html("*Data successfully inserted. ");
+    $.ajax({
+      url: "php/insertDepartment.php",
+      type: "POST",
+      data: {
+        name: departName,
+        locationID: locationid,
+      },
+      success: function (data) {
+        console.log(data);
+        if (departName == "" || locationid == "") {
+          $("#message-error").html("*Please fill all required field.");
+        } else {
+          loadTable();
+          $("#message-success").html("*Data successfully inserted. ");
 
-  //         $("#addForm").trigger("reset");
-  //       },
-  //       error: function (jqXHR, textStatus, errorThrown) {
-  //         console.log(jqXHR.textStatus);
-  //       },
-  //     });
-  // }
-  // });
+          $("#adddepartmentForm").trigger("reset");
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
+  });
 
   //edit records
 
@@ -184,21 +184,52 @@ $(document).ready(function () {
   });
 
   //Table =>location
-  //populate location
-  $.ajax({
-    type: "GET",
-    url: "php/getAllLocations.php",
-    dataType: "json",
-    success: function (output) {
-      console.log(output);
-      for (var i = 0; i < output.data.length; i++) {
-        $("#select_location").append(
-          `<option value="${output.data[i].id}">${output.data[i].name}</option>`
-        );
+  // show all location on bootstrap cards
+  function loadLocation() {
+    $.ajax({
+      type: "GET",
+      url: "php/getAllLocations.php",
+      dataType: "json",
+      success: function (output) {
+        console.log(output);
+
+        for (var i = 0; i < output.data.length; i++) {
+          var location = output.data[i].id;
+          var locationName = output.data[i].name;
+          $(".card").append(`<h4 class="card-title">${location}</h4>
+          <h4 class="card-title">${locationName}</h4>`);
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
+  }
+  loadLocation();
+
+  // insert location
+  $("#add_location_btn").on("click", () => {
+    $("#submit").on("click", () => {
+      var input = $("#location_name").val();
+      if (input != "") {
+        $.ajax({
+          url: "php/insertLocation.php",
+          type: "GET",
+          dataType: "json",
+          data: {
+            name: input,
+          },
+          success: function (data) {
+            console.log(data);
+            // $("#addLocationModal").modal("show");
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      } else {
+        alert("Data insertion failed");
       }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
+    });
   });
 });

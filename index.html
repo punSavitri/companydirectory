@@ -23,12 +23,12 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link active"
-            id="pills-home-tab"
+            id="pills-contact-tab"
             data-bs-toggle="pill"
             data-bs-target="#contact"
             type="button"
             role="tab"
-            aria-controls="pills-home"
+            aria-controls="pills-contact"
             aria-selected="true"
           >
             Contact
@@ -37,12 +37,12 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link"
-            id="pills-profile-tab"
+            id="pills-department-tab"
             data-bs-toggle="pill"
             data-bs-target="#department"
             type="button"
             role="tab"
-            aria-controls="pills-profile"
+            aria-controls="pills-department"
             aria-selected="false"
           >
             Department
@@ -66,7 +66,7 @@
     </nav>
     <!-- navigation end -->
 
-    <!--Contact Page-->
+    <!--Contact Page start-->
     <div class="tab-content" id="pills-tabContent">
       <div
         class="tab-pane fade show active"
@@ -79,13 +79,15 @@
         <div class="container">
           <div class="row">
             <div class="col">
-              <small> Enter the employee id to search employee details </small>
               <form class="d-flex justify-content-start" role="search">
+                <small>
+                  Enter the employee id to search employee details
+                </small>
                 <input
                   id="search"
-                  class="form-control w-50"
+                  class="form-control"
                   type="search"
-                  placeholder="Search employee by ID"
+                  placeholder="Search..."
                   aria-label="Search"
                   autocomplete="off"
                 />
@@ -97,239 +99,10 @@
             </div>
           </div>
         </div>
-        <!-- add personnel button -->
-        <div class="container">
-          <button type="submit" id="addpersonnelBtn" class="btn btn-success">
-            Add Personnel
-          </button>
-        </div>
-      </div>
-      <!-- personnel id search Modal -->
-      <!-- modal -->
-      <div
-        class="modal fade"
-        id="personnelModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">
-                Employee Details
-              </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <table
-                class="table table-hover table-light table-bordered text-center"
-              >
-                <thead class="table-dark">
-                  <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Department ID</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td id="id"></td>
-                    <td id="firstName"></td>
-                    <td id="lastName"></td>
-                    <td id="email"></td>
-                    <td id="departmentId"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success">Save</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- add personnel modal -->
-      <!-- modal -->
-      <div
-        class="modal fade"
-        id="addpersonnelModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">
-                Add Employee
-              </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <small> Complete the form below to add employee </small>
-              <p id="message">
-                <!--display message here if any input field empty-->
-              </p>
-              <form id="addpersonnelForm">
-                <label for="firstname"
-                  >First Name<input
-                    type="text"
-                    id="firstname"
-                    class="form-control"
-                  />
-                </label>
-                <label for="lastname"
-                  >Last Name<input
-                    type="text"
-                    id="lastname"
-                    class="form-control"
-                /></label>
-                <label for="jobtitle"
-                  >Job Title<input
-                    type="text"
-                    id="jobtitle"
-                    class="form-control"
-                /></label>
-                <label for="emailid"
-                  >Email<input type="email" id="emailid" class="form-control"
-                /></label>
-                <label for="departmentid"
-                  >Department ID<input
-                    type="number"
-                    id="departmentid"
-                    class="form-control"
-                /></label>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-success" id="btnadd">
-                Add
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="messageError" class="text-danger text-center fs-5 mt-4"></div>
-      <div id="messageSuccess" class="text-success text-center fs-5 mt-4"></div>
-
-      <!-- load personnel details  in table -->
-      <div class="container">
-        <div class="d-flex justify-content-center align-items-center">
-          <table
-            class="table table-hover table-striped table-bordered text-center"
-          >
-            <thead class="table-dark">
-              <tr>
-                <th class="th-sm">ID</th>
-                <th class="th-sm">First Name</th>
-                <th class="th-sm">Last Name</th>
-                <th class="th-sm">Email</th>
-                <th class="th-sm">Department ID</th>
-                <th class="th-sm">Action</th>
-              </tr>
-            </thead>
-            <tbody id="output">
-              <!--insert data from database-->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- department page -->
-    <!-- <div
-        class="tab-pane fade"
-        id="department"
-        role="tabpanel"
-        aria-labelledby="pills-profile-tab"
-      >This is department page
-        <div class="bg-info mt-4 mb-4 p-2 text-center">
-          <h4>List of Department Name</h4>
-        </div>
-        <div class="container">
-          <p class="text-muted text-center">
-            Complete the form below to add a new department
-          </p>
-          <div class="d-flex justify-content-evenly mb-5 mx-1">
-            <form id="addForm">
-              <label for="departName"
-                >Department Name:<input
-                  type="text"
-                  id="departName"
-                  class="form-control" /></label
-              >&nbsp;
-              <label for="locationID"
-                >Location ID:<input
-                  type="number"
-                  id="locationID"
-                  class="form-control"
-              /></label>
-              <button type="submit" id="add-button" class="btn btn-success">
-                Add New Department
-              </button>
-            </form>
-          </div>
-        </div>
-
-        <div id="message-error" class="text-danger text-center fs-4 mt-4"></div>
+        <!-- personnel id search Modal -->
         <div
-          id="message-success"
-          class="text-success text-center fs-4 mt-4" -->
-    <!-- ></div> -->
-
-    <!-- inserting  department list  in table -->
-    <!-- <div class="container">
-          <div class="d-flex justify-content-center align-items-center">
-            <table
-              class="table table-hover table-striped table-bordered text-center"
-            >
-              <thead class="table-dark">
-                <tr>
-                  <th class="th-sm">ID</th>
-                  <th class="th-sm">Department Name</th>
-                  <th class="th-sm">Location ID</th>
-                  <th class="th-sm">Action</th>
-                </tr>
-              </thead>
-              <tbody id="load-data"></tbody>
-            </table>
-          </div>
-        </div> -->
-
-    <!-- Edit Modal -->
-    <!-- <div
           class="modal fade"
-          id="editModal"
+          id="personnelModal"
           tabindex="-1"
           role="dialog"
           aria-labelledby="exampleModalCenterTitle"
@@ -338,52 +111,48 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">
-                  Update Department
-                </h5>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  Employee Details
+                </h1>
                 <button
                   type="button"
-                  class="close"
-                  data-dismiss="modal"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
                   aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
+                ></button>
               </div>
               <div class="modal-body">
-                <p id=" update-message" class="text-dark">
-                  display message here -->
-    <!-- </p>
-                <form>
-                  <input
-                    type="hidden"
-                    class="form-control my-2"
-                    placeholder="department id"
-                    id="depart_ID"
-                  />
-                  <input
-                    type="text"
-                    class="form-control my-2"
-                    placeholder="department name"
-                    id="depart_name"
-                  />
-                  <input
-                    type="number"
-                    class="form-control my-2"
-                    placeholder="location id"
-                    id="location_ID"
-                  />
-                </form>
+                <div class="d-flex justify-content-center align-items-center">
+                  <table
+                    class="table table-hover table-light table-bordered text-center w-auto"
+                  >
+                    <thead class="table-dark">
+                      <tr>
+                        <th class="th-sm">ID</th>
+                        <th class="th-sm">First Name</th>
+                        <th class="th-sm">Last Name</th>
+                        <th class="th-sm">Email</th>
+                        <th class="th-sm">Department ID</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td id="id"></td>
+                        <td id="firstName"></td>
+                        <td id="lastName"></td>
+                        <td id="email"></td>
+                        <td id="departmentId"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="update_btn">
-                  Update Now
-                </button>
+                <button type="button" class="btn btn-success">Save</button>
                 <button
                   type="button"
                   class="btn btn-danger"
-                  data-dismiss="modal"
-                  id="btn_close"
+                  data-bs-dismiss="modal"
                 >
                   Close
                 </button>
@@ -391,22 +160,205 @@
             </div>
           </div>
         </div>
-      </div> -->
-    <!-- location page -->
-    <!-- <div
-        class="tab-pane fade"
-        id="location"
-        role="tabpanel"
-        aria-labelledby="pills-contact-tab"
-      >
-        <div id="message-error" class="text-danger text-center fs-4 mt-4"></div>
-        <div
-          id="message-success"
-          class="text-success text-center fs-4 mt-4"
-        ></div> -->
+        <!-- search modal end -->
+        <!-- add personnel button -->
 
-    <!-- inserting  department list  in table -->
-    <!-- <div class="container">
+        <div class="container mt-3 mb-3">
+          <button
+            type="button"
+            data-toggle="modal"
+            data-target="addpersonnelModal"
+            id="addpersonnelBtn"
+            class="btn btn-primary"
+          >
+            Add Personnel
+          </button>
+        </div>
+
+        <!-- add personnel modal -->
+        <!-- modal -->
+        <div
+          class="modal fade"
+          id="addpersonnelModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title text-center fs-5" id="exampleModalLabel">
+                  Add Employee
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <small> Complete the form below to add employee </small>
+                <p id="message">
+                  <!--display message here if any input field empty-->
+                </p>
+                <form id="addpersonnelForm">
+                  <label for="firstname">First Name</label
+                  ><input type="text" id="firstname" class="form-control" />
+
+                  <label for="lastname">Last Name</label
+                  ><input type="text" id="lastname" class="form-control" />
+                  <label for="jobtitle">Job Title</label
+                  ><input type="text" id="jobtitle" class="form-control" />
+                  <label for="emailid">Email</label
+                  ><input type="email" id="emailid" class="form-control" />
+                  <label for="departmentid">Department ID</label
+                  ><input
+                    type="number"
+                    id="departmentid"
+                    class="form-control"
+                  />
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnadd">
+                  Add
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="messageError" class="text-danger text-center fs-5 mt-4"></div>
+        <div
+          id="messageSuccess"
+          class="text-success text-center fs-5 mt-4"
+        ></div>
+        <!-- show personnel table -->
+        <div class="container">
+          <div class="d-flex justify-content-center align-items-center">
+            <table
+              class="table table-hover table-striped table-bordered text-center"
+            >
+              <thead class="table-dark">
+                <tr>
+                  <th class="th-sm">ID</th>
+                  <th class="th-sm">First Name</th>
+                  <th class="th-sm">Last Name</th>
+                  <th class="th-sm">Email</th>
+                  <th class="th-sm">Department ID</th>
+                  <th class="th-sm">Action</th>
+                </tr>
+              </thead>
+              <tbody id="output">
+                <!--insert data from database-->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- contact page end -->
+
+      <!-- department page start -->
+      <div
+        class="tab-pane fade"
+        id="department"
+        role="tabpanel"
+        aria-labelledby="pills-department-tab"
+      >
+        <div class="text-center mt-4 mb-4">
+          <h4>List of Department Name</h4>
+        </div>
+
+        <!-- table of all department with location id -->
+        <div class="container">
+          <!-- add department button -->
+
+          <div class="container mt-3 mb-3">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#adddepartmentModal"
+            >
+              Add Department
+            </button>
+            <!-- just for demo -->
+            <!-- Button trigger modal -->
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#editdepartmentModal"
+            >
+              edit demo modal
+            </button>
+            <!-- just demo end -->
+          </div>
+          <div id="message-success"></div>
+          <div id="message-error"></div>
+          <!-- add department modal -->
+          <!-- modal -->
+          <div
+            class="modal fade"
+            id="adddepartmentModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Add Department
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="depart_name">Department Name</label
+                    ><input type="text" id="depart_name" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="location_id">Location ID</label
+                    ><input
+                      type="number"
+                      id="location_id"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" id="submit" class="btn btn-success">
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- table department -->
           <div class="d-flex justify-content-center align-items-center">
             <table
               class="table table-hover table-striped table-bordered text-center"
@@ -422,17 +374,232 @@
               <tbody id="load-data"></tbody>
             </table>
           </div>
-        </div> -->
-
-    <!-- <div class="container d-flex">
-        <div class="col-md-3 m-3">
-          <span>Select Location</span>
-          <select id="select_location" class="form-select shadow-sm"></select>
         </div>
-        <button type="submit" id="addBtn">Add location</button>
-      </div> -->
-    <!-- </div>
-    </div> -->
+
+        <!-- Edit department popup form bootstrap Modal -->
+
+        <div
+          class="modal fade"
+          id="editdepartmentModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  Edit Department
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <form action="" method="POST">
+                <div class="modal-body">
+                  <input type="hidden" name="update_id" id="update_id" />
+                  <div class="form-group">
+                    <label>Department Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="department name"
+                      id="depart_name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>Location ID</label>
+                    <input
+                      type="number"
+                      class="form-control my-2"
+                      placeholder="location id"
+                      id="location_ID"
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success" id="update_btn">
+                    Update Data
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- edit modal end -->
+      </div>
+      <!-- department page end -->
+
+      <!-- location page start -->
+      <div
+        class="tab-pane fade"
+        id="location"
+        role="tabpanel"
+        aria-labelledby="pills-location-tab"
+      >
+        <h4 class="text-center mt-3 mb-3">Location Name</h4>
+        <!-- add location  modal button -->
+        <div class="container mt-3 mb-3">
+          <button
+            type="button"
+            id="add_location_btn"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#addLocationModal"
+          >
+            Add Location
+          </button>
+        </div>
+        <!-- add location modal -->
+        <div
+          class="modal fade"
+          id="addLocationModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  Add Location
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form method="POST" action="" id="locationForm">
+                  <input type="hidden" name="locationId" id="locationId" />
+                  <div class="form-group">
+                    <label for="location_name">Location Name</label
+                    ><input
+                      type="text"
+                      id="location_name"
+                      class="form-control"
+                    />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" id="submit" class="btn btn-success">
+                  Add
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- *******Edit pop up form (bootstrap modal)****** -->
+        <!-- Button trigger modal -->
+        <div class="container">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#editLocationBtn"
+          >
+            edit location demo modal
+          </button>
+        </div>
+
+        <div
+          class="modal fade"
+          id="editLocationBtn"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  Edit Location
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <form action="" method="POST">
+                <div class="modal-body">
+                  <input type="hidden" name="update_id" id="updateId" />
+                  <div class="form-group">
+                    <label>Location Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="location name"
+                      id="location_name"
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success" id="updateBtn">
+                    Update
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- ************* -->
+
+        <!-- location in bootstrap cards style -->
+        <div class="container">
+          <div class="row g-3">
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="card">
+                <div class="card-body" id="card-body">
+                  <a href="#" id="editLocationBtn" class="line-dark"
+                    ><i
+                      class="fa-solid fa-pen-to-square fs-5 me-2"
+                      style="color: orange"
+                    ></i></a
+                  ><a href="#" id="deleteBtn" class="line-dark"
+                    ><i class="fa-solid fa-trash fs-5" style="color: red"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- bootstrap card end -->
+      </div>
+      <!-- location page end -->
+      <!-- tab content div end -->
+    </div>
 
     <!-- bootstrap js file -->
     <script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
