@@ -20,7 +20,7 @@ $(document).ready(function () {
               result.data[i].email +
               "</td><td>" +
               result.data[i].departmentID +
-              "</td><td><a href='' id='editPersonnel' class='line-dark'><i class='fa-solid fa-pen-to-square  fs-5 me-3'  style='color:orange'></i></a><a href='' id='deletePersonnel' class='line-dark'><i class='fa-solid fa-trash fs-5'style='color:red'></i></a> </td></tr>"
+              "</td><td><a href='../php/editPersonnel.php' id='editPersonnel' class='line-dark' title='Edit/Update Data' data-bs-toggle='tooltip'><i class='fa-solid fa-pen-to-square  fs-5 me-3'  style='color:orange'></i></a><a href='../php/deletePersonnelByID.php' id='deletePersonnel' class='line-dark' title='Delete Data' data-bs-toggle='tooltip'><i class='fa-solid fa-trash fs-5'style='color:red'></i></a> </td></tr>"
           );
         }
       },
@@ -33,53 +33,55 @@ $(document).ready(function () {
 
   //insert personnel details
   //insert personnel  on personnel table
-  $("#addpersonnelBtn").on("click", function (e) {
-    e.preventDefault();
+  $("#personnelBtn").on("click", function () {
     $("#addpersonnelModal").modal("show");
+    $("#addpersonnelForm").on("submit", function (event) {
+      event.preventDefault();
 
-    //get input field value from user
-    var firstname = $("#firstname").val();
-    var lastname = $("#lastname").val();
-    var jobtitle = $("#jobtitle").val();
-    var emailid = $("#emailid").val();
-    var departmentid = $("#departmentid").val();
+      //get input field value from user
+      var firstname = $("#firstname").val();
+      var lastname = $("#lastname").val();
+      var jobtitle = $("#jobtitle").val();
+      var emailid = $("#emailid").val();
+      var departmentid = $("#departmentid").val();
 
-    //check form validation
-    if (
-      firstname == "" &&
-      lastname == "" &&
-      jobtitle == "" &&
-      emailid == "" &&
-      departmentid == ""
-    ) {
-      $("#messageError").html("*Please fill all required field.");
-    } else {
-      $.ajax({
-        url: "php/insertPersonnel.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-          firstName: firstname,
-          lastName: lastname,
-          jobTitle: jobtitle,
-          email: emailid,
-          departmentID: departmentid,
-        },
-        success: function (data) {
-          console.log(data);
+      //check form validation
+      if (firstname == "") {
+        alert("First name is required.");
+      } else if (lastname == "") {
+        alert("Last name is required.");
+      } else if (jobtitle == "") {
+        alert("Job title is required.");
+      } else if (emailid == "") {
+        alert("Email id is required.");
+      } else if (departmentid == "") {
+        alert("Department id is required.");
+      } else {
+        $.ajax({
+          url: "php/insertPersonnel.php",
+          type: "POST",
+          dataType: "json",
+          data: {
+            firstName: firstname,
+            lastName: lastname,
+            jobTitle: jobtitle,
+            email: emailid,
+            departmentID: departmentid,
+          },
+          success: function (data) {
+            console.log(data);
 
-          // //check form validation
-          loadPersonnelTable();
-
-          $("#messageSuccess").html("*Data successfully inserted. ");
-
-          $("#addpersonnelForm").trigger("reset");
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
-        },
-      });
-    }
+            // //check form validation
+            // loadPersonnelTable();
+            // $("#messageSuccess").html("*Data successfully inserted. ");
+            // $("#addpersonnelForm").trigger("reset");
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      }
+    });
   });
 
   //get  personnel details by ID
@@ -134,7 +136,7 @@ $(document).ready(function () {
               result.data[i].name +
               "</td><td>" +
               result.data[i].locationID +
-              "</td><td><a href='#' id='editBtn'class='line-dark'><i class='fa-solid fa-pen-to-square  fs-5 me-3'  style='color:orange'></i></a><a href='#' class='line-dark'><i class='fa-solid fa-trash fs-5'style='color:red'></i></a> </td></tr>"
+              "</td><td><a href='../php/editDepartment.php' id='editDepartmentBtn'class='line-dark' title='Edit/Update Data' data-bs-toggle='tooltip'><i class='fa-solid fa-pen-to-square  fs-5 me-3'  style='color:orange'></i></a><a href='../php/deleteDepartmentByID.php' id='deleteDepartmentBtn'class='line-dark' title='Delete Data' data-bs-toggle='tooltip'><i class='fa-solid fa-trash fs-5'style='color:red'></i></a> </td></tr>"
           );
         }
       },

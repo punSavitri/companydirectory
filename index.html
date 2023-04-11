@@ -79,7 +79,11 @@
         <div class="container">
           <div class="row">
             <div class="col">
-              <form class="d-flex justify-content-start" role="search">
+              <form
+                method="POST"
+                class="d-flex justify-content-start"
+                role="search"
+              >
                 <small>
                   Enter the employee id to search employee details
                 </small>
@@ -167,9 +171,9 @@
           <button
             type="button"
             data-toggle="modal"
-            data-target="addpersonnelModal"
-            id="addpersonnelBtn"
+            data-target="#addpersonnelModal"
             class="btn btn-primary"
+            id="personnelBtn"
           >
             Add Personnel
           </button>
@@ -198,41 +202,52 @@
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
-                <small> Complete the form below to add employee </small>
-                <p id="message">
-                  <!--display message here if any input field empty-->
-                </p>
-                <form id="addpersonnelForm">
-                  <label for="firstname">First Name</label
-                  ><input type="text" id="firstname" class="form-control" />
+              <form id="addpersonnelForm" method="POST">
+                <div class="modal-body">
+                  <small> Complete the form below to add employee </small>
+                  <p id="message">
+                    <!--display message here if any input field empty-->
+                  </p>
+                  <input type="hidden" id="personnelId" />
+                  <div class="form-group">
+                    <label for="firstname">First Name</label
+                    ><input type="text" id="firstname" class="form-control" />
+                  </div>
 
-                  <label for="lastname">Last Name</label
-                  ><input type="text" id="lastname" class="form-control" />
-                  <label for="jobtitle">Job Title</label
-                  ><input type="text" id="jobtitle" class="form-control" />
-                  <label for="emailid">Email</label
-                  ><input type="email" id="emailid" class="form-control" />
-                  <label for="departmentid">Department ID</label
-                  ><input
-                    type="number"
-                    id="departmentid"
-                    class="form-control"
-                  />
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="btnadd">
-                  Add
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
+                  <div class="form-group">
+                    <label for="lastname">Last Name</label
+                    ><input type="text" id="lastname" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="jobtitle">Job Title</label
+                    ><input type="text" id="jobtitle" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="emailid">Email</label
+                    ><input type="email" id="emailid" class="form-control" />
+                  </div>
+                  <div class="form-group">
+                    <label for="departmentid">Department ID</label
+                    ><input
+                      type="number"
+                      id="departmentid"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success" id="btnadd">
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -285,11 +300,16 @@
           <div class="container mt-3 mb-3">
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn btn-success"
               data-bs-toggle="modal"
               data-bs-target="#adddepartmentModal"
             >
-              Add Department
+              <a
+                href="../php/insertDepartment.php"
+                id="addDepartment"
+                class="btn btn-success"
+                ><i class="fa fa-plus"></i>Add New Department</a
+              >
             </button>
             <!-- just for demo -->
             <!-- Button trigger modal -->
@@ -328,32 +348,38 @@
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label for="depart_name">Department Name</label
-                    ><input type="text" id="depart_name" class="form-control" />
+                <form method="POST" action="" id="form">
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label for="depart_name">Department Name</label
+                      ><input
+                        type="text"
+                        id="depart_name"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="location_id">Location ID</label
+                      ><input
+                        type="number"
+                        id="location_id"
+                        class="form-control"
+                      />
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="location_id">Location ID</label
-                    ><input
-                      type="number"
-                      id="location_id"
-                      class="form-control"
-                    />
+                  <div class="modal-footer">
+                    <button type="button" id="submit" class="btn btn-success">
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
                   </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" id="submit" class="btn btn-success">
-                    Add
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -453,12 +479,16 @@
         <div class="container mt-3 mb-3">
           <button
             type="button"
-            id="add_location_btn"
-            class="btn btn-primary"
+            class="btn btn-success"
             data-bs-toggle="modal"
             data-bs-target="#addLocationModal"
           >
-            Add Location
+            <a
+              href="../php/insertLocation.php"
+              id="add_location_btn"
+              class="btn btn-success"
+              ><i class="fa fa-plus"></i>Add Location</a
+            >
           </button>
         </div>
         <!-- add location modal -->
@@ -483,8 +513,8 @@
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
-                <form method="POST" action="" id="locationForm">
+              <form method="POST" action="" id="locationForm">
+                <div class="modal-body">
                   <input type="hidden" name="locationId" id="locationId" />
                   <div class="form-group">
                     <label for="location_name">Location Name</label
@@ -494,20 +524,20 @@
                       class="form-control"
                     />
                   </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" id="submit" class="btn btn-success">
-                  Add
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" id="submit" class="btn btn-success">
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -582,12 +612,22 @@
             <div class="col-12 col-md-6 col-lg-3">
               <div class="card">
                 <div class="card-body" id="card-body">
-                  <a href="#" id="editLocationBtn" class="line-dark"
+                  <a
+                    href="../php/editLocation.php"
+                    id="editLocationBtn"
+                    class="line-dark"
+                    title="Edit/Update Location"
+                    data-bs-toggle="tooltip"
                     ><i
                       class="fa-solid fa-pen-to-square fs-5 me-2"
                       style="color: orange"
                     ></i></a
-                  ><a href="#" id="deleteBtn" class="line-dark"
+                  ><a
+                    href="../php/deleteLocationByID.php"
+                    id="deleteBtn"
+                    class="line-dark"
+                    title="Delete Record"
+                    data-bs-toggle="tooltip"
                     ><i class="fa-solid fa-trash fs-5" style="color: red"></i
                   ></a>
                 </div>
