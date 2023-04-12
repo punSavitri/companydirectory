@@ -170,31 +170,22 @@
         <div class="container mt-3 mb-3">
           <button
             type="button"
-            data-toggle="modal"
-            data-target="#addpersonnelModal"
-            class="btn btn-primary"
-            id="personnelBtn"
+            data-bs-toggle="modal"
+            data-bs-target="#addpersonnelModal"
+            class="btn btn-success"
           >
+            <i class="fa fa-plus"></i>
             Add Personnel
           </button>
         </div>
 
         <!-- add personnel modal -->
         <!-- modal -->
-        <div
-          class="modal fade"
-          id="addpersonnelModal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" id="addpersonnelModal">
+          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title text-center fs-5" id="exampleModalLabel">
-                  Add Employee
-                </h1>
+                <h1 class="modal-title text-center fs-5">Add Employee</h1>
                 <button
                   type="button"
                   class="btn-close"
@@ -205,9 +196,6 @@
               <form id="addpersonnelForm" method="POST">
                 <div class="modal-body">
                   <small> Complete the form below to add employee </small>
-                  <p id="message">
-                    <!--display message here if any input field empty-->
-                  </p>
                   <input type="hidden" id="personnelId" />
                   <div class="form-group">
                     <label for="firstname">First Name</label
@@ -236,7 +224,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-success" id="btnadd">
+                  <button type="button " class="btn btn-success" id="btnadd">
                     Add
                   </button>
                   <button
@@ -252,11 +240,17 @@
           </div>
         </div>
 
-        <div id="messageError" class="text-danger text-center fs-5 mt-4"></div>
+        <!-- show message to user  -->
+        <div
+          id="messageError"
+          class="text-danger text-center fs-5 mt-4 mb-3"
+        ></div>
         <div
           id="messageSuccess"
-          class="text-success text-center fs-5 mt-4"
+          class="text-success text-center fs-5 mt-4 mb-3"
         ></div>
+        <!-- ***** -->
+
         <!-- show personnel table -->
         <div class="container">
           <div class="d-flex justify-content-center align-items-center">
@@ -304,27 +298,21 @@
               data-bs-toggle="modal"
               data-bs-target="#adddepartmentModal"
             >
-              <a
-                href="../php/insertDepartment.php"
-                id="addDepartment"
-                class="btn btn-success"
-                ><i class="fa fa-plus"></i>Add New Department</a
-              >
+              <i class="fa fa-plus"></i>Add New Department
             </button>
-            <!-- just for demo -->
-            <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#editdepartmentModal"
-            >
-              edit demo modal
-            </button>
-            <!-- just demo end -->
           </div>
-          <div id="message-success"></div>
-          <div id="message-error"></div>
+
+          <!-- *message for user*  -->
+          <div
+            id="message-success"
+            class="text-success text-center fs-5 mt-2 mb-2"
+          ></div>
+          <div
+            id="message-error"
+            class="text-danger text-center fs-5 mt-2 mb-2"
+          ></div>
+          <!-- ******************  -->
+
           <!-- add department modal -->
           <!-- modal -->
           <div
@@ -368,7 +356,7 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" id="submit" class="btn btn-success">
+                    <button type="button" id="add" class="btn btn-success">
                       Add
                     </button>
                     <button
@@ -403,7 +391,6 @@
         </div>
 
         <!-- Edit department popup form bootstrap Modal -->
-
         <div
           class="modal fade"
           id="editdepartmentModal"
@@ -448,7 +435,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-success" id="update_btn">
+                  <button type="button" class="btn btn-success" id="update_btn">
                     Update Data
                   </button>
                   <button
@@ -475,6 +462,7 @@
         aria-labelledby="pills-location-tab"
       >
         <h4 class="text-center mt-3 mb-3">Location Name</h4>
+
         <!-- add location  modal button -->
         <div class="container mt-3 mb-3">
           <button
@@ -483,12 +471,7 @@
             data-bs-toggle="modal"
             data-bs-target="#addLocationModal"
           >
-            <a
-              href="../php/insertLocation.php"
-              id="add_location_btn"
-              class="btn btn-success"
-              ><i class="fa fa-plus"></i>Add Location</a
-            >
+            <i class="fa fa-plus"></i>Add Location
           </button>
         </div>
         <!-- add location modal -->
@@ -526,7 +509,11 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" id="submit" class="btn btn-success">
+                  <button
+                    type="button"
+                    id="add_location_btn"
+                    class="btn btn-success"
+                  >
                     Add
                   </button>
                   <button
@@ -541,19 +528,19 @@
             </div>
           </div>
         </div>
-        <!-- *******Edit pop up form (bootstrap modal)****** -->
-        <!-- Button trigger modal -->
-        <div class="container">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#editLocationBtn"
-          >
-            edit location demo modal
-          </button>
-        </div>
 
+        <!-- message for user  -->
+        <div
+          id="msg-success"
+          class="text-success text-center fs-5 mt-2 mb-2"
+        ></div>
+        <div
+          id="msg-error"
+          class="text-danger text-center fs-5 mt-2 mb-2"
+        ></div>
+        <!-- message for user end -->
+
+        <!-- *******Edit pop up form (bootstrap modal)****** -->
         <div
           class="modal fade"
           id="editLocationBtn"
