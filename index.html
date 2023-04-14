@@ -18,8 +18,8 @@
   <body>
     <!-- navigation start -->
     <nav class="navbar bg-light">
-      <h3 class="text-center mb-3 mx-2">Company Directory</h3>
-      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <h3 class="text-center mb-3 m-auto" id="company">Company Directory</h3>
+      <ul class="nav nav-pills mb-3 ms-2 me-2" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
           <button
             class="nav-link active"
@@ -74,36 +74,37 @@
         role="tabpanel"
         aria-labelledby="pills-home-tab"
       >
-        <h5 class="text-center m-4">Contact Details</h5>
-        <!-- search employee details by id -->
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <form
-                method="POST"
-                class="d-flex justify-content-start"
-                role="search"
-              >
-                <small>
-                  Enter the employee id to search employee details
-                </small>
+        <h4 class="text-center mt-2 mb-2">Contact Details</h4>
+
+        <!-- search button -->
+        <div class="container mt-2">
+          <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+              <form id="searchForm" role="search">
+                <label for="input"
+                  >Enter the employee id number to find employee details</label
+                >
                 <input
                   id="search"
-                  class="form-control"
-                  type="search"
-                  placeholder="Search..."
+                  class="form-control me-2 mt-2"
+                  type="text"
+                  placeholder="Employee id number"
                   aria-label="Search"
                   autocomplete="off"
                 />
-                <!-- employee search button -->
-                <button class="btn btn-success" type="button" id="searchBtn">
+                <button
+                  class="btn btn-success mt-2"
+                  type="button"
+                  id="searchBtn"
+                >
                   Search
                 </button>
               </form>
             </div>
           </div>
         </div>
-        <!-- personnel id search Modal -->
+
+        <!-- employee search box by id modal -->
         <div
           class="modal fade"
           id="personnelModal"
@@ -114,7 +115,7 @@
         >
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-              <div class="modal-header">
+              <div class="modal-header text-center">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">
                   Employee Details
                 </h1>
@@ -126,29 +127,23 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <div class="d-flex justify-content-center align-items-center">
-                  <table
-                    class="table table-hover table-light table-bordered text-center w-auto"
-                  >
-                    <thead class="table-dark">
-                      <tr>
-                        <th class="th-sm">ID</th>
-                        <th class="th-sm">First Name</th>
-                        <th class="th-sm">Last Name</th>
-                        <th class="th-sm">Email</th>
-                        <th class="th-sm">Department ID</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td id="id"></td>
-                        <td id="firstName"></td>
-                        <td id="lastName"></td>
-                        <td id="email"></td>
-                        <td id="departmentId"></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div
+                  class="card text-bg-light border-warning m-auto"
+                  style="max-width: 22rem"
+                >
+                  <div class="card-header text-bg-warning text-center">
+                    <i class="fa fa-user fs-1"></i>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text" id="id">Employee ID :&nbsp;</p>
+                    <p class="card-text" id="fullName">Full Name :&nbsp;</p>
+
+                    <p class="card-text" id="job_title">Job Title : &nbsp;</p>
+                    <p class="card-text" id="emailId">Email :&nbsp;</p>
+                    <p class="card-text" id="departmentId">
+                      Department ID :&nbsp;
+                    </p>
+                  </div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -164,9 +159,9 @@
             </div>
           </div>
         </div>
-        <!-- search modal end -->
-        <!-- add personnel button -->
+        <!-- search  modal end -->
 
+        <!-- add personnel button -->
         <div class="container mt-3 mb-3">
           <button
             type="button"
@@ -178,7 +173,6 @@
             Add Personnel
           </button>
         </div>
-
         <!-- add personnel modal -->
         <!-- modal -->
         <div class="modal fade" id="addpersonnelModal">
@@ -251,26 +245,142 @@
         ></div>
         <!-- ***** -->
 
+        <!-- personnel update modal -->
+        <div class="modal fade" id="update_personnel_Modal">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title">Update Employee</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p id="update_error_message" class="text-danger"></p>
+                <p id="update_success_message" class="text-success"></p>
+                <form>
+                  <div class="form-group">
+                    <input
+                      type="hidden"
+                      id="personnelId"
+                      class="form-control my-1"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input type="text" id="fname" class="form-control my-1" />
+                  </div>
+                  <div class="form-group">
+                    <input type="text" id="lname" class="form-control my-1" />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      id="jobTitle"
+                      class="form-control my-1"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="email"
+                      id="email_id"
+                      class="form-control my-1"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="number"
+                      id="department_ID"
+                      class="form-control my-1"
+                    />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button "
+                  class="btn btn-success"
+                  id="update_button"
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end of personnel update modal -->
+
+        <!-- delete personnel modal start -->
+        <div class="modal fade" id="deleteModal">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title">Delete Record</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <div class="modal-body">
+                <p
+                  id="delete_success_message"
+                  class="text-center text-success"
+                ></p>
+                <p>Do you want to delete the record ?</p>
+                <button
+                  type="button "
+                  class="btn btn-success"
+                  id="delete_button"
+                >
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- delete personnel modal end -->
+
         <!-- show personnel table -->
         <div class="container">
-          <div class="d-flex justify-content-center align-items-center">
-            <table
-              class="table table-hover table-striped table-bordered text-center"
-            >
-              <thead class="table-dark">
-                <tr>
-                  <th class="th-sm">ID</th>
-                  <th class="th-sm">First Name</th>
-                  <th class="th-sm">Last Name</th>
-                  <th class="th-sm">Email</th>
-                  <th class="th-sm">Department ID</th>
-                  <th class="th-sm">Action</th>
-                </tr>
-              </thead>
-              <tbody id="output">
-                <!--insert data from database-->
-              </tbody>
-            </table>
+          <div class="row g-4">
+            <div class="col-md-6 col-lg-12">
+              <table
+                class="table table-responsive-md table-hover table-striped table-bordered text-center"
+                id="personnelTable"
+              >
+                <thead class="table-dark">
+                  <tr>
+                    <th class="th-sm">ID</th>
+                    <th class="th-sm">First Name</th>
+                    <th class="th-sm">Last Name</th>
+                    <th class="th-sm">Email</th>
+                    <th class="th-sm">Department ID</th>
+                    <th class="th-sm">Edit/Update</th>
+                    <th class="th-sm">Delete</th>
+                  </tr>
+                </thead>
+                <tbody id="output"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -283,114 +393,109 @@
         role="tabpanel"
         aria-labelledby="pills-department-tab"
       >
-        <div class="text-center mt-4 mb-4">
-          <h4>List of Department Name</h4>
+        <h4 class="text-center mt-2 mb-2">List of Department Name</h4>
+
+        <!-- add department button -->
+        <div class="container mt-3 mb-3">
+          <button
+            type="button"
+            class="btn btn-success"
+            data-bs-toggle="modal"
+            data-bs-target="#adddepartmentModal"
+          >
+            <i class="fa fa-plus"></i>Add Department
+          </button>
         </div>
 
-        <!-- table of all department with location id -->
-        <div class="container">
-          <!-- add department button -->
+        <!-- add department modal -->
+        <!-- modal -->
+        <div
+          class="modal fade"
+          id="adddepartmentModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  Add Department
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
 
-          <div class="container mt-3 mb-3">
-            <button
-              type="button"
-              class="btn btn-success"
-              data-bs-toggle="modal"
-              data-bs-target="#adddepartmentModal"
-            >
-              <i class="fa fa-plus"></i>Add New Department
-            </button>
-          </div>
-
-          <!-- *message for user*  -->
-          <div
-            id="message-success"
-            class="text-success text-center fs-5 mt-2 mb-2"
-          ></div>
-          <div
-            id="message-error"
-            class="text-danger text-center fs-5 mt-2 mb-2"
-          ></div>
-          <!-- ******************  -->
-
-          <!-- add department modal -->
-          <!-- modal -->
-          <div
-            class="modal fade"
-            id="adddepartmentModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">
-                    Add Department
-                  </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <form method="POST" action="" id="form">
-                  <div class="modal-body">
-                    <div class="form-group">
-                      <label for="depart_name">Department Name</label
-                      ><input
-                        type="text"
-                        id="depart_name"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="location_id">Location ID</label
-                      ><input
-                        type="number"
-                        id="location_id"
-                        class="form-control"
-                      />
-                    </div>
+              <div class="modal-body">
+                <form id="form">
+                  <p
+                    id="message-success"
+                    class="text-success text-center fs-5 mt-2 mb-2"
+                  ></p>
+                  <p
+                    id="message-error"
+                    class="text-danger text-center fs-5 mt-2 mb-2"
+                  ></p>
+                  <input type="hidden" class="form-control" id="departID" />
+                  <div class="form-group">
+                    <label for="depart_name">Department Name</label
+                    ><input type="text" id="depart_name" class="form-control" />
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" id="add" class="btn btn-success">
-                      Add
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
+                  <div class="form-group">
+                    <label for="location_id">Location ID</label
+                    ><input
+                      type="number"
+                      id="location_id"
+                      class="form-control"
+                    />
                   </div>
                 </form>
               </div>
+              <div class="modal-footer">
+                <button type="button" id="add" class="btn btn-success">
+                  Add
+                </button>
+                <button
+                  type="button"
+                  id="depart_Close_btn"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
-          </div>
-
-          <!-- table department -->
-          <div class="d-flex justify-content-center align-items-center">
-            <table
-              class="table table-hover table-striped table-bordered text-center"
-            >
-              <thead class="table-dark">
-                <tr>
-                  <th class="th-sm">ID</th>
-                  <th class="th-sm">Department Name</th>
-                  <th class="th-sm">Location ID</th>
-                  <th class="th-sm">Action</th>
-                </tr>
-              </thead>
-              <tbody id="load-data"></tbody>
-            </table>
           </div>
         </div>
 
-        <!-- Edit department popup form bootstrap Modal -->
+        <!-- display table of all department with location id -->
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-md-6 col-lg-12">
+              <table
+                class="table table-responsive-md table-hover table-striped table-bordered text-center"
+              >
+                <thead class="table-dark">
+                  <tr>
+                    <th class="th-sm">ID</th>
+                    <th class="th-sm">Department Name</th>
+                    <th class="th-sm">Location ID</th>
+                    <th class="th-sm">Edit/Update</th>
+                    <th class="th-sm">Delete</th>
+                  </tr>
+                </thead>
+                <tbody id="load-data"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit department Modal -->
         <div
           class="modal fade"
           id="editdepartmentModal"
@@ -463,8 +568,8 @@
       >
         <h4 class="text-center mt-3 mb-3">Location Name</h4>
 
-        <!-- add location  modal button -->
         <div class="container mt-3 mb-3">
+          <!-- add location  modal button -->
           <button
             type="button"
             class="btn btn-success"
@@ -496,8 +601,16 @@
                   aria-label="Close"
                 ></button>
               </div>
-              <form method="POST" action="" id="locationForm">
-                <div class="modal-body">
+              <div class="modal-body">
+                <form method="POST" action="" id="locationForm">
+                  <p
+                    id="msg-success"
+                    class="text-success text-center fs-5 mt-2 mb-2"
+                  ></p>
+                  <p
+                    id="msg-error"
+                    class="text-danger text-center fs-5 mt-2 mb-2"
+                  ></p>
                   <input type="hidden" name="locationId" id="locationId" />
                   <div class="form-group">
                     <label for="location_name">Location Name</label
@@ -507,38 +620,28 @@
                       class="form-control"
                     />
                   </div>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    id="add_location_btn"
-                    class="btn btn-success"
-                  >
-                    Add
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </form>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  id="add_location_btn"
+                  class="btn btn-success"
+                >
+                  Add
+                </button>
+                <button
+                  type="button"
+                  id="btnClose"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
-
-        <!-- message for user  -->
-        <div
-          id="msg-success"
-          class="text-success text-center fs-5 mt-2 mb-2"
-        ></div>
-        <div
-          id="msg-error"
-          class="text-danger text-center fs-5 mt-2 mb-2"
-        ></div>
-        <!-- message for user end -->
 
         <!-- *******Edit pop up form (bootstrap modal)****** -->
         <div
@@ -593,43 +696,17 @@
         </div>
         <!-- ************* -->
 
-        <!-- location in bootstrap cards style -->
-        <div class="container">
-          <div class="row g-3">
-            <div class="col-12 col-md-6 col-lg-3">
-              <div class="card">
-                <div class="card-body" id="card-body">
-                  <a
-                    href="../php/editLocation.php"
-                    id="editLocationBtn"
-                    class="line-dark"
-                    title="Edit/Update Location"
-                    data-bs-toggle="tooltip"
-                    ><i
-                      class="fa-solid fa-pen-to-square fs-5 me-2"
-                      style="color: orange"
-                    ></i></a
-                  ><a
-                    href="../php/deleteLocationByID.php"
-                    id="deleteBtn"
-                    class="line-dark"
-                    title="Delete Record"
-                    data-bs-toggle="tooltip"
-                    ><i class="fa-solid fa-trash fs-5" style="color: red"></i
-                  ></a>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- display locations in bootstrap cards  -->
+        <div class="container" id="location">
+          <!-- loadlocation name and id here -->
         </div>
-        <!-- bootstrap card end -->
       </div>
       <!-- location page end -->
       <!-- tab content div end -->
     </div>
 
     <!-- bootstrap js file -->
-    <script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="libs/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="libs/jquery/jquery-3.6.3.min.js"></script>
     <script src="js/script.js"></script>
