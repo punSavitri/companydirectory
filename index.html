@@ -187,8 +187,8 @@
                   aria-label="Close"
                 ></button>
               </div>
-              <form id="addpersonnelForm" method="POST">
-                <div class="modal-body">
+              <div class="modal-body">
+                <form id="addpersonnelForm">
                   <small> Complete the form below to add employee </small>
                   <input type="hidden" id="personnelId" />
                   <div class="form-group">
@@ -216,20 +216,20 @@
                       class="form-control"
                     />
                   </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button " class="btn btn-success" id="btnadd">
-                    Add
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </form>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button " class="btn btn-success" id="btnadd">
+                  Add
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -384,9 +384,9 @@
           </div>
         </div>
       </div>
-      <!-- contact page end -->
+      <!-- ----------------------------Contact page end ------------------------------->
 
-      <!-- department page start -->
+      <!-- --------------------------Department page start ---------------------------->
       <div
         class="tab-pane fade"
         id="department"
@@ -430,7 +430,6 @@
                   aria-label="Close"
                 ></button>
               </div>
-
               <div class="modal-body">
                 <form id="form">
                   <p
@@ -475,7 +474,7 @@
 
         <!-- display table of all department with location id -->
         <div class="container">
-          <div class="row g-4">
+          <div class="row">
             <div class="col-md-6 col-lg-12">
               <table
                 class="table table-responsive-md table-hover table-striped table-bordered text-center"
@@ -495,7 +494,7 @@
           </div>
         </div>
 
-        <!-- Edit department Modal -->
+        <!-- Edit/Update department Modal -->
         <div
           class="modal fade"
           id="editdepartmentModal"
@@ -507,8 +506,8 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Edit Department
+                <h1 class="modal-title" id="exampleModalLabel">
+                  Edit/Update Department
                 </h1>
                 <button
                   type="button"
@@ -517,16 +516,17 @@
                   aria-label="Close"
                 ></button>
               </div>
-              <form action="" method="POST">
-                <div class="modal-body">
-                  <input type="hidden" name="update_id" id="update_id" />
+              <div class="modal-body">
+                <form id="update_form">
+                  <p id="message" class="text-center text-success"></p>
+                  <input type="hidden" class="form-control" id="update_id" />
                   <div class="form-group">
                     <label>Department Name</label>
                     <input
                       type="text"
                       class="form-control"
                       placeholder="department name"
-                      id="depart_name"
+                      id="update_depart_name"
                     />
                   </div>
                   <div class="form-group">
@@ -535,31 +535,67 @@
                       type="number"
                       class="form-control my-2"
                       placeholder="location id"
-                      id="location_ID"
+                      id="update_location_ID"
                     />
                   </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-success" id="update_btn">
-                    Update Data
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </form>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="update_btn">
+                  Update
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        <!-- edit modal end -->
-      </div>
-      <!-- department page end -->
+        <!-- Edit/Update modal end -->
 
-      <!-- location page start -->
+        <!-- delete department modal start -->
+        <div class="modal fade" id="deleteDepartmentModal">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title">Delete Record</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <div class="modal-body">
+                <p
+                  id="deleteSuccessMessage"
+                  class="text-center text-success"
+                ></p>
+                <p>Do you want to delete the record ?</p>
+                <button type="button " class="btn btn-danger" id="deleteButton">
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- delete department modal end -->
+      </div>
+      <!----------------------------------Department page end here------------------------>
+
+      <!-----------------------------------Location page start from here------------------>
       <div
         class="tab-pane fade"
         id="location"
@@ -602,15 +638,15 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <form method="POST" action="" id="locationForm">
-                  <p
-                    id="msg-success"
-                    class="text-success text-center fs-5 mt-2 mb-2"
-                  ></p>
-                  <p
-                    id="msg-error"
-                    class="text-danger text-center fs-5 mt-2 mb-2"
-                  ></p>
+                <p
+                  id="msg-success"
+                  class="text-success text-center fs-5 mt-2 mb-2"
+                ></p>
+                <p
+                  id="msg-error"
+                  class="text-danger text-center fs-5 mt-2 mb-2"
+                ></p>
+                <form id="locationForm">
                   <input type="hidden" name="locationId" id="locationId" />
                   <div class="form-group">
                     <label for="location_name">Location Name</label
@@ -643,20 +679,25 @@
           </div>
         </div>
 
-        <!-- *******Edit pop up form (bootstrap modal)****** -->
+        <!-- display all locations in cards ones page load  -->
+        <div class="container py-3 ml-4">
+          <div class="row g-3" id="row"></div>
+        </div>
+
+        <!--  Edit location modal -->
         <div
           class="modal fade"
-          id="editLocationBtn"
+          id="editLocationModal"
           tabindex="-1"
           role="dialog"
-          aria-labelledby="exampleModalLabel"
+          aria-labelledby="exampleModalCenterTitle"
           aria-hidden="true"
         >
-          <div class="modal-dialog" role="document">
+          <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Edit Location
+                <h1 class="modal-title" id="exampleModalLabel">
+                  Edit/Update Location
                 </h1>
                 <button
                   type="button"
@@ -665,43 +706,74 @@
                   aria-label="Close"
                 ></button>
               </div>
-              <form action="" method="POST">
-                <div class="modal-body">
-                  <input type="hidden" name="update_id" id="updateId" />
-                  <div class="form-group">
-                    <label>Location Name</label>
+              <div class="modal-body">
+                <p id="msg" class="text-center text-success"></p>
+                <form id="locationform">
+                  <div class="form-group my-2">
                     <input
-                      type="text"
+                      type="hidden"
                       class="form-control"
-                      placeholder="location name"
-                      id="location_name"
+                      id="updateLocation"
                     />
                   </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-success" id="updateBtn">
-                    Update
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </form>
+                  <div class="form-group my-2">
+                    <label>Location Name</label>
+                    <input type="text" class="form-control" id="locationname" />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="updateBtn">
+                  Update
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        <!-- ************* -->
+        <!--    End  of Edit location Modal -->
 
-        <!-- display locations in bootstrap cards  -->
-        <div class="container" id="location">
-          <!-- loadlocation name and id here -->
+        <!-- delete department modal start -->
+        <div class="modal fade" id="deleteLocationModal">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title">Delete Record</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <div class="modal-body">
+                <p id="deleteMessage" class="text-center text-success"></p>
+                <p>Do you want to delete the record ?</p>
+                <button type="button " class="btn btn-danger" id="delete">
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+        <!-- end of delete location modal -->
+
+        <!-- location page end -->
       </div>
-      <!-- location page end -->
       <!-- tab content div end -->
     </div>
 

@@ -40,7 +40,7 @@ $(document).ready(function () {
     $(document).on("click", "#btn_edit", function () {
       //get particular id
       var id = $(this).attr("data-id");
-      // console.log(id);
+      console.log(id);
       $.ajax({
         url: "php/getPersonnelByID.php",
         method: "POST",
@@ -141,7 +141,6 @@ $(document).ready(function () {
             $("#delete_success_message").html(
               "Selected data successfully deleted."
             );
-            $("#deleteModal").modal("show");
           },
         });
       });
@@ -239,11 +238,11 @@ $(document).ready(function () {
   });
   //********************End of contact page******************************************//
 
-  ////////////////////// department page start /////////////////////////////////////////
+  ////////////////////// Department page start /////////////////////////////////////////
 
   //display all department in table as page load
   //function loadTable
-  function loadTable() {
+  function loadDepartmentTable() {
     $.ajax({
       type: "GET",
       url: "php/getAllDepartments.php",
@@ -272,9 +271,9 @@ $(document).ready(function () {
     });
   }
   //display table as the page load
-  loadTable();
+  loadDepartmentTable();
 
-  //insert/add department on database
+  //Insert/Add Department on database
   $("#add").on("click", function (e) {
     e.preventDefault();
 
@@ -308,30 +307,127 @@ $(document).ready(function () {
     }
   });
 
-  /// to be continue..
+  //Get particular department ID and update ones click on update button
+  function getDepartmentByID() {
+    $(document).on("click", "#editDepartmentBtn", function () {
+      //get particular department id from user
+      var department_id = $(this).attr("data_depart_id");
+      console.log(department_id);
 
-  ////////////////////// End ofdepartment page  ////////////////////////////////////////
+      //form validation if any field is empty
+      if (department_id == "") {
+        alert("Please fill the required field.");
+      } else {
+        $.ajax({
+          url: "php/getDepartmentByID.php",
+          method: "POST",
+          dataType: "json",
+          data: {
+            id: department_id,
+          },
+          success: function (data) {
+            console.log(data);
+            $("#update_id").val(data.data[0]["id"]);
+            $("#update_depart_name").val(data.data[0]["name"]);
+            $("#update_location_ID").val(data.data[0]["locationID"]);
+            $("#editdepartmentModal").modal("show");
+            loadDepartmentTable();
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      }
+    });
+  }
+  getDepartmentByID();
 
-  ///////  Location page start /////////
+  //Update Department by id
+  function updateDepartmentById() {
+    $(document).on("click", "#update_btn", function () {
+      var updateId = $("#update_id").val();
+      var updateDepartmentName = $("#update_depart_name").val();
+      var updateLocationID = $("#update_location_ID").val();
+      // check form validation if any field is empty
+      if (updateDepartmentName == "") {
+        alert("Department name is required.");
+      } else if (updateLocationID == "") {
+        alert("Location ID is required.");
+      } else {
+        $.ajax({
+          url: "php/editDepartment.php",
+          method: "POST",
+          dataType: "json",
+          data: {
+            id: updateId,
+            name: updateDepartmentName,
+            locationID: updateLocationID,
+          },
+          success: function (data) {
+            console.log(data);
+            $("#message").html("Data has successfully updated.");
+            $("#editdepartmentModal").modal("show");
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      }
+    });
+  }
+  updateDepartmentById();
+
+  //Delete Record by ID from database
+  function deleteDepartmentRecord() {
+    $(document).on("click", "#deleteDepartmentBtn", function () {
+      console.log("Testing delete button working or not!!!");
+      //get data id attribute
+      var dataID = $(this).attr("data_depart_id1");
+      console.log(dataID);
+      $("#deleteDepartmentModal").modal("show");
+      $(document).on("click", "#deleteButton", function () {
+        $.ajax({
+          url: "php/deleteDepartmentByID.php",
+          method: "POST",
+          dataType: "json",
+          data: {
+            id: dataID,
+          },
+          success: function (data) {
+            console.log(data);
+            $("#deleteSuccessMessage").html("Selected data deleted.");
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      });
+    });
+  }
+  deleteDepartmentRecord();
+
+  /////////////////////////// End of department page here  ///////////////////////////////
+
+  //////////////////////////  Location page start from here///////////////////////////////
   //function to display location on cards
   function displayLocation() {
     $.ajax({
-      type: "GET",
+      type: "POST",
       url: "php/getAllLocations.php",
       dataType: "json",
       success: function (data) {
         console.log(data);
         for (var i = 0; i < data.data.length; i++) {
-          $("#location").append(
-            "<div class='container'><div class='row g-4'><div class='col-12 col-md-6 col-lg-4'><div class='card text-center ' id='card'><i class='fa-solid fa-location-crosshairs fs-5 mt-2 mb-2'></i><div class='card-body bg-light' id='card-body'>  <h5 class='card-title text-center' id='card-title'>" +
+          $("#row").append(
+            "<div class='col-md-3'><div class='card text-center border-light'  id='card'><div class='card-body bg-light' id='card-body'><h5 class='card-title text-center' id='card-title'>Location ID :&nbsp;" +
               data.data[i].id +
-              "</h5><p class='card-text text-center' id='card-text'>" +
+              "</h5><p class='card-text text-center' id='card-text'>Location :&nbsp;" +
               data.data[i].name +
-              "</p></div><div class='card-footer'><button class='btn btn-success me-2' id='btnedit' data_id=" +
+              "</p></div><div class='card-footer'><button class='btn btn-success me-3' id='btnedit' data_location_id=" +
               data.data[i].id +
-              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger' id='btndelete' data_id1=" +
+              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger' id='btndelete' data_location_id1=" +
               data.data[i].id +
-              "><i class='fa-solid fa-trash'></i></button></div></div></div></div></div>"
+              "><i class='fa-solid fa-trash'></i></button></div></div></div>"
           );
         }
       },
@@ -376,6 +472,91 @@ $(document).ready(function () {
       $("#msg-success").html("");
     });
   });
+
+  //get particular location id and view details
+  function getLocationId() {
+    $(document).on("click", "#btnedit", function () {
+      var location_id = $(this).attr("data_location_id");
+      // console.log(location_id);
+      $.ajax({
+        url: "php/getLocationByID.php",
+        method: "POST",
+        dataType: "json",
+        data: {
+          id: location_id,
+        },
+        success: function (data) {
+          console.log(data);
+          $("#updateLocation").val(data.data.location[0]["id"]);
+          $("#locationname").val(data.data.location[0]["name"]);
+          $("#editLocationModal").modal("show");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR.textStatus);
+        },
+      });
+    });
+  }
+  getLocationId();
+
+  //function UPDATE RECORD///////
+  function updateLocationID() {
+    $(document).on("click", "#updateBtn", function () {
+      console.log("testing update button!!!");
+      var idLocation = $("#updateLocation").val();
+      var nameLocation = $("#locationname").val();
+
+      //check form validation if any field is empty
+      if (nameLocation == "") {
+        alert("Location name is required.");
+      } else {
+        $.ajax({
+          url: "php/editLocation.php",
+          method: "POST",
+          dataType: "json",
+          data: {
+            id: idLocation,
+            name: nameLocation,
+          },
+          success: function (data) {
+            console.log(data);
+            $("#msg").html("Data has successfully updated.");
+            $("#editLocationModal").modal("show");
+          },
+        });
+      }
+    });
+  }
+  updateLocationID();
+
+  //DELETE RECORD FROM LOCATION DATABASE
+  function delete_location() {
+    $(document).on("click", "#btndelete", function () {
+      console.log("Testing location delete button working or not!");
+      //get the data attribute value
+      var data_id1 = $(this).attr("data_location_id1");
+      console.log(data_id1);
+      $("#deleteLocationModal").modal("show");
+      $(document).on("click", "#delete", function () {
+        $.ajax({
+          url: "php/deleteLocationByID.php",
+          method: "POST",
+          dataType: "json",
+          data: {
+            id: data_id1,
+          },
+          success: function (data) {
+            console.log(data);
+            $("#deleteMessage").html("Selected data deleted");
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      });
+    });
+  }
+  delete_location();
 
   //document ready()callback function end
 });
