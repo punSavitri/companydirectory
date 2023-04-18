@@ -31,19 +31,24 @@ if (mysqli_connect_errno()) {
 	exit;
 }
 
-// // setting the start from value
-// $start = 0;
-// // setting the number of rows to display on a page
-// $num_per_page = 5;
-// //get the total number of rows
-// $records = $mysqli->query('SELECT id, firstName, lastName, email, jobTitle, departmentID FROM personnel');
-// $num_of_rows = $records-> num_rows;
-// // calculating the number of pages
-// $pages = ceil($num_of_rows / $num_per_page);
+
+
 //  SQL does not accept parameters and so is not prepared
-$query = 'SELECT id, firstName, lastName, email, jobTitle, departmentID FROM personnel ORDER BY firstName LIMIT 5';
+$query = 'SELECT id, firstName, lastName, email, jobTitle, departmentID FROM personnel ORDER BY firstName';
 
 $result = $conn->query($query);
+// get the total number of rows in a table 
+$num_of_rows = mysqli_num_rows($result);
+// echo $num_of_rows;
+
+// setting the number of rows to display in a page
+$row_per_page = 20;
+
+// calculating the number of pages 
+$pages = ceil($num_of_rows / $row_per_page);
+// echo $pages;
+
+
 
 if (!$result) {
 
@@ -65,6 +70,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 	array_push($data, $row);
 }
+
 
 $output['status']['code'] = "200";
 $output['status']['name'] = "ok";
