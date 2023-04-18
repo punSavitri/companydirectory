@@ -1,6 +1,25 @@
 $(document).ready(function () {
-  //personnel table
-  //show personnel database as page load
+  //Personnel Table
+  // adding Pagination on Personnel Table using DataTable bootstrap 5 plugin
+  $("#personnelTable")
+    .DataTable
+    // {
+    //   "bProcessing": true,
+    //   "serverSide": true,
+    //   "select": true,
+    //   "ajax": {
+    //     url:"php/getAllPersonnel.php",
+    //     type:"POST",
+    //     dataType:"json",
+    //     success:function(data){
+    //       console.log(data);
+    //       $("#output").html(data);
+    //     }
+    //   }
+    // }
+    ();
+
+  //function show personnel database as page load
   function loadPersonnelTable() {
     $.ajax({
       type: "GET",

@@ -31,9 +31,17 @@ if (mysqli_connect_errno()) {
 	exit;
 }
 
-// SQL does not accept parameters and so is not prepared
-
-$query = 'SELECT id, firstName, lastName, email, jobTitle, departmentID FROM personnel ORDER BY firstName';
+// // setting the start from value
+// $start = 0;
+// // setting the number of rows to display on a page
+// $num_per_page = 5;
+// //get the total number of rows
+// $records = $mysqli->query('SELECT id, firstName, lastName, email, jobTitle, departmentID FROM personnel');
+// $num_of_rows = $records-> num_rows;
+// // calculating the number of pages
+// $pages = ceil($num_of_rows / $num_per_page);
+//  SQL does not accept parameters and so is not prepared
+$query = 'SELECT id, firstName, lastName, email, jobTitle, departmentID FROM personnel ORDER BY firstName LIMIT 5';
 
 $result = $conn->query($query);
 
