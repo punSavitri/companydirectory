@@ -16,57 +16,59 @@
     <link rel="stylesheet" href="css/custom.css" />
   </head>
 
-  <body>
+  <body class="bg-light">
     <!------------------------------- navigation start ----------------------------------->
-    <nav class="navbar bg-light">
-      <h4 class="text-center mb-3 mt-3 m-auto" id="company">
-        COMPANY DIRECTORY
-      </h4>
-      <ul class="nav nav-pills mb-3 ms-2 me-2" id="pills-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="pills-contact-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#contact"
-            type="button"
-            role="tab"
-            aria-controls="pills-contact"
-            aria-selected="true"
-          >
-            Contact
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="pills-department-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#department"
-            type="button"
-            role="tab"
-            aria-controls="pills-department"
-            aria-selected="false"
-          >
-            Department
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="pills-location-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#location"
-            type="button"
-            role="tab"
-            aria-controls="pills-location"
-            aria-selected="false"
-          >
-            Location
-          </button>
-        </li>
-      </ul>
-    </nav>
+    <div class="container">
+      <nav class="navbar" style="background-color: #e3f2fd">
+        <h4>COMPANY DIRECTORY</h4>
+
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="pills-contact-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#contact"
+              type="button"
+              role="tab"
+              aria-controls="pills-contact"
+              aria-selected="true"
+            >
+              Contact
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-department-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#department"
+              type="button"
+              role="tab"
+              aria-controls="pills-department"
+              aria-selected="false"
+            >
+              Department
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="pills-location-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#location"
+              type="button"
+              role="tab"
+              aria-controls="pills-location"
+              aria-selected="false"
+            >
+              Location
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
     <!----------------------------------- Navigation end -------------------------------->
 
     <!-------------------------------------Contact Page start----------------------------->
@@ -77,7 +79,7 @@
         role="tabpanel"
         aria-labelledby="pills-home-tab"
       >
-        <h6 class="text-center mt-3 mb-3">CONTACT DETAILS</h6>
+        <h6 class="text-center mt-3 mb-3">LIST OF CONTACT DETAILS</h6>
 
         <!-- Add Employee button -->
         <div class="container">
@@ -93,108 +95,22 @@
               </button>
             </div>
             <!--  Employee Id detals search box  -->
+
             <div class="col-md-6 col-lg-6">
-              <form class="d-flex" id="searchForm" role="search">
-                <div id="error"></div>
-                <input
-                  id="search"
-                  class="form-control me-1 mb-3"
-                  type="search"
-                  placeholder="Search location by ID"
-                  aria-label="Search"
-                  type="text"
-                  autocomplete="off"
-                />
-                <button
-                  class="btn btn-success mb-3"
-                  type="button"
-                  id="searchBtn"
-                >
-                  Search
-                </button>
-              </form>
+              <input
+                id="live_search"
+                class="form-control d-flex me-1 mb-3"
+                type="search"
+                placeholder="Search "
+                aria-label="Search"
+                type="text"
+                autocomplete="off"
+              />
             </div>
           </div>
         </div>
-
-        <!-- search button -->
-        <!-- <div class="container mt-2">
-          <div class="row">
-            <div class="col-md-6 col-lg-4">
-              <form id="searchForm" role="search">
-                <label>Search Employee by ID Number</label>
-                <input
-                  id="search"
-                  class="form-control me-2 mt-2"
-                  type="text"
-                  placeholder="search.."
-                  aria-label="Search"
-                  autocomplete="off"
-                />
-                <button
-                  class="btn btn-success mt-2"
-                  type="button"
-                  id="searchBtn"
-                >
-                  Search
-                </button>
-              </form>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- Employee search Modal by id  -->
-        <div
-          class="modal fade"
-          id="personnelModal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header text-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Employee Details
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <div
-                  class="card text-bg-light border-success m-auto"
-                  style="max-width: 22rem"
-                >
-                  <div class="card-body">
-                    <p class="card-text" id="id">Employee ID :&nbsp;</p>
-                    <p class="card-text" id="fullName">Full Name :&nbsp;</p>
-                    <p class="card-text" id="job_title">Job Title : &nbsp;</p>
-                    <p class="card-text" id="emailId">Email :&nbsp;</p>
-                    <p class="card-text" id="departmentId">
-                      Department ID :&nbsp;
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success">Save</button>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- search  modal end -->
+        <!-- search result display -->
+        <div id="search_term_output"></div>
 
         <!-- add personnel modal -->
         <!-- modal -->
@@ -212,6 +128,9 @@
               </div>
               <div class="modal-body">
                 <form id="addpersonnelForm">
+                  <p id="msgSuccess" class="text-success text-center fs-4"></p>
+                  <p id="msgError" class="text-warning text-center fs-4"></p>
+
                   <small> Complete the form below to add employee </small>
                   <input type="hidden" id="personnelId" />
                   <div class="form-group">
@@ -382,7 +301,7 @@
         </div>
         <!-- delete personnel modal end -->
 
-        <!-- show personnel table -->
+        <!-- Display Personnel Database table -->
         <div class="container">
           <div class="row g-2">
             <div class="col-md-6 col-lg-12">
@@ -395,6 +314,7 @@
                     <th class="th-sm">ID</th>
                     <th class="th-sm">First Name</th>
                     <th class="th-sm">Last Name</th>
+                    <th class="th-sm">Job Title</th>
                     <th class="th-sm">Email</th>
                     <th class="th-sm">Department ID</th>
                     <th class="th-sm">Edit/Update</th>
@@ -431,81 +351,8 @@
                 <i class="fa fa-plus"></i>Add Department
               </button>
             </div>
-            <!--  department search box  -->
-            <div class="col-md-6 col-lg-6">
-              <form class="d-flex" id="Form" role="search">
-                <input
-                  id="depart_id_search"
-                  class="form-control me-1 mb-3"
-                  type="search"
-                  placeholder="Search department by ID number"
-                  aria-label="Search"
-                  type="text"
-                  autocomplete="off"
-                />
-                <button
-                  class="btn btn-success mb-3"
-                  type="button"
-                  id="depart_Search_btn"
-                >
-                  Search
-                </button>
-              </form>
-            </div>
           </div>
         </div>
-        <!-- search  department detail by ID modal -->
-        <div
-          class="modal fade"
-          id="departModal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header text-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Department Details
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <div
-                  class="card text-bg-light border-success m-auto"
-                  style="max-width: 22rem"
-                >
-                  <div class="card-body">
-                    <p class="card-text" id="id_depart">
-                      Department ID :&nbsp;
-                    </p>
-                    <p class="card-text" id="departmentt">
-                      Department Name :&nbsp;
-                    </p>
-                    <p class="card-text" id="LocationId">Location ID :&nbsp;</p>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success">Save</button>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End -->
 
         <!-- add department modal -->
         <!-- modal -->
@@ -702,7 +549,7 @@
         role="tabpanel"
         aria-labelledby="pills-location-tab"
       >
-        <h6 class="text-center mt-3 mb-3">LOCATION NAME</h6>
+        <h6 class="text-center mt-3 mb-3">LIST OF LOCATION NAME</h6>
         <!-- add Location button -->
         <div class="container">
           <div class="row g-2">
@@ -741,7 +588,7 @@
           </div>
         </div>
 
-        <!-- search Location detail by ID Modal -->
+        <!-- Search Location detail by ID Modal -->
         <div
           class="modal fade"
           id="Location_Modal"

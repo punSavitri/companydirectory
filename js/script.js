@@ -18,6 +18,8 @@ $(document).ready(function () {
               "</td><td>" +
               result.data[i].lastName +
               "</td><td>" +
+              result.data[i].jobTitle +
+              "</td><td>" +
               result.data[i].email +
               "</td><td>" +
               result.data[i].departmentID +
@@ -151,8 +153,10 @@ $(document).ready(function () {
   //*******delete record function end*****//
 
   //Insert/Add personnel record
+
   $("#btnadd").click(function (event) {
     event.preventDefault();
+
     //get input value from user
     var firstname = $("#firstname").val();
     var lastname = $("#lastname").val();
@@ -187,7 +191,7 @@ $(document).ready(function () {
           console.log(data);
           //display added data on table
 
-          $("#messageSuccess").html("*Data successfully inserted.");
+          $("#msgSuccess").append("*Data successfully inserted.");
           $("#addpersonnelForm").trigger("reset");
           loadPersonnelTable();
         },
@@ -198,43 +202,39 @@ $(document).ready(function () {
     }
   });
 
-  //Search personnel details by ID number from search box
+  //Search personnel details by firstname and lastname from search box
 
-  $(document).on("click", "#searchBtn", function () {
-    $("#personnelModal").modal("show");
+  $("#live_search").keyup(function () {
+    var searchTerm = $(this).val();
+    console.log(searchTerm);
 
-    var UserId = $("#search").val();
-    console.log(UserId);
-
-    // check form validation
-    if (UserId == "") {
-      alert("Employee ID number is required.");
-    } else {
+    if (searchTerm != "") {
       $.ajax({
-        url: "php/getPersonnelByID.php",
+        url: "php/getAll.php",
         method: "POST",
         dataType: "json",
         data: {
-          id: UserId,
+          search_term: searchTerm,
         },
         success: function (data) {
           console.log(data);
-          $("#id").append(data.data.personnel[0].id);
-          $("#fullName").append(
-            data.data.personnel[0].firstName +
-              "&nbsp;" +
-              data.data.personnel[0].lastName
+          $("#search_term_output").html(
+            "<div class='container'><div class='row g-2'>   <div class='col-md-6 col-lg-12'><table class='table table-responsive-md table-hover table-striped table-bordered text-center'><thead><tr>            <th class='th-sm'>ID</th><th class='th-sm'>First Name</th><th class='th-sm'>Last Name</th><th class='th-sm'>Job Title</th><th class='th-sm'>Email</th><th class='th-sm'>Department</th><th class='th-sm'>Location</th></tr></thead><tbody><tr><td>" +
+              data.data[0].id +
+              "</td><td>" +
+              data.data[0].firstName +
+              "</td><td>" +
+              data.data[0].lastName +
+              "</td><td>" +
+              data.data[0].jobTitle +
+              "</td><td>" +
+              data.data[0].email +
+              "</td><td>" +
+              data.data[0].department +
+              "</td><td>" +
+              data.data[0].location +
+              "</td></tr></tbody></table></div></div></div> "
           );
-
-          $("#job_title").append(data.data.personnel[0].jobTitle);
-          $("#emailId").append(data.data.personnel[0].email);
-          $("#departmentId").append(data.data.personnel[0].departmentID);
-
-          $("#searchForm").trigger("reset");
-          $("#search").val("");
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
         },
       });
     }
@@ -278,6 +278,7 @@ $(document).ready(function () {
   loadDepartmentTable();
 
   //Insert/Add Department on database
+
   $("#add").on("click", function (e) {
     e.preventDefault();
 
@@ -311,38 +312,8 @@ $(document).ready(function () {
     }
   });
 
-  // Search particular departement details from search box by department ID
-
-  $(document).on("click", "#depart_Search_btn", function () {
-    $("#departModal").modal("show");
-
-    var iddepart = $("#depart_id_search").val();
-    console.log(iddepart);
-    // form validation
-    if (iddepart != "") {
-      $.ajax({
-        url: "php/getDepartmentByID.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-          id: iddepart,
-        },
-        success: function (data) {
-          console.log(data);
-          $("#id_depart").append(data.data[0].id);
-          $("#departmentt").append(data.data[0].name);
-          $("#LocationId").append(data.data[0].locationID);
-          $("#Form").trigger("reset");
-          $("#depart_id_search").val("");
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
-        },
-      });
-    }
-  });
-
   //Get particular department ID  ones click on update/edit button on page
+
   function getDepartmentByID() {
     $(document).on("click", "#editDepartmentBtn", function () {
       //get particular department id from user
@@ -378,11 +349,13 @@ $(document).ready(function () {
   getDepartmentByID();
 
   //Update Department by id
+
   function updateDepartmentById() {
     $(document).on("click", "#update_btn", function () {
       var updateId = $("#update_id").val();
       var updateDepartmentName = $("#update_depart_name").val();
       var updateLocationID = $("#update_location_ID").val();
+
       // check form validation if any field is empty
       if (updateDepartmentName == "") {
         alert("Department name is required.");
@@ -413,9 +386,11 @@ $(document).ready(function () {
   updateDepartmentById();
 
   //Delete Record by ID from database
+
   function deleteDepartmentRecord() {
     $(document).on("click", "#deleteDepartmentBtn", function () {
       console.log("Testing delete button working or not!!!");
+
       //get data id attribute
       var dataID = $(this).attr("data_depart_id1");
       console.log(dataID);
@@ -444,7 +419,9 @@ $(document).ready(function () {
   /////////////////////////// End of department page here  ///////////////////////////////
 
   //////////////////////////  Location page start from here///////////////////////////////
+
   //function to display location on cards ones page load
+
   function displayLocation() {
     $.ajax({
       type: "POST",
@@ -454,7 +431,7 @@ $(document).ready(function () {
         console.log(data);
         for (var i = 0; i < data.data.length; i++) {
           $("#row").append(
-            "<div class='col-md-3'><div class='card text-center border-light'  id='card'><div class='card-body bg-light' id='card-body'><h5 class='card-title text-center' id='card-title'>Location ID :&nbsp;" +
+            "<div class='col-md-6 col-lg-4'><div class='card text-center border-light'  id='card'><div class='card-body bg-light' id='card-body'><h5 class='card-title text-center' id='card-title'>Location ID :&nbsp;" +
               data.data[i].id +
               "</h5><p class='card-text text-center' id='card-text'>Location :&nbsp;" +
               data.data[i].name +
@@ -474,11 +451,14 @@ $(document).ready(function () {
   displayLocation();
 
   // Insert/Add location in database and display on webpage
+
   $("#add_location_btn").on("click", (event) => {
     event.preventDefault();
     $("#addLocationModal").modal("show");
+
     //Get input field value from user
     var locationName = $("#location_name").val();
+
     // Check form validation
     if (locationName == "") {
       alert("Location name is required.");
@@ -500,55 +480,20 @@ $(document).ready(function () {
           console.log(jqXHR.textStatus);
         },
       });
-    }
-    $("#btnClose").click(function () {
-      $("#locationForm").trigger("reset");
-      $("#msg-success").html("");
-    });
-  });
-
-  // Search particular location by ID  from search box
-
-  $("#location_search_form").submit(function (e) {
-    e.preventDefault();
-
-    var locationid = $("#location_id_search").val();
-
-    //Check form validation
-    if (locationid == "") {
-      alert("Location Id is required.");
-    } else {
-      $.ajax({
-        url: "php/getLocationByID.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-          id: locationid,
-        },
-        success: function (data) {
-          console.log(data);
-          // if the data not found on database
-          $("#errormsg").html(data);
-          // if the data found on database then show on modal
-          $("#idlocation").append(data.data.location[0].id);
-          $("#location_Name").append(data.data.location[0].name);
-          $("#Location_Modal").modal("show");
-          $("#location_search_form").trigger("reset");
-          $("#location_Search_btn").val("");
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
-        },
+      $("#btnClose").click(function () {
+        $("#locationForm").trigger("reset");
+        $("#msg-success").html("");
       });
     }
   });
 
-  //View Location detail ones click on Edit button
+  //Read Location detail ones click on Edit button
+
   function getLocationId() {
     $(document).on("click", "#btnedit", function (e) {
       e.preventDefault();
       var location_id = $(this).attr("data_location_id");
-      // console.log(location_id);
+      console.log(location_id);
       $.ajax({
         url: "php/getLocationByID.php",
         method: "POST",
@@ -571,6 +516,7 @@ $(document).ready(function () {
   getLocationId();
 
   //function UPDATE RECORD///////
+
   function updateLocationID() {
     $(document).on("click", "#updateBtn", function () {
       console.log("testing update button!!!");
@@ -601,9 +547,11 @@ $(document).ready(function () {
   updateLocationID();
 
   //DELETE RECORD FROM LOCATION DATABASE
+
   function delete_location() {
     $(document).on("click", "#btndelete", function () {
       console.log("Testing location delete button working or not!");
+
       //get the data attribute value
       var data_id1 = $(this).attr("data_location_id1");
       console.log(data_id1);
