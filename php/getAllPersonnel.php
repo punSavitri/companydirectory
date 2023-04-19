@@ -34,21 +34,11 @@ if (mysqli_connect_errno()) {
 
 
 //  SQL does not accept parameters and so is not prepared
+
+// $query = 'SELECT * FROM personnel ORDER BY firstName LIMIT 10 OFFSET 0';
 $query = 'SELECT id, firstName, lastName, email, jobTitle, departmentID FROM personnel ORDER BY firstName';
 
 $result = $conn->query($query);
-// get the total number of rows in a table 
-$num_of_rows = mysqli_num_rows($result);
-// echo $num_of_rows;
-
-// setting the number of rows to display in a page
-$row_per_page = 20;
-
-// calculating the number of pages 
-$pages = ceil($num_of_rows / $row_per_page);
-// echo $pages;
-
-
 
 if (!$result) {
 
