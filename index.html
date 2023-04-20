@@ -72,6 +72,7 @@
     <!----------------------------------- Navigation end -------------------------------->
 
     <!-------------------------------------Contact Page start----------------------------->
+
     <div class="tab-content" id="pills-tabContent">
       <div
         class="tab-pane fade show active"
@@ -79,12 +80,10 @@
         role="tabpanel"
         aria-labelledby="pills-home-tab"
       >
-        <h6 class="text-center mt-3 mb-3">LIST OF CONTACT DETAILS</h6>
-
         <!-- Add Employee button -->
-        <div class="container">
+        <div class="container mt-3">
           <div class="row g-2">
-            <div class="col-md-6 col-lg-6">
+            <div class="col-md-4 col-lg-4">
               <button
                 type="button"
                 class="btn btn-success"
@@ -94,19 +93,44 @@
                 <i class="fa fa-plus"></i>Add Employee
               </button>
             </div>
-            <!--  Employee Id detals search box  -->
-
-            <div class="col-md-6 col-lg-6">
-              <input
-                id="live_search"
-                class="form-control d-flex me-1 mb-3"
-                type="search"
-                placeholder="Search "
-                aria-label="Search"
-                type="text"
-                autocomplete="off"
-              />
+            <!--  Employee name search box  -->
+            <div class="col-md-4 col-lg-4">
+              <form class="d-flex" id="searchForm" role="search">
+                <input
+                  class="form-control me-2"
+                  id="live_search"
+                  type="search"
+                  placeholder="Search Employee Name"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">
+                  Search
+                </button>
+              </form>
             </div>
+
+            <!-- Department Dropdown list -->
+            <div class="col-md-4 col-lg-4">
+              <select
+                class="form-select form-select-sm"
+                id="select_department"
+                aria-label=".form-select-sm example"
+              >
+                <option selected>Department</option>
+              </select>
+            </div>
+            <!------>
+            <!-- Location dropdown name list -->
+            <div class="col-md-4 col-lg-4">
+              <select
+                class="form-select form-select-sm"
+                id="select_location"
+                aria-label=".form-select-sm example"
+              >
+                <option selected>Location</option>
+              </select>
+            </div>
+            <!-- -- -->
           </div>
         </div>
         <!-- search result display -->

@@ -57,6 +57,42 @@ $(document).ready(function () {
   }
   insertRecord();
 
+  // Department dropdown list
+  $.ajax({
+    type: "POST",
+    url: "php/getAllDepartments.php",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $("#select_department").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
+
+  // Location dropdown list select option
+  $.ajax({
+    type: "POST",
+    url: "php/getAllLocations.php",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $("#select_location").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
+
   //View record personnel database table as page load
   function loadPersonnelTable() {
     $.ajax({
@@ -224,6 +260,7 @@ $(document).ready(function () {
         },
         success: function (data) {
           console.log(data);
+
           $("#search_term_output").html(
             "<div class='container'><div class='row g-2'>   <div class='col-md-6 col-lg-12'><table class='table table-responsive-md table-hover table-striped table-bordered text-center'><thead><tr>            <th class='th-sm'>ID</th><th class='th-sm'>First Name</th><th class='th-sm'>Last Name</th><th class='th-sm'>Job Title</th><th class='th-sm'>Email</th><th class='th-sm'>Department</th><th class='th-sm'>Location</th></tr></thead><tbody><tr><td>" +
               data.data[0].id +
