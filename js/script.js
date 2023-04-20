@@ -1,7 +1,63 @@
 $(document).ready(function () {
   //Personnel Table
 
-  //function show personnel database table as page load
+  //Insert/Add personnel record
+  function insertRecord() {
+    $("#btnadd").click(function (event) {
+      event.preventDefault();
+
+      //get input value from user
+      var firstname = $("#firstname").val();
+      var lastname = $("#lastname").val();
+      var jobtitle = $("#jobtitle").val();
+      var emailid = $("#emailid").val();
+      var departmentid = $("#departmentid").val();
+
+      //check form validation
+      if (firstname == "") {
+        alert("First name is required.");
+      } else if (lastname == "") {
+        alert("Last name is required.");
+      } else if (jobtitle == "") {
+        alert("Job title is required.");
+      } else if (emailid == "") {
+        alert("Email id is required.");
+      } else if (departmentid == "") {
+        alert("Department id is required.");
+      } else {
+        $.ajax({
+          url: "php/insertPersonnel.php",
+          type: "POST",
+          dataType: "json",
+          data: {
+            firstName: firstname,
+            lastName: lastname,
+            jobTitle: jobtitle,
+            email: emailid,
+            departmentID: departmentid,
+          },
+          success: function (data) {
+            console.log(data);
+            //display added data on table
+
+            $("#msgSuccess").append("*Data successfully inserted.");
+            $("#addpersonnelForm").trigger("reset");
+            loadPersonnelTable();
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      }
+    });
+    $("#button_close").click(function () {
+      $("#addpersonnelForm").trigger("reset");
+      $("#msgSuccess").append("");
+    });
+  }
+  insertRecord();
+
+  //View record personnel database table as page load
   function loadPersonnelTable() {
     $.ajax({
       type: "POST",
@@ -38,7 +94,7 @@ $(document).ready(function () {
   }
   loadPersonnelTable();
 
-  //Get particular record by ID
+  //Read particualr  record by ID
   function get_record() {
     $(document).on("click", "#btn_edit", function () {
       //Get id attribute
@@ -89,15 +145,12 @@ $(document).ready(function () {
 
       //Check form validation
       if (
-        update_firstname == "" &&
-        update_lastname == "" &&
-        update_jobtitle == "" &&
-        update_emailid == "" &&
-        update_departmentid == ""
+        update_firstname != "" ||
+        update_lastname != "" ||
+        update_jobtitle != "" ||
+        update_emailid != "" ||
+        update_departmentid != " "
       ) {
-        $("#update_error_message").html("Please fill the required field.");
-        $("#update_personnel_Modal").modal("show");
-      } else {
         $.ajax({
           url: "php/editPersonnel.php",
           method: "POST",
@@ -111,11 +164,14 @@ $(document).ready(function () {
             departmentID: update_departmentid,
           },
           success: function (data) {
-            $("#update_success_message").html(
-              "You have successfully update the data."
-            );
+            console.log(data);
+            $("#update_message").html("Data has been successfully updated.");
+
             $("#update_personnel_Modal").modal("show");
             loadPersonnelTable();
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
           },
         });
       }
@@ -151,56 +207,6 @@ $(document).ready(function () {
   }
   deleteRecord();
   //*******delete record function end*****//
-
-  //Insert/Add personnel record
-
-  $("#btnadd").click(function (event) {
-    event.preventDefault();
-
-    //get input value from user
-    var firstname = $("#firstname").val();
-    var lastname = $("#lastname").val();
-    var jobtitle = $("#jobtitle").val();
-    var emailid = $("#emailid").val();
-    var departmentid = $("#departmentid").val();
-
-    //check form validation
-    if (firstname == "") {
-      alert("First name is required.");
-    } else if (lastname == "") {
-      alert("Last name is required.");
-    } else if (jobtitle == "") {
-      alert("Job title is required.");
-    } else if (emailid == "") {
-      alert("Email id is required.");
-    } else if (departmentid == "") {
-      alert("Department id is required.");
-    } else {
-      $.ajax({
-        url: "php/insertPersonnel.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-          firstName: firstname,
-          lastName: lastname,
-          jobTitle: jobtitle,
-          email: emailid,
-          departmentID: departmentid,
-        },
-        success: function (data) {
-          console.log(data);
-          //display added data on table
-
-          $("#msgSuccess").append("*Data successfully inserted.");
-          $("#addpersonnelForm").trigger("reset");
-          loadPersonnelTable();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
-        },
-      });
-    }
-  });
 
   //Search personnel details by firstname and lastname from search box
 
@@ -244,7 +250,7 @@ $(document).ready(function () {
 
   ////////////////////// Department page start /////////////////////////////////////////
 
-  //display all department in table as page load
+  //View all department in table as page load
   //function loadTable
   function loadDepartmentTable() {
     $.ajax({
@@ -278,41 +284,47 @@ $(document).ready(function () {
   loadDepartmentTable();
 
   //Insert/Add Department on database
+  function insert_department() {
+    $("#add").on("click", function (e) {
+      e.preventDefault();
 
-  $("#add").on("click", function (e) {
-    e.preventDefault();
+      //get input value from user
+      var departName = $("#depart_name").val();
+      var locationid = $("#location_id").val();
 
-    //get input value from user
-    var departName = $("#depart_name").val();
-    var locationid = $("#location_id").val();
+      //check form validation
+      if (departName == "") {
+        alert("Department name is required.");
+      } else if (locationid == "") {
+        alert("Location ID is required.");
+      } else {
+        $.ajax({
+          url: "php/insertDepartment.php",
+          type: "POST",
+          data: {
+            name: departName,
+            locationID: locationid,
+          },
+          success: function (data) {
+            console.log(data);
+            $("#message-success").append("*Data successfully inserted. ");
+            $("#form").trigger("reset");
+            loadDepartmentTable();
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      }
+    });
+    $("#depart_Close_btn").click(function () {
+      $("#form").trigger("reset");
+      $("#message-success").append("");
+    });
+  }
+  insert_department();
 
-    //check form validation
-    if (departName == "") {
-      alert("Department name is required.");
-    } else if (locationid == "") {
-      alert("Location ID is required.");
-    } else {
-      $.ajax({
-        url: "php/insertDepartment.php",
-        type: "POST",
-        data: {
-          name: departName,
-          locationID: locationid,
-        },
-        success: function (data) {
-          console.log(data);
-          $("#message-success").append("*Data successfully inserted. ");
-          $("#form").trigger("reset");
-          loadTable();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
-        },
-      });
-    }
-  });
-
-  //Get particular department ID  ones click on update/edit button on page
+  //Read particular department   ones click on update/edit button on page
 
   function getDepartmentByID() {
     $(document).on("click", "#editDepartmentBtn", function () {
@@ -348,7 +360,7 @@ $(document).ready(function () {
   }
   getDepartmentByID();
 
-  //Update Department by id
+  //Edit/Update Department
 
   function updateDepartmentById() {
     $(document).on("click", "#update_btn", function () {
@@ -373,8 +385,9 @@ $(document).ready(function () {
           },
           success: function (data) {
             console.log(data);
-            $("#message").html("Data has successfully updated.");
+            $("#message").html("Data has been successfully updated.");
             $("#editdepartmentModal").modal("show");
+            loadDepartmentTable();
           },
           error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR.textStatus);
@@ -420,7 +433,7 @@ $(document).ready(function () {
 
   //////////////////////////  Location page start from here///////////////////////////////
 
-  //function to display location on cards ones page load
+  //View location database on cards ones page load
 
   function displayLocation() {
     $.ajax({
@@ -451,41 +464,43 @@ $(document).ready(function () {
   displayLocation();
 
   // Insert/Add location in database and display on webpage
+  function insert_location() {
+    $("#add_location_btn").on("click", (event) => {
+      event.preventDefault();
+      $("#addLocationModal").modal("show");
 
-  $("#add_location_btn").on("click", (event) => {
-    event.preventDefault();
-    $("#addLocationModal").modal("show");
+      //Get input field value from user
+      var locationName = $("#location_name").val();
 
-    //Get input field value from user
-    var locationName = $("#location_name").val();
-
-    // Check form validation
-    if (locationName == "") {
-      alert("Location name is required.");
-    } else {
-      $.ajax({
-        url: "php/insertLocation.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-          name: locationName,
-        },
-        success: function (data) {
-          console.log(data);
-          //display on website
-          $("#msg-success").html("You have successfully inserted data.");
+      // Check form validation
+      if (locationName == "") {
+        alert("Location name is required.");
+      } else {
+        $.ajax({
+          url: "php/insertLocation.php",
+          type: "POST",
+          dataType: "json",
+          data: {
+            name: locationName,
+          },
+          success: function (data) {
+            console.log(data);
+            //display on website
+            $("#msg-success").html("You have successfully inserted data.");
+            $("#locationForm").trigger("reset");
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+        $("#btnClose").click(function () {
           $("#locationForm").trigger("reset");
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
-        },
-      });
-      $("#btnClose").click(function () {
-        $("#locationForm").trigger("reset");
-        $("#msg-success").html("");
-      });
-    }
-  });
+          $("#msg-success").html("");
+        });
+      }
+    });
+  }
+  insert_location();
 
   //Read Location detail ones click on Edit button
 
@@ -515,7 +530,7 @@ $(document).ready(function () {
   }
   getLocationId();
 
-  //function UPDATE RECORD///////
+  // UPDATE RECORD///////
 
   function updateLocationID() {
     $(document).on("click", "#updateBtn", function () {

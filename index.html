@@ -168,6 +168,7 @@
                   type="button"
                   class="btn btn-danger"
                   data-bs-dismiss="modal"
+                  id="button_close"
                 >
                   Close
                 </button>
@@ -201,8 +202,8 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <p id="update_error_message" class="text-danger"></p>
-                <p id="update_success_message" class="text-success"></p>
+                <p id="update_message"></p>
+
                 <form>
                   <div class="form-group">
                     <input
@@ -344,7 +345,7 @@
             <div class="col-md-6 col-lg-6">
               <button
                 type="button"
-                class="btn btn-success"
+                class="btn btn-success mb-3"
                 data-bs-toggle="modal"
                 data-bs-target="#adddepartmentModal"
               >
@@ -532,7 +533,7 @@
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
-                  Cancel
+                  Close
                 </button>
               </div>
             </div>
@@ -563,81 +564,8 @@
                 <i class="fa fa-plus"></i>Add Location
               </button>
             </div>
-            <!--  Location search box  -->
-            <div class="col-md-6 col-lg-6">
-              <form class="d-flex" id="location_search_form" role="search">
-                <div id="errormsg"></div>
-                <input
-                  id="location_id_search"
-                  class="form-control me-1 mb-3"
-                  type="search"
-                  placeholder="Search location by ID"
-                  aria-label="Search"
-                  type="text"
-                  autocomplete="off"
-                />
-                <button
-                  class="btn btn-success mb-3"
-                  type="submit"
-                  id="location_Search_btn"
-                >
-                  Search
-                </button>
-              </form>
-            </div>
           </div>
         </div>
-
-        <!-- Search Location detail by ID Modal -->
-        <div
-          class="modal fade"
-          id="Location_Modal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header text-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Location Details
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <div
-                  class="card text-bg-light border-success m-auto"
-                  style="max-width: 22rem"
-                >
-                  <div class="card-body">
-                    <p class="card-text" id="idlocation">Location ID :&nbsp;</p>
-                    <p class="card-text" id="location_Name">
-                      Location Name :&nbsp;
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success">Save</button>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End -->
-        <div id="me"></div>
 
         <!-- Add Location Modal -->
         <div
@@ -778,7 +706,6 @@
                   aria-label="Close"
                 ></button>
               </div>
-
               <div class="modal-body">
                 <p id="deleteMessage" class="text-center text-success"></p>
                 <p>Do you want to delete the record ?</p>
@@ -790,7 +717,7 @@
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
-                  Cancel
+                  Close
                 </button>
               </div>
             </div>
