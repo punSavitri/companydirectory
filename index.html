@@ -93,6 +93,19 @@
                 <i class="fa fa-plus"></i>Add Employee
               </button>
             </div>
+            <!-- View personnel database button -->
+            <div class="col-md-4 col-lg-4">
+              <button
+                id="viewBtn"
+                type="button"
+                class="btn btn-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#viewpersonnelModal"
+              >
+                <i class="fa fa-eye"></i>Read Database
+              </button>
+            </div>
+            <!--------->
             <!--  Employee name search box  -->
             <div class="col-md-4 col-lg-4">
               <form class="d-flex" id="searchForm" role="search">
@@ -103,25 +116,11 @@
                   placeholder="Search Employee Name"
                   aria-label="Search"
                 />
-                <button class="btn btn-outline-success" type="submit">
-                  Search
-                </button>
               </form>
             </div>
 
-            <!-- Department Dropdown list -->
-            <div class="col-md-4 col-lg-4">
-              <select
-                class="form-select form-select-sm"
-                id="select_department"
-                aria-label=".form-select-sm example"
-              >
-                <option selected>Department</option>
-              </select>
-            </div>
-            <!------>
             <!-- Location dropdown name list -->
-            <div class="col-md-4 col-lg-4">
+            <!-- <div class="col-md-4 col-lg-4">
               <select
                 class="form-select form-select-sm"
                 id="select_location"
@@ -129,14 +128,14 @@
               >
                 <option selected>Location</option>
               </select>
-            </div>
+            </div> -->
             <!-- -- -->
           </div>
         </div>
         <!-- search result display -->
         <div id="search_term_output"></div>
 
-        <!-- add personnel modal -->
+        <!-- Add Employee Modal -->
         <!-- modal -->
         <div class="modal fade" id="addpersonnelModal">
           <div class="modal-dialog modal-dialog-centered">
@@ -154,33 +153,50 @@
                 <form id="addpersonnelForm">
                   <p id="msgSuccess" class="text-success text-center fs-4"></p>
                   <p id="msgError" class="text-warning text-center fs-4"></p>
-
                   <small> Complete the form below to add employee </small>
                   <input type="hidden" id="personnelId" />
                   <div class="form-group">
                     <label for="firstname">First Name</label
-                    ><input type="text" id="firstname" class="form-control" />
+                    ><input
+                      type="text"
+                      id="firstname"
+                      class="form-control my-1"
+                    />
                   </div>
 
                   <div class="form-group">
                     <label for="lastname">Last Name</label
-                    ><input type="text" id="lastname" class="form-control" />
+                    ><input
+                      type="text"
+                      id="lastname"
+                      class="form-control my-1"
+                    />
                   </div>
                   <div class="form-group">
                     <label for="jobtitle">Job Title</label
-                    ><input type="text" id="jobtitle" class="form-control" />
+                    ><input
+                      type="text"
+                      id="jobtitle"
+                      class="form-control my-1"
+                    />
                   </div>
                   <div class="form-group">
                     <label for="emailid">Email</label
-                    ><input type="email" id="emailid" class="form-control" />
+                    ><input
+                      type="email"
+                      id="emailid"
+                      class="form-control my-1"
+                    />
                   </div>
                   <div class="form-group">
-                    <label for="departmentid">Department ID</label
-                    ><input
-                      type="number"
-                      id="departmentid"
-                      class="form-control"
-                    />
+                    <label for="select_department">Department</label>
+                    <select
+                      class="form-select form-select-sm my-1"
+                      id="select_department"
+                      aria-label="form-select-sm example"
+                    >
+                      <option selected>Department</option>
+                    </select>
                   </div>
                 </form>
               </div>
@@ -237,12 +253,15 @@
                     />
                   </div>
                   <div class="form-group">
+                    <label for="fname">First Name</label>
                     <input type="text" id="fname" class="form-control my-1" />
                   </div>
                   <div class="form-group">
+                    <label for="lname">Last Name</label>
                     <input type="text" id="lname" class="form-control my-1" />
                   </div>
                   <div class="form-group">
+                    <label for="jobTitle">Job Title</label>
                     <input
                       type="text"
                       id="jobTitle"
@@ -250,6 +269,7 @@
                     />
                   </div>
                   <div class="form-group">
+                    <label for="email_id">Email </label>
                     <input
                       type="email"
                       id="email_id"
@@ -257,11 +277,14 @@
                     />
                   </div>
                   <div class="form-group">
-                    <input
-                      type="number"
-                      id="department_ID"
-                      class="form-control my-1"
-                    />
+                    <label for="select_department">Department</label>
+                    <select
+                      class="form-select form-select-sm my-1"
+                      id="update_select_department"
+                      aria-label="form-select-sm example"
+                    >
+                      <option selected>Department</option>
+                    </select>
                   </div>
                 </form>
               </div>
@@ -327,6 +350,8 @@
         <!-- delete personnel modal end -->
 
         <!-- Display Personnel Database table -->
+        <!-- show table -->
+        <div id="table"></div>
         <div class="container">
           <div class="row g-2">
             <div class="col-md-6 col-lg-12">
@@ -336,14 +361,14 @@
               >
                 <thead>
                   <tr>
-                    <th class="th-sm">ID</th>
-                    <th class="th-sm">First Name</th>
-                    <th class="th-sm">Last Name</th>
-                    <th class="th-sm">Job Title</th>
-                    <th class="th-sm">Email</th>
-                    <th class="th-sm">Department ID</th>
-                    <th class="th-sm">Edit/Update</th>
-                    <th class="th-sm">Delete</th>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Job Title</th>
+                    <th>Email</th>
+                    <th>Department ID</th>
+                    <th>Edit/Update</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody id="output"></tbody>
@@ -412,18 +437,32 @@
                     id="message-error"
                     class="text-danger text-center fs-5 mt-2 mb-2"
                   ></p>
-                  <input type="hidden" class="form-control" id="departID" />
+                  <input
+                    type="hidden"
+                    class="form-control my-1"
+                    id="departID"
+                  />
                   <div class="form-group">
-                    <label for="depart_name">Department Name</label
-                    ><input type="text" id="depart_name" class="form-control" />
+                    <label for="depart_name">Select Department Name</label
+                    ><select
+                      class="form-select form-select-sm my-1"
+                      id="depart_name"
+                      aria-label="form-select-sm example"
+                    >
+                      <option selected>Department</option>
+                    </select>
+                    
                   </div>
                   <div class="form-group">
-                    <label for="location_id">Location ID</label
-                    ><input
-                      type="number"
-                      id="location_id"
-                      class="form-control"
-                    />
+                    <label for="locationName">Select Location Name</label>
+                    <select
+                      class="form-select form-select-sm my-1"
+                      id="locationName"
+                      aria-label="form-select-sm example"
+                    >
+                      <option selected>Location</option>
+                    </select>
+                    
                   </div>
                 </form>
               </div>

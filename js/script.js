@@ -2,6 +2,7 @@ $(document).ready(function () {
   //Personnel Table
 
   //Insert/Add personnel record
+
   function insertRecord() {
     $("#btnadd").click(function (event) {
       event.preventDefault();
@@ -11,7 +12,7 @@ $(document).ready(function () {
       var lastname = $("#lastname").val();
       var jobtitle = $("#jobtitle").val();
       var emailid = $("#emailid").val();
-      var departmentid = $("#departmentid").val();
+      var department = $("#select_department").val();
 
       //check form validation
       if (firstname == "") {
@@ -22,8 +23,8 @@ $(document).ready(function () {
         alert("Job title is required.");
       } else if (emailid == "") {
         alert("Email id is required.");
-      } else if (departmentid == "") {
-        alert("Department id is required.");
+      } else if (department == "") {
+        alert("Select Department Name");
       } else {
         $.ajax({
           url: "php/insertPersonnel.php",
@@ -34,7 +35,7 @@ $(document).ready(function () {
             lastName: lastname,
             jobTitle: jobtitle,
             email: emailid,
-            departmentID: departmentid,
+            departmentID: department,
           },
           success: function (data) {
             console.log(data);
@@ -42,7 +43,8 @@ $(document).ready(function () {
 
             $("#msgSuccess").append("*Data successfully inserted.");
             $("#addpersonnelForm").trigger("reset");
-            loadPersonnelTable();
+            // loadPersonnelTable();
+            // dropdown department list
           },
           error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR.textStatus);
@@ -57,7 +59,7 @@ $(document).ready(function () {
   }
   insertRecord();
 
-  // Department dropdown list
+  // Department dropdown list for Add Employee
   $.ajax({
     type: "POST",
     url: "php/getAllDepartments.php",
@@ -93,8 +95,8 @@ $(document).ready(function () {
     },
   });
 
-  //View record personnel database table as page load
-  function loadPersonnelTable() {
+  //View record personnel database table
+  $("#viewBtn").click(function () {
     $.ajax({
       type: "POST",
       url: "php/getAllPersonnel.php",
@@ -119,7 +121,7 @@ $(document).ready(function () {
               result.data[i].id +
               "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger' title='Delete Record' id='btn_delete' data-id1=" +
               result.data[i].id +
-              "><i class='fa-solid fa-trash'></i></button></td></tr>"
+              "><i class='fa-solid fa-trash'></i></button></td></tr></body></table></div></div></div>"
           );
         }
       },
@@ -127,8 +129,10 @@ $(document).ready(function () {
         console.log(jqXHR.textStatus);
       },
     });
-  }
-  loadPersonnelTable();
+    $("#viewBtn").click(function () {
+      $("#personnelTable").toggle();
+    });
+  });
 
   //Read particualr  record by ID
   function get_record() {
@@ -161,6 +165,24 @@ $(document).ready(function () {
   }
   get_record();
 
+  // Department dropdown list for Edit Button personnel
+  $.ajax({
+    type: "POST",
+    url: "php/getAllDepartments.php",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $("#update_select_department").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
+
   // Edit/Update record function
   function updateRecord() {
     $(document).on("click", "#update_button", function () {
@@ -169,7 +191,7 @@ $(document).ready(function () {
       var update_lastname = $("#lname").val();
       var update_jobtitle = $("#jobTitle").val();
       var update_emailid = $("#email_id").val();
-      var update_departmentid = $("#department_ID").val();
+      var update_departmentid = $("#update_select_department").val();
       console.log(
         update_id,
         update_firstname,
@@ -280,6 +302,8 @@ $(document).ready(function () {
           );
         },
       });
+    } else {
+      $("#search_term_output").html("");
     }
   });
 
@@ -320,6 +344,43 @@ $(document).ready(function () {
   //display table as the page load
   loadDepartmentTable();
 
+  // dropdown list of department name
+  $.ajax({
+    type: "POST",
+    url: "php/getAllDepartments.php",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $("#depart_name").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
+
+  // Location dropdown list select option
+
+  $.ajax({
+    type: "POST",
+    url: "php/getAllLocations.php",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $("#locationName").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
+
   //Insert/Add Department on database
   function insert_department() {
     $("#add").on("click", function (e) {
@@ -327,12 +388,12 @@ $(document).ready(function () {
 
       //get input value from user
       var departName = $("#depart_name").val();
-      var locationid = $("#location_id").val();
+      var locationid = $("#locationName").val();
 
       //check form validation
       if (departName == "") {
         alert("Department name is required.");
-      } else if (locationid == "") {
+      } else if (locationName == "") {
         alert("Location ID is required.");
       } else {
         $.ajax({
