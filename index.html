@@ -102,7 +102,7 @@
                 data-bs-toggle="modal"
                 data-bs-target="#viewpersonnelModal"
               >
-                <i class="fa fa-eye"></i>Read Database
+                <i class="fa fa-eye"></i>View Database
               </button>
             </div>
             <!--------->
@@ -118,18 +118,6 @@
                 />
               </form>
             </div>
-
-            <!-- Location dropdown name list -->
-            <!-- <div class="col-md-4 col-lg-4">
-              <select
-                class="form-select form-select-sm"
-                id="select_location"
-                aria-label=".form-select-sm example"
-              >
-                <option selected>Location</option>
-              </select>
-            </div> -->
-            <!-- -- -->
           </div>
         </div>
         <!-- search result display -->
@@ -348,6 +336,7 @@
           </div>
         </div>
         <!-- delete personnel modal end -->
+        <div id="deleteSuccess"></div>
 
         <!-- Display Personnel Database table -->
         <!-- show table -->
@@ -386,12 +375,10 @@
         role="tabpanel"
         aria-labelledby="pills-department-tab"
       >
-        <h6 class="text-center mt-3 mb-4">LIST OF DEPARTMENT NAME</h6>
-
         <!-- add department button -->
-        <div class="container">
+        <div class="container mt-3 mb-3">
           <div class="row g-2">
-            <div class="col-md-6 col-lg-6">
+            <div class="col-md-4 col-lg-4">
               <button
                 type="button"
                 class="btn btn-success mb-3"
@@ -400,6 +387,16 @@
               >
                 <i class="fa fa-plus"></i>Add Department
               </button>
+            </div>
+            <!-- select department dropdown list -->
+            <div class="col-md-4 col-lg-4">
+              <select
+                class="form-select form-select-sm"
+                id="selectDepartment"
+                aria-label="form-select-sm example"
+              >
+                <option selected>Select Department</option>
+              </select>
             </div>
           </div>
         </div>
@@ -443,18 +440,15 @@
                     id="departID"
                   />
                   <div class="form-group">
-                    <label for="depart_name">Select Department Name</label
-                    ><select
-                      class="form-select form-select-sm my-1"
-                      id="depart_name"
-                      aria-label="form-select-sm example"
-                    >
-                      <option selected>Department</option>
-                    </select>
-                    
+                    <label for="Department">New Department Name</label
+                    ><input
+                      type="text"
+                      class="form-control my-1"
+                      id="Department"
+                    />
                   </div>
                   <div class="form-group">
-                    <label for="locationName">Select Location Name</label>
+                    <label for="locationName">Select Location ID</label>
                     <select
                       class="form-select form-select-sm my-1"
                       id="locationName"
@@ -462,7 +456,6 @@
                     >
                       <option selected>Location</option>
                     </select>
-                    
                   </div>
                 </form>
               </div>
@@ -613,7 +606,6 @@
         role="tabpanel"
         aria-labelledby="pills-location-tab"
       >
-        <h6 class="text-center mt-3 mb-3">LIST OF LOCATION NAME</h6>
         <!-- add Location button -->
         <div class="container">
           <div class="row g-2">
@@ -626,6 +618,15 @@
               >
                 <i class="fa fa-plus"></i>Add Location
               </button>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <select
+                class="form-select form-select-sm"
+                id="selectLocation"
+                aria-label="form-select-sm example"
+              >
+                <option selected>Select Location</option>
+              </select>
             </div>
           </div>
         </div>

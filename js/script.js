@@ -372,7 +372,7 @@ $(document).ready(function () {
       console.log(data);
       for (var i = 0; i < data.data.length; i++) {
         $("#locationName").append(
-          `<option value="${data.data[i].id}">${data.data[i].name}`
+          `<option value="${data.data[i].name}">${data.data[i].id}`
         );
       }
     },
@@ -387,13 +387,13 @@ $(document).ready(function () {
       e.preventDefault();
 
       //get input value from user
-      var departName = $("#depart_name").val();
+      var departName = $("#Department").val();
       var locationid = $("#locationName").val();
 
       //check form validation
       if (departName == "") {
         alert("Department name is required.");
-      } else if (locationName == "") {
+      } else if (locationid == "") {
         alert("Location ID is required.");
       } else {
         $.ajax({
@@ -496,41 +496,73 @@ $(document).ready(function () {
   }
   updateDepartmentById();
 
-  //Delete Record by ID from database
+  //delete record
 
-  function deleteDepartmentRecord() {
-    $(document).on("click", "#deleteDepartmentBtn", function () {
-      console.log("Testing delete button working or not!!!");
+  $(document).on("click", "#deleteDepartmentBtn", function () {
+    var dataID = $(this).attr("data_depart_id1");
+    console.log(dataID);
+    //check the number of employee in department before delete
+    if (dataID > 0) {
+      alert("Cannot delete location");
+    } else {
+      $.ajax({
+        url: "php/countDepartment.php",
+        type: "POST",
+        dataType: "json",
+        data: {
+          id: dataID,
+        },
+        success: function (data) {
+          console.log(data);
 
-      //get data id attribute
-      var dataID = $(this).attr("data_depart_id1");
-      console.log(dataID);
-      $("#deleteDepartmentModal").modal("show");
-      $(document).on("click", "#deleteButton", function () {
-        $.ajax({
-          url: "php/deleteDepartmentByID.php",
-          method: "POST",
-          dataType: "json",
-          data: {
-            id: dataID,
-          },
-          success: function (data) {
-            console.log(data);
-            $("#deleteSuccessMessage").html("Selected data deleted.");
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR.textStatus);
-          },
-        });
+          $("#deleteDepartmentModal").modal("show");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR.textStatus);
+        },
       });
-    });
-  }
-  deleteDepartmentRecord();
+    }
+  });
+  // select dropdown list of department in department page
+  // dropdown list of department name
+  $.ajax({
+    type: "POST",
+    url: "php/getAllDepartments.php",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $("#selectDepartment").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
 
   /////////////////////////// End of department page here  ///////////////////////////////
 
   //////////////////////////  Location page start from here///////////////////////////////
 
+  // dropdown list of location name
+  $.ajax({
+    type: "POST",
+    url: "php/getAllLocations.php",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $("#selectLocation").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
   //View location database on cards ones page load
 
   function displayLocation() {
@@ -661,34 +693,34 @@ $(document).ready(function () {
 
   //DELETE RECORD FROM LOCATION DATABASE
 
-  function delete_location() {
-    $(document).on("click", "#btndelete", function () {
-      console.log("Testing location delete button working or not!");
+  // function delete_location() {
+  //   $(document).on("click", "#btndelete", function () {
+  //     console.log("Testing location delete button working or not!");
 
-      //get the data attribute value
-      var data_id1 = $(this).attr("data_location_id1");
-      console.log(data_id1);
-      $("#deleteLocationModal").modal("show");
-      $(document).on("click", "#delete", function () {
-        $.ajax({
-          url: "php/deleteLocationByID.php",
-          method: "POST",
-          dataType: "json",
-          data: {
-            id: data_id1,
-          },
-          success: function (data) {
-            console.log(data);
-            $("#deleteMessage").html("Selected data deleted");
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR.textStatus);
-          },
-        });
-      });
-    });
-  }
-  delete_location();
+  //     //get the data attribute value
+  //     var data_id1 = $(this).attr("data_location_id1");
+  //     console.log(data_id1);
+  //     $("#deleteLocationModal").modal("show");
+  //     $(document).on("click", "#delete", function () {
+  //       $.ajax({
+  //         url: "php/deleteLocationByID.php",
+  //         method: "POST",
+  //         dataType: "json",
+  //         data: {
+  //           id: data_id1,
+  //         },
+  //         success: function (data) {
+  //           console.log(data);
+  //           $("#deleteMessage").html("Selected data deleted");
+  //         },
+  //         error: function (jqXHR, textStatus, errorThrown) {
+  //           console.log(jqXHR.textStatus);
+  //         },
+  //       });
+  //     });
+  //   });
+  // }
+  // delete_location();
 
   //document ready()callback function end
 });
