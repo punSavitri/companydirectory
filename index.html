@@ -93,19 +93,7 @@
                 <i class="fa fa-plus"></i>Add Employee
               </button>
             </div>
-            <!-- View personnel database button -->
-            <div class="col-md-4 col-lg-4">
-              <button
-                id="viewBtn"
-                type="button"
-                class="btn btn-warning"
-                data-bs-toggle="modal"
-                data-bs-target="#viewpersonnelModal"
-              >
-                <i class="fa fa-eye"></i>View Database
-              </button>
-            </div>
-            <!--------->
+
             <!--  Employee name search box  -->
             <div class="col-md-4 col-lg-4">
               <form class="d-flex" id="searchForm" role="search">
@@ -340,32 +328,33 @@
 
         <!-- Display Personnel Database table -->
         <!-- show table -->
-        <div id="table"></div>
-        <div class="container">
-          <div class="row g-2">
-            <div class="col-md-6 col-lg-12">
-              <table
-                class="table table-responsive-md table-hover table-striped table-bordered text-center"
-                id="personnelTable"
-              >
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Job Title</th>
-                    <th>Email</th>
-                    <th>Department ID</th>
-                    <th>Edit/Update</th>
-                    <th>Delete</th>
-                  </tr>
-                </thead>
-                <tbody id="output"></tbody>
-              </table>
+        <div id="table">
+          <div class="container">
+            <div class="row g-2">
+              <div class="col-md-6 col-lg-12">
+                <table
+                  class="table table-responsive-md table-hover table-striped table-bordered text-center"
+                  id="personnelTable"
+                >
+                  <thead>
+                    <tr>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Job Title</th>
+                      <th>Email</th>
+                      <th>Department ID</th>
+                      <th>Edit/Update</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody id="output"></tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <!-- ----------------------------Contact page end ------------------------------->
 
       <!-- --------------------------Department page start ---------------------------->
@@ -395,7 +384,7 @@
                 id="selectDepartment"
                 aria-label="form-select-sm example"
               >
-                <option selected>Select Department</option>
+                <option>Select Department</option>
               </select>
             </div>
           </div>
@@ -434,11 +423,13 @@
                     id="message-error"
                     class="text-danger text-center fs-5 mt-2 mb-2"
                   ></p>
-                  <input
-                    type="hidden"
-                    class="form-control my-1"
-                    id="departID"
-                  />
+                  <div class="form-group">
+                    <input
+                      type="hidden"
+                      class="form-control my-1"
+                      id="departID"
+                    />
+                  </div>
                   <div class="form-group">
                     <label for="Department">New Department Name</label
                     ><input
@@ -454,7 +445,7 @@
                       id="locationName"
                       aria-label="form-select-sm example"
                     >
-                      <option selected>Location</option>
+                      <option>Location</option>
                     </select>
                   </div>
                 </form>
@@ -475,6 +466,75 @@
             </div>
           </div>
         </div>
+        <!-- display department card -->
+        <div class="container depart">
+          <div class="row" id="departRowId"></div>
+        </div>
+
+        <!-- update department for table database -->
+        <div
+          class="modal fade"
+          id="updateTableDepartmentModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">
+                  Edit/Update Department
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="update_form">
+                  <p id="message" class="text-center text-success"></p>
+                  <input type="hidden" class="form-control" id="updateid" />
+                  <div class="form-group">
+                    <label>Update Department Name</label>
+                    <select
+                      class="form-select form-select-sm"
+                      id="update_depart_name"
+                      aria-label="form-select-sm example"
+                    >
+                      <option>select department</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Location ID</label>
+                    <select
+                      class="form-select form-select-sm"
+                      id="update_location_ID"
+                      aria-label="form-select-sm example"
+                    >
+                      <option>select location</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="update_btn">
+                  Update
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--------- -->
 
         <!-- display table of all department with location id -->
         <div class="container">
@@ -485,7 +545,6 @@
               >
                 <thead>
                   <tr>
-                    <th class="th-sm">ID</th>
                     <th class="th-sm">Department Name</th>
                     <th class="th-sm">Location ID</th>
                     <th class="th-sm">Edit/Update</th>
@@ -498,7 +557,7 @@
           </div>
         </div>
 
-        <!-- Edit/Update department Modal -->
+        <!-- Edit/Update department Modal for select option department -->
         <div
           class="modal fade"
           id="editdepartmentModal"
@@ -525,22 +584,24 @@
                   <p id="message" class="text-center text-success"></p>
                   <input type="hidden" class="form-control" id="update_id" />
                   <div class="form-group">
-                    <label>Department Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="department name"
+                    <label>Update Department Name</label>
+                    <select
+                      class="form-select form-select-sm"
                       id="update_depart_name"
-                    />
+                      aria-label="form-select-sm example"
+                    >
+                      <option>select department</option>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label>Location ID</label>
-                    <input
-                      type="number"
-                      class="form-control my-2"
-                      placeholder="location id"
+                    <select
+                      class="form-select form-select-sm"
                       id="update_location_ID"
-                    />
+                      aria-label="form-select-sm example"
+                    >
+                      <option>select location</option>
+                    </select>
                   </div>
                 </form>
               </div>
@@ -607,7 +668,7 @@
         aria-labelledby="pills-location-tab"
       >
         <!-- add Location button -->
-        <div class="container">
+        <div class="container mt-3 mb-2">
           <div class="row g-2">
             <div class="col-md-6 col-lg-6">
               <button
@@ -619,15 +680,16 @@
                 <i class="fa fa-plus"></i>Add Location
               </button>
             </div>
-            <div class="col-md-4 col-lg-4">
+            <!-- <div class="col-md-4 col-lg-4">
+              <span>Select location to edit </span>
               <select
                 class="form-select form-select-sm"
                 id="selectLocation"
                 aria-label="form-select-sm example"
               >
-                <option selected>Select Location</option>
+                <option>Select Location</option>
               </select>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -665,7 +727,7 @@
                 <form id="locationForm">
                   <input type="hidden" name="locationId" id="locationId" />
                   <div class="form-group">
-                    <label for="location_name">Location Name</label
+                    <label for="location_name">New Location Name</label
                     ><input
                       type="text"
                       id="location_name"
@@ -735,8 +797,12 @@
                     />
                   </div>
                   <div class="form-group my-2">
-                    <label>Location Name</label>
-                    <input type="text" class="form-control" id="locationname" />
+                    <label>Select Location Name</label>
+                    <select
+                      class="form-select form-select-sm"
+                      id="locationname"
+                      aria-label="form-select-sm example"
+                    ></select>
                   </div>
                 </form>
               </div>
