@@ -377,16 +377,6 @@
                 <i class="fa fa-plus"></i>Add Department
               </button>
             </div>
-            <!-- select department dropdown list -->
-            <div class="col-md-4 col-lg-4">
-              <select
-                class="form-select form-select-sm"
-                id="selectDepartment"
-                aria-label="form-select-sm example"
-              >
-                <option>Select Department</option>
-              </select>
-            </div>
           </div>
         </div>
 
@@ -439,13 +429,13 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="locationName">Select Location ID</label>
+                    <label for="locationName">Select Location </label>
                     <select
                       class="form-select form-select-sm my-1"
                       id="locationName"
                       aria-label="form-select-sm example"
                     >
-                      <option>Location</option>
+                      <option></option>
                     </select>
                   </div>
                 </form>
@@ -470,71 +460,6 @@
         <div class="container depart">
           <div class="row" id="departRowId"></div>
         </div>
-
-        <!-- update department for table database -->
-        <div
-          class="modal fade"
-          id="updateTableDepartmentModal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title" id="exampleModalLabel">
-                  Edit/Update Department
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form id="update_form">
-                  <p id="message" class="text-center text-success"></p>
-                  <input type="hidden" class="form-control" id="updateid" />
-                  <div class="form-group">
-                    <label>Update Department Name</label>
-                    <select
-                      class="form-select form-select-sm"
-                      id="update_depart_name"
-                      aria-label="form-select-sm example"
-                    >
-                      <option>select department</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Location ID</label>
-                    <select
-                      class="form-select form-select-sm"
-                      id="update_location_ID"
-                      aria-label="form-select-sm example"
-                    >
-                      <option>select location</option>
-                    </select>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="update_btn">
-                  Update
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--------- -->
 
         <!-- display table of all department with location id -->
         <div class="container">
@@ -570,7 +495,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title" id="exampleModalLabel">
-                  Edit/Update Department
+                  Edit Department
                 </h1>
                 <button
                   type="button"
@@ -582,32 +507,40 @@
               <div class="modal-body">
                 <form id="update_form">
                   <p id="message" class="text-center text-success"></p>
-                  <input type="hidden" class="form-control" id="update_id" />
+                  <input
+                    type="hidden"
+                    class="form-control update_id"
+                    id="update_id"
+                  />
                   <div class="form-group">
-                    <label>Update Department Name</label>
+                    <label>Edit Department Name</label>
                     <select
-                      class="form-select form-select-sm"
+                      class="form-select form-select-sm update_depart_name"
                       id="update_depart_name"
                       aria-label="form-select-sm example"
                     >
-                      <option>select department</option>
+                      <option selected>--select department--</option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>Location ID</label>
+                    <label>Location </label>
                     <select
-                      class="form-select form-select-sm"
+                      class="form-select form-select-sm update_location_ID"
                       id="update_location_ID"
                       aria-label="form-select-sm example"
                     >
-                      <option>select location</option>
+                      <option selected>--select location--</option>
                     </select>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="update_btn">
-                  Update
+                <button
+                  type="button"
+                  class="btn btn-success update_btn"
+                  id="update_btn"
+                >
+                  Edit
                 </button>
                 <button
                   type="button"
