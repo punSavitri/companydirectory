@@ -1,3 +1,6 @@
+//global variable
+var getdepartmentId;
+
 $(document).ready(function () {
   //Personnel Table
 
@@ -292,68 +295,82 @@ $(document).ready(function () {
   ////////////////////// Department page start /////////////////////////////////////////
 
   //View all department in table as page load
-  //function loadTable
-  function loadDepartmentTable() {
-    $.ajax({
-      type: "POST",
-      url: "php/getAllDepartments.php",
-      dataType: "json",
-      success: function (result) {
-        console.log(result);
-        for (var i = 0; i < result.data.length; i++) {
-          $("#load-data").append(
-            "<tr><td>" +
-              result.data[i].name +
-              "</td><td>" +
-              result.data[i].locationID +
-              "</td><td><button class='btn btn-success' title='Edit/Update Record' id='editDepartmentBtn' data_depart_id=" +
-              result.data[i].id +
-              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger' id='deleteDepartmentBtn'title='Delete Record' data_depart_id1=" +
-              result.data[i].id +
-              "><i class='fa-solid fa-trash'></i></button></td></tr>"
-          );
-        }
-        ///////////////////////////// Edit////////////////////////////
-        $("#editDepartmentBtn").click(function () {
-          var department_id = result.data[0].id;
-          console.log(department_id);
-          $("#editdepartmentModal").modal("show");
-          $("#update_btn").click(function () {
-            var updateDepartmentName = $("#update_depart_name").val();
-            var updateLocationID = $("#update_location_ID").val();
-            // check form validation if any field is empty
-            if (updateDepartmentName == "") {
-              alert("Department name is required.");
-            } else if (updateLocationID == "") {
-              alert("Location ID is required.");
-            } else {
-              $.ajax({
-                url: "php/editDepartment.php",
-                method: "POST",
-                dataType: "json",
-                data: {
-                  id: department_id,
-                  name: updateDepartmentName,
-                  locationID: updateLocationID,
-                },
-                success: function (data) {
-                  console.log(data);
-                },
-              });
-            }
-          });
-        });
-        // ///////////////////////////////////////////////////////
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR.textStatus);
-      },
-    });
-  }
-  //load table as the page load
-  loadDepartmentTable();
+
+  $.ajax({
+    type: "POST",
+    url: "php/getAllDepartments.php",
+    dataType: "json",
+    success: function (result) {
+      console.log(result);
+      for (var i = 0; i < result.data.length; i++) {
+        $("#load-data").append(
+          "<tr><td>" +
+            result.data[i].name +
+            "</td><td>" +
+            result.data[i].locationID +
+            "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data_depart_id=" +
+            result.data[i].id +
+            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete_depart_button' title='Delete Record' data_depart_id1=" +
+            result.data[i].id +
+            "><i class='fa-solid fa-trash'></i></button></td></tr>"
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
 
   // .....................................Edit department select optin...................//
+
+  $(document).on("click", ".edit_depart_button", function () {
+    var getdepartmentId = $(this).attr("data_depart_id");
+    console.log(getdepartmentId);
+    $.ajax({
+      url: "php/getDepartmentByID.php",
+      method: "POSt",
+      dataType: "json",
+      data: {
+        id: getdepartmentId,
+      },
+      success: function (data) {
+        console.log(data);
+        $("#update_id").val(data.data[0]["id"]);
+        $("#update_depart_name").val(data.data[0]["name"]);
+        $("#update_location_ID").val(data.data[0]["locationID"]);
+        $("#editdepartmentModal").modal("show");
+      },
+    });
+  });
+
+  $("#update_btn").click(function () {
+    var departid = getdepartmentId;
+    var updateDepartmentName = $("#update_depart_name").val();
+    var updateLocationID = $("#update_location_ID").val();
+    // check form validation if any field is empty
+    if (updateDepartmentName == "") {
+      alert("Department name is required.");
+    } else if (updateLocationID == "") {
+      alert("Location ID is required.");
+    } else {
+      $.ajax({
+        url: "php/editDepartment.php",
+        method: "POST",
+        dataType: "json",
+        data: {
+          id: departid,
+          name: updateDepartmentName,
+          locationID: updateLocationID,
+        },
+        success: function (data) {
+          console.log(data);
+        },
+      });
+    }
+  });
+
+  //
+
   $.ajax({
     type: "POST",
     url: "php/getAllDepartments.php",
