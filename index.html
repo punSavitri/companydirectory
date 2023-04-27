@@ -510,26 +510,24 @@
               <div class="modal-body">
                 <form id="update_form">
                   <p id="message" class="text-center text-success"></p>
-                  <input
-                    type="hidden"
-                    class="form-control update_id"
-                    id="update_id"
-                  />
+                  <div class="form-group">
+                    <label> Department ID</label>
+                    <input
+                      type="text"
+                      class="form-control update_id"
+                      id="update_id"
+                    />
+                  </div>
                   <div class="form-group">
                     <label>Edit Department Name</label>
-                    <select
-                      class="form-select form-select-sm update_depart_name"
-                      id="update_depart_name"
-                      aria-label="form-select-sm example"
-                    ></select>
+                    <select class="form-control edit_depart_name"></select>
                   </div>
                   <div class="form-group">
                     <label>Location </label>
-                    <select
-                      class="form-select form-select-sm update_location_ID"
-                      id="update_location_ID"
-                      aria-label="form-select-sm example"
-                    ></select>
+
+                    <select class="form-control update_location_ID">
+                      <option value="">Select location</option>
+                    </select>
                   </div>
                 </form>
               </div>

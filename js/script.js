@@ -308,9 +308,9 @@ $(document).ready(function () {
             result.data[i].name +
             "</td><td>" +
             result.data[i].locationID +
-            "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data_depart_id=" +
+            "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
             result.data[i].id +
-            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete_depart_button' title='Delete Record' data_depart_id1=" +
+            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete-depart_button' title='Delete Record' data-depart_id1=" +
             result.data[i].id +
             "><i class='fa-solid fa-trash'></i></button></td></tr>"
         );
@@ -322,13 +322,32 @@ $(document).ready(function () {
   });
 
   // .....................................Edit department select optin...................//
+  $.ajax({
+    url: "php/getAllDepartments.php",
+    method: "POST",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $(".edit_depart_name").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}</option>`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
 
+  //
   $(document).on("click", ".edit_depart_button", function () {
-    var getdepartmentId = $(this).attr("data_depart_id");
+    getdepartmentId = $(this).data("depart_id");
     console.log(getdepartmentId);
+    // get department detail by id and show on modal
+
     $.ajax({
       url: "php/getDepartmentByID.php",
-      method: "POSt",
+      method: "POST",
       dataType: "json",
       data: {
         id: getdepartmentId,
@@ -336,17 +355,19 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         $("#update_id").val(data.data[0]["id"]);
-        $("#update_depart_name").val(data.data[0]["name"]);
-        $("#update_location_ID").val(data.data[0]["locationID"]);
+        $(".edit_depart_name").val(data.data[0]["name"]); //
+        $(".update_location_ID").val(data.data[0]["locationID"]);
         $("#editdepartmentModal").modal("show");
       },
     });
   });
 
   $("#update_btn").click(function () {
-    var departid = getdepartmentId;
-    var updateDepartmentName = $("#update_depart_name").val();
-    var updateLocationID = $("#update_location_ID").val();
+    //getdepartmentId is global variable
+    var updateid = getdepartmentId;
+
+    var updateDepartmentName = $(".update_depart_name").val();
+    var updateLocationID = $(".update_location_ID").val();
     // check form validation if any field is empty
     if (updateDepartmentName == "") {
       alert("Department name is required.");
@@ -358,7 +379,7 @@ $(document).ready(function () {
         method: "POST",
         dataType: "json",
         data: {
-          id: departid,
+          id: updateid,
           name: updateDepartmentName,
           locationID: updateLocationID,
         },
@@ -371,34 +392,17 @@ $(document).ready(function () {
 
   //
 
-  $.ajax({
-    type: "POST",
-    url: "php/getAllDepartments.php",
-    dataType: "json",
-    success: function (data) {
-      console.log(data);
-      for (var i = 0; i < data.data.length; i++) {
-        $("#update_depart_name").append(
-          `<option value="${data.data[i].id}">${data.data[i].name}`
-        );
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
-  });
-
   // update department dropdown select location id option
 
   $.ajax({
-    type: "POST",
+    method: "POST",
     url: "php/getAllLocations.php",
     dataType: "json",
     success: function (data) {
       console.log(data);
       for (var i = 0; i < data.data.length; i++) {
-        $("#update_location_ID").append(
-          `<option value="${data.data[i].id}">${data.data[i].name}`
+        $(".update_location_ID").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}</option>`
         );
       }
     },
@@ -711,3 +715,4 @@ $(document).ready(function () {
 
   //document ready()callback function end
 });
+var getdepartmentId;
