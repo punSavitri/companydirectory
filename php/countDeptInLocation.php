@@ -34,17 +34,17 @@ if (mysqli_connect_errno()) {
 
 $query = $conn->prepare('SELECT COUNT(id)
 
-                             FROM personnel
+                             FROM department
 
-                             WHERE departmentID=?');
+                             WHERE locationID=?');
 
 $query->bind_param("i", $_REQUEST['id']);
 
 $query->execute();
 
-$numEmployeeInDept = mysqli_fetch_assoc($query->get_result())["COUNT(id)"];
+$numDeptInLocation = mysqli_fetch_assoc($query->get_result())["COUNT(id)"];
 
-if ($numEmployeeInDept > 0) {
+if ($numDeptInLocation > 0) {
 
     // Create output telling the user they can’t delete   
 
@@ -52,11 +52,11 @@ if ($numEmployeeInDept > 0) {
 
     $output['status']['name'] = "forbidden";
 
-    $output['status']['description'] = "Cannot delete department.";
+    $output['status']['description'] = "Cannot delete location.";
 
     $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 
-    $output['data'] = $numEmployeeInDept;
+    $output['data'] = $numDeptInLocation;
 
     echo json_encode($output);
 
@@ -90,7 +90,7 @@ $output['status']['description'] = "success";
 
 $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 
-$output['data'] = $numEmployeeWithLoc;
+$output['data'] = $numDepartWithlocation;
 
 mysqli_close($conn);
 

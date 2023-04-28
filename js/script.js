@@ -46,8 +46,8 @@ $(document).ready(function () {
 
             $("#msgSuccess").append("*Data successfully inserted.");
             $("#addpersonnelForm").trigger("reset");
-            // loadPersonnelTable();
-            // dropdown department list
+            $("#output").html("");
+            loadPersonnelTable();
           },
           error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR.textStatus);
@@ -71,7 +71,7 @@ $(document).ready(function () {
       console.log(data);
       for (var i = 0; i < data.data.length; i++) {
         $("#select_department").append(
-          `<option value="${data.data[i].id}">${data.data[i].name}`
+          `<option value="${data.data[i].id}">${data.data[i].name}</option>`
         );
       }
     },
@@ -81,41 +81,44 @@ $(document).ready(function () {
   });
 
   //View record personnel database table
+  function loadPersonnelTable() {
+    $.ajax({
+      type: "POST",
+      url: "php/getAllPersonnel.php",
+      dataType: "json",
+      success: function (result) {
+        console.log(result);
 
-  $.ajax({
-    type: "POST",
-    url: "php/getAllPersonnel.php",
-    dataType: "json",
-    success: function (result) {
-      console.log(result);
-      for (var i = 0; i < result.data.length; i++) {
-        $("#output").append(
-          "<tr><td>" +
-            result.data[i].firstName +
-            "</td><td>" +
-            result.data[i].lastName +
-            "</td><td>" +
-            result.data[i].jobTitle +
-            "</td><td>" +
-            result.data[i].email +
-            "</td><td>" +
-            result.data[i].departmentID +
-            "</td><td><button class='btn btn-success' id='btn_edit' title='Edit/Update Record' data-id=" +
-            result.data[i].id +
-            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger' title='Delete Record' id='btn_delete' data-id1=" +
-            result.data[i].id +
-            "><i class='fa-solid fa-trash'></i></button></td></tr></tbody></table></div></div></div>"
-        );
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
-  });
+        for (var i = 0; i < result.data.length; i++) {
+          $("#output").append(
+            "<tr><td>" +
+              result.data[i].firstName +
+              "</td><td>" +
+              result.data[i].lastName +
+              "</td><td>" +
+              result.data[i].jobTitle +
+              "</td><td>" +
+              result.data[i].email +
+              "</td><td>" +
+              result.data[i].departmentID +
+              "</td><td><button class='btn btn-success btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='Edit/Update Record' data-id=" +
+              result.data[i].id +
+              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger btn_delete' data-bs-toggle='modal' data-bs-target='#deleteModal'    title='Delete Record' id='btn_delete' data-id1=" +
+              result.data[i].id +
+              "><i class='fa-solid fa-trash'></i></button></td></tr></tbody></table></div></div></div>"
+          );
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
+  }
+  loadPersonnelTable();
 
   //Read particualr  record by ID
   function get_record() {
-    $(document).on("click", "#btn_edit", function () {
+    $(document).on("click", ".btn_edit", function () {
       //Get id attribute
       var id = $(this).attr("data-id");
       console.log(id);
@@ -205,6 +208,7 @@ $(document).ready(function () {
             $("#update_message").html("Data has been successfully updated.");
 
             $("#update_personnel_Modal").modal("show");
+            $("#output").html("");
             loadPersonnelTable();
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -216,29 +220,30 @@ $(document).ready(function () {
   }
   updateRecord();
 
-  //*******Delete record function*****//
+  //*******Delete Personnel record function*****//
+
   function deleteRecord() {
+    //getting personnel id from delete button
     $(document).on("click", "#btn_delete", function () {
       console.log("testing btn");
 
-      var delete_id = $(this).attr("data-id1");
+      var delete_id = $(this).data("data-id1");
       console.log(delete_id);
-      $("#deleteModal").modal("show");
+    });
 
-      $(document).on("click", "#delete_button", function () {
-        $.ajax({
-          url: "php/deletePersonnelByID.php",
-          method: "POST",
-          dataType: "json",
-          data: {
-            id: delete_id,
-          },
-          success: function (data) {
-            $("#delete_success_message").html(
-              "Selected data successfully deleted."
-            );
-          },
-        });
+    $("#delete_button").click(function () {
+      $.ajax({
+        url: "php/deletePersonnelByID.php",
+        method: "POST",
+        dataType: "json",
+        data: {
+          id: delete_id,
+        },
+        success: function (data) {
+          $("#delete_success_message").html(
+            "Selected data successfully deleted."
+          );
+        },
       });
     });
   }
@@ -263,7 +268,7 @@ $(document).ready(function () {
           console.log(data);
 
           $("#search_term_output").html(
-            "<div class='container'><div class='row g-2'>   <div class='col-md-6 col-lg-12'><table class='table table-responsive-md table-hover table-striped table-bordered text-center'><thead><tr>            <th class='th-sm'>ID</th><th class='th-sm'>First Name</th><th class='th-sm'>Last Name</th><th class='th-sm'>Job Title</th><th class='th-sm'>Email</th><th class='th-sm'>Department</th><th class='th-sm'>Location</th><th class='th-sm'>Edit/Update</th><th class='th-sm'>Delete</th></tr></thead><tbody><tr><td>" +
+            "<div class='container'><div class='row g-2'>   <div class='col-md-6 col-lg-12'><table class='table table-responsive-md table-hover table-striped table-bordered text-center'><thead><tr><th class='th-sm'>ID</th><th class='th-sm'>First Name</th><th class='th-sm'>Last Name</th><th class='th-sm'>Job Title</th><th class='th-sm'>Email</th><th  class='th-sm'>Department</th><th class='th-sm'>Location</th></tr></thead><tbody><tr><td>" +
               data.data[0].id +
               "</td><td>" +
               data.data[0].firstName +
@@ -277,11 +282,7 @@ $(document).ready(function () {
               data.data[0].department +
               "</td><td>" +
               data.data[0].location +
-              "</td><td><button class='btn btn-success' id='btn_edit' title='Edit/Update Record' data-id=" +
-              data.data[0].id +
-              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger' title='Delete Record' id='btn_delete' data-id1=" +
-              data.data[0].id +
-              "><i class='fa-solid fa-trash'></i></button></td></tr></tbody></table></div></div></div>"
+              "</td></tr></tbody></table></div></div></div>"
           );
         },
       });
@@ -295,24 +296,46 @@ $(document).ready(function () {
   ////////////////////// Department page start /////////////////////////////////////////
 
   //View all department in table as page load
+  function loadDeptTable() {
+    $.ajax({
+      type: "POST",
+      url: "php/getAllDepartments.php",
+      dataType: "json",
+      success: function (result) {
+        console.log(result);
+        for (var i = 0; i < result.data.length; i++) {
+          $("#load-data").append(
+            "<tr><td>" +
+              result.data[i].name +
+              "</td><td>" +
+              result.data[i].locationID +
+              "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
+              result.data[i].id +
+              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger' id='delete_depart_button' data-bs-toggle='modal' data-bs-target='#deleteDepartmentModal' title='Delete Record' data-depart_id1=" +
+              result.data[i].id +
+              "><i class='fa-solid fa-trash'></i></button></td></tr>"
+          );
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
+  }
+  loadDeptTable();
+  // ..............................Add Department Code Start.............................//
+
+  // Location dropdown list select option
 
   $.ajax({
     type: "POST",
-    url: "php/getAllDepartments.php",
+    url: "php/getAllLocations.php",
     dataType: "json",
-    success: function (result) {
-      console.log(result);
-      for (var i = 0; i < result.data.length; i++) {
-        $("#load-data").append(
-          "<tr><td>" +
-            result.data[i].name +
-            "</td><td>" +
-            result.data[i].locationID +
-            "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
-            result.data[i].id +
-            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete-depart_button' title='Delete Record' data-depart_id1=" +
-            result.data[i].id +
-            "><i class='fa-solid fa-trash'></i></button></td></tr>"
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $(".locationName").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}</option>`
         );
       }
     },
@@ -320,8 +343,47 @@ $(document).ready(function () {
       console.log(jqXHR.textStatus);
     },
   });
+  //Insert/Add Department on database
+  function insert_department() {
+    $("#add").on("click", function (e) {
+      e.preventDefault();
 
-  // .....................................Edit department select optin...................//
+      //get input value from user
+
+      var departName = $("#Department").val();
+      var locationid = $(".locationName").val();
+
+      //check form validation
+      if (departName == "") {
+        alert("Department name is required.");
+      } else if (locationid == "") {
+        alert("Location ID is required.");
+      } else {
+        $.ajax({
+          url: "php/insertDepartment.php",
+          type: "POST",
+          data: {
+            name: departName,
+            locationID: locationid,
+          },
+          success: function (data) {
+            console.log(data);
+            $("#message-success").append("*Data successfully inserted. ");
+            $("#form").trigger("reset");
+            $("#load-data").html("");
+            loadDeptTable();
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      }
+    });
+  }
+  insert_department();
+
+  // ..pre-populate select department dropdown.......//
+
   $.ajax({
     url: "php/getAllDepartments.php",
     method: "POST",
@@ -339,10 +401,12 @@ $(document).ready(function () {
     },
   });
 
-  //
+  // adding click event to Edit button/icon on page
+
   $(document).on("click", ".edit_depart_button", function () {
     getdepartmentId = $(this).data("depart_id");
     console.log(getdepartmentId);
+
     // get department detail by id and show on modal
 
     $.ajax({
@@ -355,19 +419,19 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         $("#update_id").val(data.data[0]["id"]);
-        $(".edit_depart_name").val(data.data[0]["name"]); //
+        $("#deptName").val(data.data[0]["name"]); //
         $(".update_location_ID").val(data.data[0]["locationID"]);
         $("#editdepartmentModal").modal("show");
       },
     });
   });
 
-  $("#update_btn").click(function () {
-    //getdepartmentId is global variable
-    var updateid = getdepartmentId;
+  //adding event to edit button to update details
 
-    var updateDepartmentName = $(".update_depart_name").val();
+  $("#update_btn").click(function () {
+    var updateDepartmentName = $("#deptName").val();
     var updateLocationID = $(".update_location_ID").val();
+
     // check form validation if any field is empty
     if (updateDepartmentName == "") {
       alert("Department name is required.");
@@ -379,18 +443,24 @@ $(document).ready(function () {
         method: "POST",
         dataType: "json",
         data: {
-          id: updateid,
+          id: getdepartmentId,
           name: updateDepartmentName,
           locationID: updateLocationID,
         },
         success: function (data) {
           console.log(data);
+
+          $("#message").html("Data has been successfully updated.");
+          $("#update_form").trigger("reset");
+          $("#load-data").html("");
+          loadDeptTable();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR.textStatus);
         },
       });
     }
   });
-
-  //
 
   // update department dropdown select location id option
 
@@ -411,141 +481,66 @@ $(document).ready(function () {
     },
   });
 
-  // ..............................Add Department Code Start.............................//
+  //...................................Delete  Department Record........................//
 
-  // Location dropdown list select option
+  // adding event to delete button/icon on page to get dept id
 
-  $.ajax({
-    type: "POST",
-    url: "php/getAllLocations.php",
-    dataType: "json",
-    success: function (data) {
-      console.log(data);
-      for (var i = 0; i < data.data.length; i++) {
-        $("#locationName").append(
-          `<option value="${data.data[i].name}">${data.data[i].id}`
-        );
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
-  });
-  //Insert/Add Department on database
-  function insert_department() {
-    $("#add").on("click", function (e) {
-      e.preventDefault();
-
-      //get input value from user
-
-      var departName = $("#Department").val();
-      var locationid = $("#locationName").val();
-
-      //check form validation
-      if (departName == "") {
-        alert("Department name is required.");
-      } else if (locationid == "") {
-        alert("Location ID is required.");
-      } else {
-        $.ajax({
-          url: "php/insertDepartment.php",
-          type: "POST",
-          data: {
-            name: departName,
-            locationID: locationid,
-          },
-          success: function (data) {
-            console.log(data);
-            $("#message-success").append("*Data successfully inserted. ");
-            $("#form").trigger("reset");
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR.textStatus);
-          },
-        });
-      }
-    });
-    $("#depart_Close_btn").click(function () {
-      $("#form").trigger("reset");
-      $("#message-success").append("");
-    });
-  }
-  insert_department();
-  // .................................Add Department End................................//
-
-  //...................................Delete record....................................//
-
-  $(document).on("click", "#deleteDepartmentBtn", function () {
-    var dataID = $(this).attr("data_depart_id1");
-    console.log(dataID);
-    //check the number of employee in department before delete
-    if (dataID > 0) {
-      alert("Cannot delete department");
-    } else {
-      $.ajax({
-        url: "php/countEmployeeInDepartment.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-          id: dataID,
-        },
-        success: function (data) {
-          console.log(data);
-
-          $("#deleteDepartmentModal").modal("show");
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
-        },
-      });
-    }
+  $(document).on("click", "#delete_depart_button", function () {
+    //deptId global variable
+    deptid = $(this).data("depart_id1");
+    console.log(deptid);
   });
 
-  /////////////////////////// End of department page here  ///////////////////////////////
+  // adding event to delete button ones confirm from user
+
+  $("#deleteButton").click(function () {
+    var id = $("#deptid").val();
+
+    $.ajax({
+      url: "php/countEmployeeInDepartment.php",
+      type: "POST",
+      dataType: "json",
+      data: {
+        id: id,
+      },
+      success: function (data) {
+        console.log(data);
+        $("#Message").html("Data can not deleted.");
+
+        //check the number of employee in department before to delete record
+        if (id > 0) {
+          alert("Data can not be deleted.");
+        } else {
+          $.ajax({
+            url: "php/deleteDepartmentByID.php",
+            method: "POST",
+            dataType: "json",
+            data: {
+              id: id,
+            },
+            success: function (data) {
+              console.log(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log(jqXHR.textStatus);
+            },
+          });
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
+  }); //// End of Department Page here///////////////
 
   //////////////////////////  Location page start from here///////////////////////////////
 
-  // dropdown list of location name
-  $.ajax({
-    type: "POST",
-    url: "php/getAllLocations.php",
-    dataType: "json",
-    success: function (data) {
-      console.log(data);
-      for (var i = 0; i < data.data.length; i++) {
-        $("#selectLocation").append(
-          `<option value="${data.data[i].id}">${data.data[i].name}`
-        );
-      }
-      // on change event get the id of location and edit it
-      $("#selectLocation").change(function () {
-        $.ajax({
-          url: "php/getLocationByID.php",
-          method: "POST",
-          dataType: "json",
-          data: {
-            id: $("#selectLocation").val(),
-          },
-          success: function (data) {
-            console.log(data);
-            // show edit location modal
-            // $("#editLocationModal").modal("show");
-            // $("#");
-          },
-        });
-      });
-      ///////////////////////
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
-  });
   //View location database on cards ones page load
 
-  function displayLocation() {
+  function loadLocation() {
     $.ajax({
-      type: "POST",
       url: "php/getAllLocations.php",
+      type: "POST",
       dataType: "json",
       success: function (data) {
         console.log(data);
@@ -553,9 +548,9 @@ $(document).ready(function () {
           $("#row").append(
             "<div class='col-md-6 col-lg-4'><div class='card text-center border-light'  id='card'><div class='card-body bg-light' id='card-body'><p class='card-text text-center' id='card-text'>Location Name :&nbsp;" +
               data.data[i].name +
-              "</p></div><div class='card-footer'><button class='btn btn-success me-3' id='btnedit' title='Edit/Update Record'data_location_id=" +
+              "</p></div><div class='card-footer'><button class='btn btn-success me-3 btnedit' id='btnedit' data-bs-toggle='modal' data-bs-target='#editLocationModal' title='Edit/Update Record' data-location-id=" +
               data.data[i].id +
-              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger' id='btndelete' title='Delete Record' data_location_id1=" +
+              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger btndelete' id='btndelete' data-bs-toggle='modal' data-bs-target='#deleteLocationModal'  title='Delete Record' data-location-id1=" +
               data.data[i].id +
               "><i class='fa-solid fa-trash'></i></button></div></div></div>"
           );
@@ -566,9 +561,9 @@ $(document).ready(function () {
       },
     });
   }
-  displayLocation();
+  loadLocation();
 
-  // Insert/Add location in database and display on webpage
+  // Add location name in database and display on webpage
 
   $("#add_location_btn").on("click", (event) => {
     event.preventDefault();
@@ -593,126 +588,124 @@ $(document).ready(function () {
           //display on website
           $("#msg-success").html("You have successfully inserted data.");
           $("#locationForm").trigger("reset");
+          loadLocation();
         },
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(jqXHR.textStatus);
         },
-      });
-      $("#btnClose").click(function () {
-        $("#locationForm").trigger("reset");
-        $("#msg-success").html("");
       });
     }
   });
 
-  //Read Location detail ones click on Edit button
+  // Edit location
+  //adding event to get id from edit location button
+  $(document).on("click", ".btnedit", function () {
+    location_id = $(this).data("location-id");
+    console.log(location_id);
 
-  function getLocationId() {
-    $(document).on("click", "#btnedit", function (e) {
-      e.preventDefault();
-      var location_id = $(this).attr("data_location_id");
-      console.log(location_id);
+    //get location detail by id
+    $.ajax({
+      url: "php/getLocationByID.php",
+      method: "POST",
+      dataType: "json",
+      data: {
+        id: location_id,
+      },
+      success: function (data) {
+        console.log(data);
+        $("#updateLocation").val(data.data.location[0]["id"]);
+        $("#locationname").val(data.data.location[0]["name"]);
+        $("#editLocationModal").modal("show");
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
+  });
+
+  //adding event to edit button
+  $("#editlocbtn").click(function () {
+    var location = $("#updateLocation").val();
+
+    var nameLocation = $("#locationname").val();
+
+    // //Check form validation if any field is empty
+    if (nameLocation == "") {
+      alert("Location name is required.");
+    } else {
       $.ajax({
-        url: "php/getLocationByID.php",
+        url: "php/editLocation.php",
         method: "POST",
         dataType: "json",
         data: {
-          id: location_id,
+          id: location,
+          name: nameLocation,
         },
         success: function (data) {
           console.log(data);
-          $("#updateLocation").val(data.data.location[0]["id"]);
-          $("#locationname").val(data.data.location[0]["name"]);
+          $("#msg").html("Data has been successfully updated.");
           $("#editLocationModal").modal("show");
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR.textStatus);
-        },
       });
-    });
-  }
-  getLocationId();
-
-  // pre-populate location name
-  $.ajax({
-    type: "POST",
-    url: "php/getAllLocations.php",
-    dataType: "json",
-    success: function (data) {
-      console.log(data);
-      for (var i = 0; i < data.data.length; i++) {
-        $("#locationname").append(
-          `<option value="${data.data[i].id}">${data.data[i].name}`
-        );
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
+    }
   });
 
-  // UPDATE RECORD///////
+  //........DELETE RECORD .......///
 
-  function updateLocationID() {
-    $(document).on("click", "#updateBtn", function () {
-      console.log("testing update button!!!");
-      var idLocation = $("#updateLocation").val();
-      var nameLocation = $("#locationname").val();
+  //adding event to get location id from delete button on page
 
-      //Check form validation if any field is empty
-      if (nameLocation == "") {
-        alert("Location name is required.");
-      } else {
-        $.ajax({
-          url: "php/editLocation.php",
-          method: "POST",
-          dataType: "json",
-          data: {
-            id: idLocation,
-            name: nameLocation,
-          },
-          success: function (data) {
-            console.log(data);
-            $("#msg").html("Data has been successfully updated.");
-            $("#editLocationModal").modal("show");
-          },
-        });
-      }
+  $(document).on("click", ".btndelete", function () {
+    // get the location id ones click on delete button/icon
+    locationid = $(this).data("location-id1");
+    console.log(locationid);
+  });
+
+  $("#delete").click(function () {
+    var id = $("#locationid").val();
+    // //check the number of department in particular location before to delete record
+    $.ajax({
+      url: "php/countDeptInLocation.php",
+      method: "POST",
+      dataType: "json",
+      data: {
+        id: id,
+      },
+      success: function (data) {
+        console.log(data);
+        $("#deleteMessage").html("Data can not deleted.");
+
+        if (id > 0) {
+          alert("Data can not be deleted.");
+        } else {
+          // delete location if it has 0 department in it
+          $.ajax({
+            url: "php/deleteLocationByID.php",
+            method: "POST",
+            dataType: "json",
+            data: {
+              id: id,
+            },
+            success: function (data) {
+              console.log(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log(jqXHR.textStatus);
+            },
+          });
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
     });
-  }
-  updateLocationID();
-
-  //DELETE RECORD FROM LOCATION DATABASE
-
-  function delete_location() {
-    $(document).on("click", "#btndelete", function () {
-      console.log("Testing location delete button working or not!");
-
-      //get the data attribute value
-      var data_id1 = $(this).attr("data_location_id1");
-      console.log(data_id1);
-      $("#deleteLocationModal").modal("show");
-      $(document).on("click", "#delete", function () {
-        $.ajax({
-          url: "php/deleteLocationByID.php",
-          method: "POST",
-          dataType: "json",
-          data: {
-            id: data_id1,
-          },
-          success: function (data) {
-            console.log(data);
-            $("#deleteMessage").html("Selected data deleted");
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR.textStatus);
-          },
-        });
-      });
-    });
-  }
-  delete_location();
+  });
 
   //document ready()callback function end
 });
-var getdepartmentId;
+
+//global variables
+var getdepartmentId; // used in edit department code
+var locationid;
+var location_id; //used for editing location
+
+var deptid; //used in department delete record
