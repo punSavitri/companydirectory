@@ -172,12 +172,39 @@
                       aria-label="form-select-sm example"
                     ></select>
                   </div>
+
+                  <button type="submit" class="btn btn-success" id="btnadd">
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                    id="button_close"
+                  >
+                    Close
+                  </button>
                 </form>
               </div>
-              <div class="modal-footer">
-                <button type="button " class="btn btn-success" id="btnadd">
-                  Add
-                </button>
+            </div>
+          </div>
+        </div>
+        <!-- custome modal to show validation error mesage -->
+        <div class="modal fade" id="errorModal">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title text-center fs-5">Warning</h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p id="validation_error"></p>
+
                 <button
                   type="button"
                   class="btn btn-danger"
@@ -207,7 +234,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title">Update Employee</h1>
+                <h1 class="modal-title">Edit Employee</h1>
                 <button
                   type="button"
                   class="btn-close"
@@ -217,7 +244,7 @@
               </div>
               <div class="modal-body">
                 <p id="update_message"></p>
-                <form>
+                <form id="updateForm">
                   <div class="form-group">
                     <input
                       type="hidden"
@@ -250,26 +277,25 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="select_department">Department</label>
+                    <label for="select_department"> Select Department</label>
                     <select
-                      class="form-select form-select-sm my-1"
+                      class="form-select form-select-sm my-1 update_select_department"
                       id="update_select_department"
                       aria-label="form-select-sm example"
-                    >
-                      <option selected>Department</option>
-                    </select>
+                    ></select>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
                 <button
-                  type="button "
+                  type="submit "
                   class="btn btn-success"
                   id="update_button"
                 >
                   Update
                 </button>
                 <button
+                  id="update_close_btn"
                   type="button"
                   class="btn btn-danger"
                   data-bs-dismiss="modal"
@@ -299,8 +325,9 @@
               <div class="modal-body">
                 <p
                   id="delete_success_message"
-                  class="text-center text-success"
+                  class="text-center text-warning"
                 ></p>
+                <input type="hidden" id="PersonnelID" />
                 <p>Do you want to delete the record ?</p>
                 <button
                   type="button "
@@ -310,6 +337,7 @@
                   Delete
                 </button>
                 <button
+                  id="closebtn"
                   type="button"
                   class="btn btn-danger"
                   data-bs-dismiss="modal"
@@ -321,7 +349,8 @@
           </div>
         </div>
         <!-- delete personnel modal end -->
-        <div id="deleteSuccess"></div>
+        <div id="delete"></div>
+        <div id="deletemsg"></div>
 
         <!-- Display Personnel Database table -->
         <!-- show table -->
@@ -436,7 +465,7 @@
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" id="add" class="btn btn-success">
+                <button type="submit" id="add" class="btn btn-success">
                   Add
                 </button>
                 <button
@@ -522,13 +551,14 @@
               </div>
               <div class="modal-footer">
                 <button
-                  type="button"
+                  type="submit"
                   class="btn btn-success update_btn"
                   id="update_btn"
                 >
                   Edit
                 </button>
                 <button
+                  id="update_closeBtn"
                   type="button"
                   class="btn btn-danger"
                   data-bs-dismiss="modal"
@@ -556,19 +586,26 @@
               </div>
 
               <div class="modal-body">
-                <p id="Message" class="text-center text-success"></p>
+                <form action="" id="DeleteDeptForm">
+                  <p id="Message" class="text-center text-warning"></p>
 
-                <input type="hidden" id="deptid" />
-                <button type="button " class="btn btn-danger" id="deleteButton">
-                  Delete
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
+                  <input type="hidden" id="deptid" />
+                  <button
+                    type="button "
+                    class="btn btn-danger"
+                    id="deleteButton"
+                  >
+                    Delete
+                  </button>
+                  <button
+                    id="closeBtn"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -645,7 +682,7 @@
               </div>
               <div class="modal-footer">
                 <button
-                  type="button"
+                  type="submit"
                   id="add_location_btn"
                   class="btn btn-success"
                 >
@@ -705,12 +742,14 @@
                   </div>
                   <div class="form-group my-2">
                     <label>Edit Location Name</label>
-                    <input
+
+                    <select class="form-control" id="selectLocation"></select>
+                  </div>
+                  <!-- <input
                       type="text"
                       class="form-control locationname"
                       id="locationname"
-                    />
-                  </div>
+                    /> -->
                 </form>
               </div>
               <div class="modal-footer">
@@ -718,6 +757,7 @@
                   Update
                 </button>
                 <button
+                  id="Close_Button"
                   type="button"
                   class="btn btn-danger"
                   data-bs-dismiss="modal"
@@ -745,21 +785,25 @@
               </div>
               <div class="modal-body">
                 <p id="deleteMessage" class="text-center text-success"></p>
-                <input type="hidden" id="locationid" />
-                <button
-                  type="button "
-                  class="btn btn-danger deletelocation"
-                  id="delete"
-                >
-                  Delete
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
+                <form id="deletelocForm">
+                  <input type="hidden" id="locationid" />
+
+                  <button
+                    type="button "
+                    class="btn btn-danger"
+                    id="DeleteLocationBtn"
+                  >
+                    Delete
+                  </button>
+                  <button
+                    id="closelocation"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </form>
               </div>
             </div>
           </div>
