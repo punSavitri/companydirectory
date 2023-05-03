@@ -13,66 +13,110 @@ $(document).ready(function () {
       event.preventDefault();
 
       //get input value from user
-      var firstname = $("#firstname").val();
-      var lastname = $("#lastname").val();
-      var jobtitle = $("#jobtitle").val();
-      var emailid = $("#emailid").val();
+      // var firstname = $("#firstname").val();
+      // var lastname = $(".lastname").val();
+      // var jobtitle = $(".jobtitle").val();
+      // var emailid = $(".emailid").val();
 
-      var department = $("#select_department").val();
+      // var department = $("#select_department").val();
+
+      // validation first name of user
+      $(".firstname").blur(function (e) {
+        e.preventDefault();
+        var firstname = $(".firstname").val();
+        if ($.trim(firstname).length == 0) {
+          error_firstname = "Please enter first name";
+          $("#error_firstname").html(error_firstname);
+        } else {
+          error_firstname = "";
+          $("#error_firstname").html(error_firstname);
+        }
+      });
+
+      //last name validation
+      $(".lastname").blur(function (e) {
+        e.preventDefault();
+        var lastname = $(".lastname").val();
+        if ($.trim(lastname).length == 0) {
+          error_lastname = "Please enter last name";
+          $("#error_lastname").html(error_lastname);
+        } else {
+          error_lastname = "";
+          $("#error_lastname").html(error_lastname);
+        }
+      });
+
+      // job title validation
+
+      $(".jobtitle").blur(function (e) {
+        e.preventDefault();
+        var jobtitle = $(".jobtitle").val();
+        if ($.trim(jobtitle).length == 0) {
+          error_jobtitle = "Please enter job title";
+          $("#error_jobtitle").html(error_jobtitle);
+        } else {
+          error_jobtitle = "";
+          $("#error_jobtitle").html(error_jobtitle);
+        }
+      });
 
       //email validation
-      // var emailid = "";
-      // var email_error = "";
-      // //email validation
-      // if (!filter_var(emailid, FILTER_VALIDATE_EMAIL)) {
-      //   emailid = $("#emailid").val();
-      //   email_error = "This is an invalid email.";
-      // } else {
-      //   email_error = "This is valid email";
-      // }
+      $(".email").blur(function (e) {
+        e.preventDefault();
+        var email_filter =
+          /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var email = $(".email").val();
+        if ($.trim(email).length == 0) {
+          error_email = "Please enter email";
+          $("#error_email").html(error_email);
+        } else if (!email_filter.test(email)) {
+          error_email = "Please enter valid email";
+          $("#error_email").html(error_email);
+        } else {
+          error_email = "";
+          $("#error_email").html(error_email);
+        }
+      });
+      // department validation
 
-      //check form validation
-      if (firstname == "") {
-        $("#validation_error").append("First name is required.");
-        $("#errorModal").modal("show");
-      } else if (lastname == "") {
-        $("#validation_error").append("last name is required.");
-        $("#errorModal").modal("show");
-      } else if (jobtitle == "") {
-        $("#validation_error").append("Job title is required.");
-        $("#errorModal").modal("show");
-      } else if (emailid == "") {
-        $("#validation_error").append("Email is required.");
-        $("#errorModal").modal("show");
-      } else if (department == "") {
-        $("#validation_error").append("Select Department Name");
-        $("#errorModal").modal("show");
-      } else {
-        $.ajax({
-          url: "php/insertPersonnel.php",
-          type: "POST",
-          dataType: "json",
-          data: {
-            firstName: firstname,
-            lastName: lastname,
-            jobTitle: jobtitle,
-            email: emailid,
-            departmentID: department,
-          },
-          success: function (data) {
-            console.log(data);
-            //display added data on table
+      $("#select_department").blur(function (e) {
+        e.preventDefault();
 
-            $("#msgSuccess").append("*Data successfully inserted.");
-            $("#addpersonnelForm").trigger("reset");
-            $("#output").html("");
-            loadPersonnelTable();
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR.textStatus);
-          },
-        });
-      }
+        var selectDept = $("#select_department").val();
+        if ($.trim(selectDept).length == 0) {
+          error_dept = "Please select department";
+          $("#error_dept").html(error_dept);
+        } else {
+          error_dept = "";
+          $("#error_dept").html(error_dept);
+        }
+      });
+
+      //add personnel record AJAX CALL
+      $.ajax({
+        url: "php/insertPersonnel.php",
+        type: "POST",
+        dataType: "json",
+        data: {
+          firstName: firstname,
+          lastName: lastname,
+          jobTitle: jobtitle,
+          email: email,
+          departmentID: selectDept,
+        },
+        success: function (data) {
+          console.log(data);
+          //display added data on table
+
+          $("#msgSuccess").append("*Data successfully inserted.");
+          $("#addpersonnelForm").trigger("reset");
+          $("#output").html("");
+          loadPersonnelTable();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR.textStatus);
+        },
+      });
     });
     $("#button_close").click(function () {
       $("#addpersonnelForm").trigger("reset");

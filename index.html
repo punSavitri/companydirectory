@@ -133,47 +133,76 @@
                   <input type="hidden" id="personnelId" />
                   <div class="form-group">
                     <label for="firstname">First Name</label
+                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
+                      id="error_firstname"
+                      class="text-center text-warning"
+                    ></small
                     ><input
                       type="text"
                       id="firstname"
-                      class="form-control my-1"
+                      class="form-control firstname my-2"
+                      placeholder="Enter first name"
                     />
                   </div>
 
                   <div class="form-group">
                     <label for="lastname">Last Name</label
+                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
+                      id="error_lastname"
+                      class="text-center text-warning"
+                    ></small
                     ><input
                       type="text"
                       id="lastname"
-                      class="form-control my-1"
+                      class="form-control lastname my-2"
+                      placeholder="Enter last name"
                     />
                   </div>
                   <div class="form-group">
                     <label for="jobtitle">Job Title</label
+                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
+                      id="error_jobtitle"
+                      class="text-center text-warning"
+                    ></small
                     ><input
                       type="text"
                       id="jobtitle"
-                      class="form-control my-1"
+                      class="form-control jobtitle my-2"
+                      placeholder="Enter job title"
                     />
                   </div>
                   <div class="form-group">
                     <label for="emailid">Email</label
+                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
+                      id="error_email"
+                      class="text-center text-warning"
+                    ></small
                     ><input
                       type="email"
                       id="emailid"
-                      class="form-control my-1"
+                      class="form-control email my-2"
+                      placeholder="Enter email id"
                     />
                   </div>
                   <div class="form-group">
-                    <label for="select_department">Department</label>
+                    <label for="select_department">Department</label
+                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
+                      id="error_dept"
+                      class="text-center text-warning"
+                    ></small>
                     <select
-                      class="form-select form-select-sm my-1"
+                      class="form-select form-select-sm select_department my-2"
                       id="select_department"
                       aria-label="form-select-sm example"
-                    ></select>
+                    >
+                      <option value="">select department</option>
+                    </select>
                   </div>
-
-                  <button type="submit" class="btn btn-success" id="btnadd">
+                  <button
+                    type="submit"
+                    class="btn btn-success my-2"
+                    id="btnadd"
+                  >
                     Add
                   </button>
                   <button
