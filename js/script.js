@@ -13,17 +13,20 @@ $(document).ready(function () {
       event.preventDefault();
 
       //get input value from user
-      // var firstname = $("#firstname").val();
-      // var lastname = $(".lastname").val();
-      // var jobtitle = $(".jobtitle").val();
-      // var emailid = $(".emailid").val();
+      var firstname = $("#firstname").val();
 
-      // var department = $("#select_department").val();
+      var lastname = $("#lastname").val();
+
+      var jobtitle = $("#jobtitle").val();
+
+      var emailid = $("#emailid").val();
+
+      var department = $("#select_department").val();
 
       // validation first name of user
-      $(".firstname").blur(function (e) {
+      $("#firstname").blur(function (e) {
         e.preventDefault();
-        var firstname = $(".firstname").val();
+        firstname = $("#firstname").val();
         if ($.trim(firstname).length == 0) {
           error_firstname = "Please enter first name";
           $("#error_firstname").html(error_firstname);
@@ -34,9 +37,9 @@ $(document).ready(function () {
       });
 
       //last name validation
-      $(".lastname").blur(function (e) {
+      $("#lastname").blur(function (e) {
         e.preventDefault();
-        var lastname = $(".lastname").val();
+        lastname = $("#lastname").val();
         if ($.trim(lastname).length == 0) {
           error_lastname = "Please enter last name";
           $("#error_lastname").html(error_lastname);
@@ -48,9 +51,9 @@ $(document).ready(function () {
 
       // job title validation
 
-      $(".jobtitle").blur(function (e) {
+      $("#jobtitle").blur(function (e) {
         e.preventDefault();
-        var jobtitle = $(".jobtitle").val();
+        jobtitle = $("#jobtitle").val();
         if ($.trim(jobtitle).length == 0) {
           error_jobtitle = "Please enter job title";
           $("#error_jobtitle").html(error_jobtitle);
@@ -61,15 +64,16 @@ $(document).ready(function () {
       });
 
       //email validation
-      $(".email").blur(function (e) {
+      $("#emailid").blur(function (e) {
         e.preventDefault();
         var email_filter =
           /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        var email = $(".email").val();
-        if ($.trim(email).length == 0) {
+        emailid = $("#emailid").val();
+
+        if ($.trim(emailid).length == 0) {
           error_email = "Please enter email";
           $("#error_email").html(error_email);
-        } else if (!email_filter.test(email)) {
+        } else if (!email_filter.test(emailid)) {
           error_email = "Please enter valid email";
           $("#error_email").html(error_email);
         } else {
@@ -82,8 +86,9 @@ $(document).ready(function () {
       $("#select_department").blur(function (e) {
         e.preventDefault();
 
-        var selectDept = $("#select_department").val();
-        if ($.trim(selectDept).length == 0) {
+        department = $("#select_department").val();
+
+        if ($.trim(department).length == 0) {
           error_dept = "Please select department";
           $("#error_dept").html(error_dept);
         } else {
@@ -91,6 +96,12 @@ $(document).ready(function () {
           $("#error_dept").html(error_dept);
         }
       });
+
+      console.log(firstname);
+      console.log(lastname);
+      console.log(jobtitle);
+      console.log(emailid);
+      console.log(department);
 
       //add personnel record AJAX CALL
       $.ajax({
@@ -101,12 +112,12 @@ $(document).ready(function () {
           firstName: firstname,
           lastName: lastname,
           jobTitle: jobtitle,
-          email: email,
-          departmentID: selectDept,
+          email: emailid,
+          departmentID: department,
         },
         success: function (data) {
           console.log(data);
-          //display added data on table
+          //     //display added data on table
 
           $("#msgSuccess").append("*Data successfully inserted.");
           $("#addpersonnelForm").trigger("reset");
@@ -114,6 +125,7 @@ $(document).ready(function () {
           loadPersonnelTable();
         },
         error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR);
           console.log(jqXHR.textStatus);
         },
       });
