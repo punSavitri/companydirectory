@@ -198,22 +198,20 @@
                       <option value="">select department</option>
                     </select>
                   </div>
-                  <button
-                    type="submit"
-                    class="btn btn-success my-2"
-                    id="btnadd"
-                  >
-                    Add
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                    id="button_close"
-                  >
-                    Close
-                  </button>
                 </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success my-2" id="btnadd">
+                  Add
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-dismiss="modal"
+                  id="button_close"
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
@@ -462,11 +460,11 @@
                 <form id="form">
                   <p
                     id="message-success"
-                    class="text-success text-center fs-5 mt-2 mb-2"
+                    class="text-success text-center mt-2 mb-2"
                   ></p>
                   <p
                     id="message-error"
-                    class="text-danger text-center fs-5 mt-2 mb-2"
+                    class="text-danger text-center mt-2 mb-2"
                   ></p>
                   <div class="form-group">
                     <input
@@ -506,6 +504,33 @@
                   Close
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal2 to show error/warning message -->
+
+        <div
+          class="modal fade"
+          id="errorModal2"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-danger">
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p id="error2"></p>
+              </div>
+              <div class="modal-footer"></div>
             </div>
           </div>
         </div>
@@ -574,7 +599,9 @@
                   <div class="form-group">
                     <label>Location </label>
 
-                    <select class="form-control update_location_ID"></select>
+                    <select class="form-control update_location_ID">
+                      <option value="">select location</option>
+                    </select>
                   </div>
                 </form>
               </div>
@@ -701,6 +728,10 @@
                   <input type="hidden" class="form-control" id="locationId" />
                   <div class="form-group">
                     <label for="location_name">New Location Name</label
+                    ><br /><small
+                      id="error_location"
+                      class="text-center text-warning"
+                    ></small
                     ><input
                       type="text"
                       id="location_name"
@@ -750,7 +781,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title" id="exampleModalLabel">
-                  Edit/Update Location
+                  Edit Location
                 </h1>
                 <button
                   type="button"
@@ -770,15 +801,12 @@
                     />
                   </div>
                   <div class="form-group my-2">
-                    <label>Edit Location Name</label>
-
+                    <label>Edit Location</label><br /><small
+                      id="errorlocation"
+                      class="text-center text-warning"
+                    ></small>
                     <select class="form-control" id="selectLocation"></select>
                   </div>
-                  <!-- <input
-                      type="text"
-                      class="form-control locationname"
-                      id="locationname"
-                    /> -->
                 </form>
               </div>
               <div class="modal-footer">
