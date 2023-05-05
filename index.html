@@ -110,6 +110,7 @@
         </div>
         <!-- search result display -->
         <div id="search_term_output"></div>
+        <div id="dataNotFound"></div>
 
         <!-- Add Employee Modal -->
         <!-- modal -->
@@ -117,7 +118,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title text-center fs-5">Add Employee</h1>
+                <h5 class="modal-title text-center fs-5">Add Employee</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -127,16 +128,18 @@
               </div>
               <div class="modal-body">
                 <form id="addpersonnelForm">
-                  <p id="msgSuccess" class="text-success text-center fs-4"></p>
-                  <p id="msgError" class="text-warning text-center fs-4"></p>
+                  <p id="msgSuccess" class="text-success text-center"></p>
+                  <p id="msgError" class="text-warning text-center"></p>
                   <small> Complete the form below to add employee </small>
-                  <input type="hidden" id="personnelId" />
+                  <div class="form-group">
+                    <input
+                      type="hidden"
+                      id="personnelId"
+                      class="form-control my-2"
+                    />
+                  </div>
                   <div class="form-group">
                     <label for="firstname">First Name</label
-                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
-                      id="error_firstname"
-                      class="text-center text-warning"
-                    ></small
                     ><input
                       type="text"
                       id="firstname"
@@ -147,10 +150,6 @@
 
                   <div class="form-group">
                     <label for="lastname">Last Name</label
-                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
-                      id="error_lastname"
-                      class="text-center text-warning"
-                    ></small
                     ><input
                       type="text"
                       id="lastname"
@@ -160,10 +159,6 @@
                   </div>
                   <div class="form-group">
                     <label for="jobtitle">Job Title</label
-                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
-                      id="error_jobtitle"
-                      class="text-center text-warning"
-                    ></small
                     ><input
                       type="text"
                       id="jobtitle"
@@ -173,10 +168,6 @@
                   </div>
                   <div class="form-group">
                     <label for="emailid">Email</label
-                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
-                      id="error_email"
-                      class="text-center text-warning"
-                    ></small
                     ><input
                       type="email"
                       id="emailid"
@@ -185,11 +176,7 @@
                     />
                   </div>
                   <div class="form-group">
-                    <label for="select_department">Department</label
-                    >&nbsp;&nbsp;&nbsp;&nbsp;<small
-                      id="error_dept"
-                      class="text-center text-warning"
-                    ></small>
+                    <label for="select_department">Department</label>
                     <select
                       class="form-select form-select-sm select_department my-2"
                       id="select_department"
@@ -221,7 +208,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title text-center fs-5">Warning</h1>
+                <h5 class="modal-title text-center">Warning</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -230,7 +217,7 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <p id="validation_error"></p>
+                <p id="error1"></p>
 
                 <button
                   type="button"
@@ -261,7 +248,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title">Edit Employee</h1>
+                <h5 class="modal-title">Edit Employee</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -340,7 +327,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title">Delete Record</h1>
+                <h5 class="modal-title">Delete Record</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -446,9 +433,9 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                <h5 class="modal-title fs-5" id="exampleModalLabel">
                   Add Department
-                </h1>
+                </h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -572,9 +559,9 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title" id="exampleModalLabel">
+                <h5 class="modal-title" id="exampleModalLabel">
                   Edit Department
-                </h1>
+                </h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -632,7 +619,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title">Delete Record</h1>
+                <h5 class="modal-title">Delete Record</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -705,9 +692,9 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                <h5 class="modal-title fs-5" id="exampleModalLabel">
                   Add Location
-                </h1>
+                </h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -718,12 +705,9 @@
               <div class="modal-body">
                 <p
                   id="msg-success"
-                  class="text-success text-center fs-5 mt-2 mb-2"
+                  class="text-success text-center mt-2 mb-2"
                 ></p>
-                <p
-                  id="msg-error"
-                  class="text-danger text-center fs-5 mt-2 mb-2"
-                ></p>
+                <p id="msg-error" class="text-danger text-center mt-2 mb-2"></p>
                 <form id="locationForm">
                   <input type="hidden" class="form-control" id="locationId" />
                   <div class="form-group">
@@ -760,6 +744,33 @@
             </div>
           </div>
         </div>
+        <!-- Modal3 to show error/warning message -->
+
+        <div
+          class="modal fade"
+          id="errorModal3"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-danger">
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p id="error3"></p>
+              </div>
+              <div class="modal-footer"></div>
+            </div>
+          </div>
+        </div>
 
         <!-- display all locations in bootstrap cards ones page load  -->
         <div class="container location py-3 ml-4">
@@ -780,9 +791,9 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title" id="exampleModalLabel">
+                <h5 class="modal-title" id="exampleModalLabel">
                   Edit Location
-                </h1>
+                </h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -801,17 +812,17 @@
                     />
                   </div>
                   <div class="form-group my-2">
-                    <label>Edit Location</label><br /><small
-                      id="errorlocation"
-                      class="text-center text-warning"
-                    ></small>
-                    <select class="form-control" id="selectLocation"></select>
+                    <label>Edit Location</label>
+                    <select
+                      class="form-control selectLocation"
+                      id="selectLocation"
+                    ></select>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="editlocbtn">
-                  Update
+                <button type="submit" class="btn btn-success" id="editlocbtn">
+                  Edit
                 </button>
                 <button
                   id="Close_Button"
@@ -832,7 +843,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title">Delete Record</h1>
+                <h5 class="modal-title">Do you want to delete a record ?</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -841,26 +852,27 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <p id="deleteMessage" class="text-center text-success"></p>
+                <p id="deleteMessage" class="text-center text-danger"></p>
                 <form id="deletelocForm">
                   <input type="hidden" id="locationid" />
-
-                  <button
-                    type="button "
-                    class="btn btn-danger"
-                    id="DeleteLocationBtn"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    id="closelocation"
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
                 </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  id="DeleteLocationBtn"
+                >
+                  Delete
+                </button>
+                <button
+                  id="closelocation"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>

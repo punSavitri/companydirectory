@@ -12,32 +12,59 @@ $(document).ready(function () {
     $("#btnadd").click(function (event) {
       event.preventDefault();
       //get input value from user
-      //add personnel record AJAX CALL
-      $.ajax({
-        url: "php/insertPersonnel.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-          firstName: firstname,
-          lastName: lastname,
-          jobTitle: jobtitle,
-          email: emailid,
-          departmentID: department,
-        },
-        success: function (data) {
-          console.log(data);
-          //     //display added data on table
+      var firstname = $("#firstname").val();
+      console.log(firstname);
+      var lastname = $("#lastname").val();
+      console.log(lastname);
+      var jobtitle = $("#jobtitle").val();
+      console.log(jobtitle);
+      var emailid = $("#emailid").val();
+      console.log(emailid);
+      var department = $("#select_department").val();
+      console.log(department);
 
-          $("#msgSuccess").append("*Data successfully inserted.");
-          $("#addpersonnelForm").trigger("reset");
-          $("#output").html("");
-          loadPersonnelTable();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR);
-          console.log(jqXHR.textStatus);
-        },
-      });
+      //check form validation
+      if (firstname == "") {
+        $("#error1").html("Please enter first name.");
+        $("#errorModal").modal("show");
+      } else if (lastname == "") {
+        $("#error1").html("Please enter last name.");
+        $("#errorModal").modal("show");
+      } else if (jobtitle == "") {
+        $("#error1").html("Please enter job title.");
+        $("#errorModal").modal("show");
+      } else if (emailid == "") {
+        $("#error1").html("Please enter valid email id.");
+        $("#errorModal").modal("show");
+      } else if (department == "") {
+        $("#error1").html("Please select department.");
+        $("#errorModal").modal("show");
+      } else {
+        $.ajax({
+          url: "php/insertPersonnel.php",
+          type: "POST",
+          dataType: "json",
+          data: {
+            firstName: firstname,
+            lastName: lastname,
+            jobTitle: jobtitle,
+            email: emailid,
+            departmentID: department,
+          },
+          success: function (data) {
+            console.log(data);
+            //display added data on table
+
+            $("#msgSuccess").append("*Data successfully inserted.");
+            $("#addpersonnelForm").trigger("reset");
+            $("#output").html("");
+            loadPersonnelTable();
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.textStatus);
+          },
+        });
+      }
     });
     $("#button_close").click(function () {
       $("#addpersonnelForm").trigger("reset");
@@ -45,86 +72,6 @@ $(document).ready(function () {
     });
   }
   insertRecord();
-
-  // form validation personnel form
-  // firstname
-  $("#firstname").blur(function (e) {
-    e.preventDefault();
-    var firstname = $("#firstname").val();
-    console.log(firstname);
-    if ($.trim(firstname).length == 0) {
-      error_firstname = "Please enter first name";
-      $("#error_firstname").text(error_firstname);
-    } else {
-      error_firstname = "";
-      $("#error_firstname").text(error_firstname);
-    }
-  });
-
-  //last name validation
-  $("#lastname").blur(function (e) {
-    e.preventDefault();
-    var lastname = $("#lastname").val();
-    console.log(lastname);
-    if ($.trim(lastname).length == 0) {
-      error_lastname = "Please enter last name";
-      $("#error_lastname").html(error_lastname);
-    } else {
-      error_lastname = "";
-      $("#error_lastname").html(error_lastname);
-    }
-  });
-
-  // job title validation
-
-  $("#jobtitle").blur(function (e) {
-    e.preventDefault();
-    var jobtitle = $("#jobtitle").val();
-    console.log(jobtitle);
-    if ($.trim(jobtitle).length == 0) {
-      error_jobtitle = "Please enter job title";
-      $("#error_jobtitle").html(error_jobtitle);
-    } else {
-      error_jobtitle = "";
-      $("#error_jobtitle").html(error_jobtitle);
-    }
-  });
-
-  //email validation
-  $("#emailid").blur(function (e) {
-    e.preventDefault();
-    var email_filter =
-      /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    var emailid = $("#emailid").val();
-    console.log(emailid);
-
-    if ($.trim(emailid).length == 0) {
-      error_email = "Please enter email";
-      $("#error_email").html(error_email);
-    } else if (!email_filter.test(emailid)) {
-      error_email = "Please enter valid email";
-      $("#error_email").html(error_email);
-    } else {
-      error_email = "";
-      $("#error_email").html(error_email);
-    }
-  });
-  // department validation
-
-  $("#select_department").blur(function (e) {
-    e.preventDefault();
-
-    var department = $("#select_department").val();
-    console.log(department);
-
-    if ($.trim(department).length == 0) {
-      error_dept = "Please select department";
-      $("#error_dept").html(error_dept);
-    } else {
-      error_dept = "";
-      $("#error_dept").html(error_dept);
-    }
-  });
 
   // // adding event to prevent automactically submit form
   $("#addpersonnelForm").on("keyup keypress", function (e) {
@@ -351,7 +298,6 @@ $(document).ready(function () {
         },
         success: function (data) {
           console.log(data);
-
           $("#search_term_output").html(
             "<div class='container'><div class='row g-2'>   <div class='col-md-6 col-lg-12'><table class='table table-responsive-md table-hover table-striped table-bordered text-center'><thead><tr><th class='th-sm'>First Name</th><th class='th-sm'>Last Name</th><th class='th-sm'>Job Title</th><th class='th-sm'>Email</th><th  class='th-sm'>Department</th><th class='th-sm'>Location</th></tr></thead><tbody><tr><td>" +
               data.data[0].firstName +
@@ -367,6 +313,10 @@ $(document).ready(function () {
               data.data[0].location +
               "</td></tr></tbody></table></div></div></div>"
           );
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR);
+          console.log(jqXHR.textStatus);
         },
       });
     } else {
@@ -513,6 +463,9 @@ $(document).ready(function () {
         $(".update_location_ID").val(data.data[0]["locationID"]);
         $("#editdepartmentModal").modal("show");
       },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
     });
   });
 
@@ -632,8 +585,8 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         for (var i = 0; i < data.data.length; i++) {
-          $("#row").append(
-            "<div class='col-md-6 col-lg-4'><div class='card text-center border-light'  id='card'><div class='card-body bg-light' id='card-body'><p class='card-text text-center' id='card-text'>Location Name :&nbsp;" +
+          $("#row").prepend(
+            "<div class='col-md-6 col-lg-4'><div class='card text-center border-light'  id='card'><div class='card-body bg-light' id='show_data'><p class='card-text text-center' id='card-text'>Location Name :&nbsp;" +
               data.data[i].name +
               "</p></div><div class='card-footer'><button class='btn btn-success me-3 btnedit' id='btnedit' data-bs-toggle='modal' data-bs-target='#editLocationModal' title='Edit/Update Record' data-location-id=" +
               data.data[i].id +
@@ -671,6 +624,8 @@ $(document).ready(function () {
         console.log(data);
         //display on website
         $("#msg-success").html("Data has been successfully inserted.");
+        $("#row").html("");
+        loadLocation();
         $("#locationForm").trigger("reset");
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -691,7 +646,7 @@ $(document).ready(function () {
     console.log(locationName);
 
     if ($.trim(locationName).length == 0) {
-      error_location = "Location name is required.";
+      error_location = "Please enter location name";
       $("#error_location").text(error_location);
     } else {
       error_location = "";
@@ -701,7 +656,7 @@ $(document).ready(function () {
 
   // Edit location
   //adding event to get id from edit location button
-  $(document).on("click", ".btnedit", function () {
+  $(document).on("click", "#btnedit", function () {
     location_id = $(this).data("location-id");
     console.log(location_id);
 
@@ -716,7 +671,7 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         $("#updateLocation").val(data.data.location[0]["id"]);
-        $("#locationname").val(data.data.location[0]["name"]);
+        $("#selectLocation").val(data.data.location[0]["name"]);
         $("#editLocationModal").modal("show");
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -751,39 +706,39 @@ $(document).ready(function () {
     console.log(nameLocation);
 
     // //Check form validation if any field is empty
-    // if (nameLocation == "") {
-    //   alert("Location name is required.");
-    // } else {
-
-    $.ajax({
-      url: "php/editLocation.php",
-      method: "POST",
-      dataType: "json",
-      data: {
-        id: location,
-        name: nameLocation,
-      },
-      success: function (data) {
-        console.log(data);
-        $("#locationform").trigger("reset");
-        $("#msg").html("Data has been successfully updated.");
-        $("#editLocationModal").modal("show");
-      },
-    });
-    // }
-  });
-  // form validation
-  $("#selectLocation").blur(function (e) {
-    e.preventDefault();
-    var nameLocation = $("#selectLocation").val();
-    console.log(nameLocation);
-
-    if ($.trim(nameLocation).length == 0) {
-      error_location = "Please select location";
-      $("#errorlocation").text(error_location);
+    if (nameLocation == "") {
+      $("#error3").html("Please select location");
+      $("#errorModal3").modal("show");
     } else {
-      error_location = "";
-      $("#errorlocation").text(error_location);
+      $.ajax({
+        url: "php/editLocation.php",
+        method: "POST",
+        dataType: "json",
+        data: {
+          id: location,
+          name: nameLocation,
+        },
+        success: function (data) {
+          console.log(data);
+          $("#selectLocation").val(data.data.location[0]["name"]);
+
+          $("#msg").html("Data has been successfully updated.");
+          $("#row").html("");
+          loadLocation();
+          $("#locationform").trigger("reset");
+
+          // $("#editLocationModal").modal("show");
+        },
+      });
+    }
+  });
+
+  // // adding event to prevent automactically submit form
+  $("#locationform").on("keyup keypress", function (e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) {
+      e.preventDefault();
+      return false;
     }
   });
 
@@ -827,6 +782,10 @@ $(document).ready(function () {
               success: function (data) {
                 console.log(data);
                 $("#deleteMessage").html("Data deleted.");
+                $("#row").html("");
+                loadLocation();
+                // $("#deleteLocationModal").modal("show");
+                $("#deletelocForm").trigger("reset");
               },
             });
           });
@@ -839,7 +798,7 @@ $(document).ready(function () {
   });
 
   $("#closelocation").click(function () {
-    $("#deleteMessage").html("Data deleted.");
+    $("#deleteMessage").html("");
     $("#deletelocForm").trigger("reset");
   });
 
