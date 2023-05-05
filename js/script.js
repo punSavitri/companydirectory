@@ -656,7 +656,7 @@ $(document).ready(function () {
 
   // Edit location
   //adding event to get id from edit location button
-  $(document).on("click", "#btnedit", function () {
+  $(document).on("click", ".btnedit", function () {
     location_id = $(this).data("location-id");
     console.log(location_id);
 
@@ -679,10 +679,10 @@ $(document).ready(function () {
       },
     });
   });
-
+  //prepopulate select location name
   $.ajax({
-    method: "POST",
     url: "php/getAllLocations.php",
+    method: "POST",
     dataType: "json",
     success: function (data) {
       console.log(data);
@@ -698,39 +698,33 @@ $(document).ready(function () {
   });
 
   //adding event to edit button
-  $("#editlocbtn").click(function () {
+  $(".editlocbtn").click(function () {
     var location = $("#updateLocation").val();
     console.log(location);
 
     var nameLocation = $("#selectLocation").val();
     console.log(nameLocation);
 
-    // //Check form validation if any field is empty
-    if (nameLocation == "") {
-      $("#error3").html("Please select location");
-      $("#errorModal3").modal("show");
-    } else {
-      $.ajax({
-        url: "php/editLocation.php",
-        method: "POST",
-        dataType: "json",
-        data: {
-          id: location,
-          name: nameLocation,
-        },
-        success: function (data) {
-          console.log(data);
-          $("#selectLocation").val(data.data.location[0]["name"]);
+    $.ajax({
+      url: "php/editLocation.php",
+      method: "POST",
+      dataType: "json",
+      data: {
+        id: location,
+        name: nameLocation,
+      },
+      success: function (data) {
+        console.log(data);
 
-          $("#msg").html("Data has been successfully updated.");
-          $("#row").html("");
-          loadLocation();
-          $("#locationform").trigger("reset");
-
-          // $("#editLocationModal").modal("show");
-        },
-      });
-    }
+        $("#msg").html("Data has been successfully updated.");
+        $("#row").html("");
+        loadLocation();
+        $("#locationform").trigger("reset");
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
   });
 
   // // adding event to prevent automactically submit form
@@ -786,6 +780,9 @@ $(document).ready(function () {
                 loadLocation();
                 // $("#deleteLocationModal").modal("show");
                 $("#deletelocForm").trigger("reset");
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.textStatus);
               },
             });
           });
