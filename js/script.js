@@ -298,6 +298,7 @@ $(document).ready(function () {
         },
         success: function (data) {
           console.log(data);
+
           $("#search_term_output").html(
             "<div class='container'><div class='row g-2'>   <div class='col-md-6 col-lg-12'><table class='table table-responsive-md table-hover table-striped table-bordered text-center'><thead><tr><th class='th-sm'>First Name</th><th class='th-sm'>Last Name</th><th class='th-sm'>Job Title</th><th class='th-sm'>Email</th><th  class='th-sm'>Department</th><th class='th-sm'>Location</th></tr></thead><tbody><tr><td>" +
               data.data[0].firstName +
@@ -344,7 +345,7 @@ $(document).ready(function () {
               result.data[i].locationID +
               "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
               result.data[i].id +
-              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger' id='delete_depart_button' data-bs-toggle='modal' data-bs-target='#deleteDepartmentModal' title='Delete Record' data-depart_id1=" +
+              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete_depart_button' id='delete_depart_button' data-bs-toggle='modal' data-bs-target='#deleteDepartmentModal' title='Delete Record' data-depart_id1=" +
               result.data[i].id +
               "><i class='fa-solid fa-trash'></i></button></td></tr>"
           );
@@ -525,7 +526,7 @@ $(document).ready(function () {
 
   // adding event to delete button/icon on page to get dept id
 
-  $(document).on("click", "#delete_depart_button", function () {
+  $(document).on("click", ".delete_depart_button", function () {
     //deptId global variable
     deptid = $(this).data("depart_id1");
     console.log(deptid);

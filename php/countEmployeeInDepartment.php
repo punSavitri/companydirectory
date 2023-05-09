@@ -90,7 +90,7 @@ $output['status']['description'] = "success";
 
 $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 
-$output['data'] = $numEmployeeWithLoc;
+$output['data'] = $numEmployeeInDept;
 
 mysqli_close($conn);
 
