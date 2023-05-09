@@ -119,8 +119,6 @@ $(document).ready(function () {
               result.data[i].jobTitle +
               "</td><td>" +
               result.data[i].email +
-              "</td><td>" +
-              result.data[i].departmentID +
               "</td><td><button class='btn btn-success btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='Edit/Update Record' data-id=" +
               result.data[i].id +
               "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger btn_delete' data-bs-toggle='modal' data-bs-target='#deleteModal'    title='Delete Record' id='btn_delete' data-id1=" +
@@ -341,8 +339,6 @@ $(document).ready(function () {
           $("#load-data").append(
             "<tr><td>" +
               result.data[i].name +
-              "</td><td>" +
-              result.data[i].locationID +
               "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
               result.data[i].id +
               "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete_depart_button' id='delete_depart_button' data-bs-toggle='modal' data-bs-target='#deleteDepartmentModal' title='Delete Record' data-depart_id1=" +
@@ -418,7 +414,7 @@ $(document).ready(function () {
 
     $("#depart_Close_btn").click(function () {
       $("#form").trigger("reset");
-      $("#message-success").append("");
+      $("#message-success").html("");
     });
   }
   insert_department();
