@@ -553,6 +553,9 @@ $(document).ready(function () {
               success: function (data) {
                 console.log(data);
                 $("#Message").html("Data deleted.");
+                $("#load-data").html("");
+                loadDeptTable();
+                $("#DeleteDeptForm").trigger("reset");
               },
               error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR.textStatus);
@@ -568,6 +571,7 @@ $(document).ready(function () {
   });
   $("#closeBtn").click(function () {
     $("#DeleteDeptForm").trigger("reset");
+    $("#Message").html("");
   });
 
   //////////////////////////  Location page start from here///////////////////////////////
@@ -582,7 +586,7 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         for (var i = 0; i < data.data.length; i++) {
-          $("#row").prepend(
+          $("#row").append(
             "<div class='col-md-6 col-lg-4'><div class='card text-center border-light'  id='card'><div class='card-body bg-light' id='show_data'><p class='card-text text-center' id='card-text'>Location Name :&nbsp;" +
               data.data[i].name +
               "</p></div><div class='card-footer'><button class='btn btn-success me-3 btnedit' id='btnedit' data-bs-toggle='modal' data-bs-target='#editLocationModal' title='Edit/Update Record' data-location-id=" +
@@ -775,7 +779,7 @@ $(document).ready(function () {
                 $("#deleteMessage").html("Data deleted.");
                 $("#row").html("");
                 loadLocation();
-                // $("#deleteLocationModal").modal("show");
+                $("#deleteLocationModal").modal("show");
                 $("#deletelocForm").trigger("reset");
               },
               error: function (jqXHR, textStatus, errorThrown) {
@@ -792,8 +796,8 @@ $(document).ready(function () {
   });
 
   $("#closelocation").click(function () {
-    $("#deleteMessage").html("");
     $("#deletelocForm").trigger("reset");
+    $("#deleteMessage").html("");
   });
 
   //document ready()callback function end
