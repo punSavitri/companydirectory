@@ -743,7 +743,7 @@ $(document).ready(function () {
     $("#msg").html("");
   });
 
-  //........DELETE RECORD .......///
+  //........DELETE location RECORD .......///
 
   //adding event to get location id from delete button on page
 
@@ -763,7 +763,9 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         if (data.data > 0) {
-          $("#deleteMessage").html("Data cannot be deleted.");
+          $("#delete2Message").html("Data cannot be deleted.");
+          $("#delete2LocationModal").modal("show");
+          $("#delete2locForm").trigger("reset");
         } else {
           // adding event to delete location if there is no department in that location
           $("#DeleteLocationBtn").click(function () {

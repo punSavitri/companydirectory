@@ -890,8 +890,30 @@
               </div>
             </div>
           </div>
-          <!-- end of delete location modal -->
-          <!-- -----------------------------------Location page end ------------------------>
+          
+          <!-- delete2 when record cannot be deleted location modal(delete2LocationModal) start -->
+          <div class="modal fade" id="delete2LocationModal">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <p id="delete2Message" class="text-center text-danger"></p>
+                  <form id="delete2locForm">
+                    <input type="hidden" id="locationid" />
+                  </form>
+                </div>                
+              </div>
+            </div>
+          </div>
+          <!-- -------------------------------Location page end ------------------------>
         </div>
         <!-- Location tab content div end -->
       </div>
