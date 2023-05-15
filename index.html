@@ -856,7 +856,6 @@
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Do you want to delete a record ?</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -866,6 +865,7 @@
                 </div>
                 <div class="modal-body">
                   <p id="deleteMessage" class="text-center text-danger"></p>
+
                   <form id="deletelocForm">
                     <input type="hidden" id="locationid" />
                   </form>
@@ -890,13 +890,12 @@
               </div>
             </div>
           </div>
-          
+
           <!-- delete2 when record cannot be deleted location modal(delete2LocationModal) start -->
           <div class="modal fade" id="delete2LocationModal">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  
                   <button
                     type="button"
                     class="btn-close"
@@ -906,10 +905,17 @@
                 </div>
                 <div class="modal-body">
                   <p id="delete2Message" class="text-center text-danger"></p>
-                  <form id="delete2locForm">
-                    <input type="hidden" id="locationid" />
-                  </form>
-                </div>                
+                </div>
+                <div class="modal-footer">
+                  <button
+                    id="Closelocation"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             </div>
           </div>

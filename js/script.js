@@ -1,5 +1,12 @@
-//global variable
-var getdepartmentId;
+
+
+//global variables
+var getdepartmentId; // used in edit department code
+
+var location_id; //used for editing location
+
+var deptid; //used in department delete record
+var locid;
 var idpersonnel;
 var delete_id;
 
@@ -112,18 +119,18 @@ $(document).ready(function () {
         for (var i = 0; i < result.data.length; i++) {
           $("#output").append(
             "<tr><td>" +
-              result.data[i].firstName +
-              "</td><td>" +
-              result.data[i].lastName +
-              "</td><td>" +
-              result.data[i].jobTitle +
-              "</td><td>" +
-              result.data[i].email +
-              "</td><td><button class='btn btn-success btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='Edit/Update Record' data-id=" +
-              result.data[i].id +
-              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger btn_delete' data-bs-toggle='modal' data-bs-target='#deleteModal'    title='Delete Record' id='btn_delete' data-id1=" +
-              result.data[i].id +
-              "><i class='fa-solid fa-trash'></i></button></td></tr></tbody></table></div></div></div>"
+            result.data[i].firstName +
+            "</td><td>" +
+            result.data[i].lastName +
+            "</td><td>" +
+            result.data[i].jobTitle +
+            "</td><td>" +
+            result.data[i].email +
+            "</td><td><button class='btn btn-success btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='Edit/Update Record' data-id=" +
+            result.data[i].id +
+            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger btn_delete' data-bs-toggle='modal' data-bs-target='#deleteModal'    title='Delete Record' id='btn_delete' data-id1=" +
+            result.data[i].id +
+            "><i class='fa-solid fa-trash'></i></button></td></tr></tbody></table></div></div></div>"
           );
         }
       },
@@ -299,18 +306,18 @@ $(document).ready(function () {
 
           $("#search_term_output").html(
             "<div class='container'><div class='row g-2'>   <div class='col-md-6 col-lg-12'><table class='table table-responsive-md table-hover table-striped table-bordered text-center'><thead><tr><th class='th-sm'>First Name</th><th class='th-sm'>Last Name</th><th class='th-sm'>Job Title</th><th class='th-sm'>Email</th><th  class='th-sm'>Department</th><th class='th-sm'>Location</th></tr></thead><tbody><tr><td>" +
-              data.data[0].firstName +
-              "</td><td>" +
-              data.data[0].lastName +
-              "</td><td>" +
-              data.data[0].jobTitle +
-              "</td><td>" +
-              data.data[0].email +
-              "</td><td>" +
-              data.data[0].department +
-              "</td><td>" +
-              data.data[0].location +
-              "</td></tr></tbody></table></div></div></div>"
+            data.data[0].firstName +
+            "</td><td>" +
+            data.data[0].lastName +
+            "</td><td>" +
+            data.data[0].jobTitle +
+            "</td><td>" +
+            data.data[0].email +
+            "</td><td>" +
+            data.data[0].department +
+            "</td><td>" +
+            data.data[0].location +
+            "</td></tr></tbody></table></div></div></div>"
           );
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -338,12 +345,12 @@ $(document).ready(function () {
         for (var i = 0; i < result.data.length; i++) {
           $("#load-data").append(
             "<tr><td>" +
-              result.data[i].name +
-              "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
-              result.data[i].id +
-              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete_depart_button' id='delete_depart_button' data-bs-toggle='modal' data-bs-target='#deleteDepartmentModal' title='Delete Record' data-depart_id1=" +
-              result.data[i].id +
-              "><i class='fa-solid fa-trash'></i></button></td></tr>"
+            result.data[i].name +
+            "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
+            result.data[i].id +
+            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete_depart_button' id='delete_depart_button' data-bs-toggle='modal' data-bs-target='#deleteDepartmentModal' title='Delete Record' data-depart_id1=" +
+            result.data[i].id +
+            "><i class='fa-solid fa-trash'></i></button></td></tr>"
           );
         }
       },
@@ -588,12 +595,12 @@ $(document).ready(function () {
         for (var i = 0; i < data.data.length; i++) {
           $("#row").append(
             "<div class='col-md-6 col-lg-4'><div class='card text-center border-light'  id='card'><div class='card-body bg-light' id='show_data'><p class='card-text text-center' id='card-text'>Location Name :&nbsp;" +
-              data.data[i].name +
-              "</p></div><div class='card-footer'><button class='btn btn-success me-3 btnedit' id='btnedit' data-bs-toggle='modal' data-bs-target='#editLocationModal' title='Edit/Update Record' data-location-id=" +
-              data.data[i].id +
-              "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger btndelete' id='btndelete' data-bs-toggle='modal' data-bs-target='#deleteLocationModal'  title='Delete Record' data-location-id1=" +
-              data.data[i].id +
-              "><i class='fa-solid fa-trash'></i></button></div></div></div>"
+            data.data[i].name +
+            "</p></div><div class='card-footer'><button class='btn btn-success me-3 btnedit' id='btnedit' data-bs-toggle='modal' data-bs-target='#editLocationModal' title='Edit/Update Record' data-location-id=" +
+            data.data[i].id +
+            "><i class='fa-solid fa-pen-to-square'></i></button><button class='btn btn-danger btndelete' id='btndelete' title='Delete Record' data-location-id1=" +
+            data.data[i].id +
+            "><i class='fa-solid fa-trash'></i></button></div></div></div>"
           );
         }
       },
@@ -747,10 +754,11 @@ $(document).ready(function () {
 
   //adding event to get location id from delete button on page
 
-  $(document).on("click", "#btndelete", function () {
+  $(document).on("click", ".btndelete", function () {
     // get the location id ones click on delete button/icon
-    var locid = $(this).data("location-id1");
+    locid = $(this).data("location-id1");
     console.log(locid);
+
 
     // checking number of department in particular location before to delete location
     $.ajax({
@@ -765,30 +773,30 @@ $(document).ready(function () {
         if (data.data > 0) {
           $("#delete2Message").html("Data cannot be deleted.");
           $("#delete2LocationModal").modal("show");
-          $("#delete2locForm").trigger("reset");
+
         } else {
-          // adding event to delete location if there is no department in that location
-          $("#DeleteLocationBtn").click(function () {
-            $.ajax({
-              url: "php/deleteLocationByID.php",
-              type: "POST",
-              dataType: "json",
-              data: {
-                id: locid,
-              },
-              success: function (data) {
-                console.log(data);
-                $("#deleteMessage").html("Data deleted.");
-                $("#row").html("");
-                loadLocation();
-                $("#deleteLocationModal").modal("show");
-                $("#deletelocForm").trigger("reset");
-              },
-              error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR.textStatus);
-              },
-            });
+          $.ajax({
+            url: "php/deleteLocationByID.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+              id: locid,
+            },
+            success: function (data) {
+              console.log(data);
+              $("#deleteLocationModal").modal("show");
+
+              $("#deleteMessage").html("Data deleted.");
+              $("#row").html("");
+              loadLocation();
+
+              $("#deletelocForm").trigger("reset");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log(jqXHR.textStatus);
+            },
           });
+
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -802,12 +810,13 @@ $(document).ready(function () {
     $("#deleteMessage").html("");
   });
 
+  $(function () {
+    $("#DeleteLocationBtn").click(function () {
+      $("#deleteLocationModal").modal("show");
+      $("#deleteMessage").html("Data deleted.");
+    })
+  })
+
   //document ready()callback function end
 });
 
-//global variables
-var getdepartmentId; // used in edit department code
-
-var location_id; //used for editing location
-
-var deptid; //used in department delete record
