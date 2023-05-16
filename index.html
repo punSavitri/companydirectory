@@ -617,12 +617,12 @@
           </div>
           <!-- Edit/Update modal end -->
 
-          <!-- delete department modal start -->
+          <!-- delete department modal1 start -->
           <div class="modal fade" id="deleteDepartmentModal">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Delete Record</h5>
+                  <h5 class="modal-title">Do you want to delete record ?</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -630,7 +630,6 @@
                     aria-label="Close"
                   ></button>
                 </div>
-
                 <div class="modal-body">
                   <p id="Message" class="text-center text-warning"></p>
                   <form action="" id="DeleteDeptForm">
@@ -657,7 +656,39 @@
               </div>
             </div>
           </div>
-          <!-- delete department modal end -->
+          <!-- delete department modal 1 end -->
+
+          <!-- delete department modal2 start -->
+          <div class="modal fade" id="delete2DepartmentModal">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+
+                <div class="modal-body">
+                  <p id="DelMessage" class="text-center text-warning"></p>
+
+                  <div class="modal-footer">
+                    <button
+                      id="closeBtn"
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- delete department modal2 end -->
         </div>
         <!----------------------------------Department page end here------------------------>
 
@@ -851,11 +882,12 @@
           </div>
           <!-------End  of Edit location Modal -->
 
-          <!-- delete location modal start -->
+          <!-- delete location modal 1 start -->
           <div class="modal fade" id="deleteLocationModal">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
+                  <h5 class="modal-title">Do you want to delete record ?</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -864,34 +896,34 @@
                   ></button>
                 </div>
                 <div class="modal-body">
-                  <p id="deleteMessage" class="text-center text-danger"></p>
-
-                  <form id="deletelocForm">
+                  <p id="deleteMessage" class="text-center text-warning"></p>
+                  <form action="" id="deletelocForm">
                     <input type="hidden" id="locationid" />
                   </form>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    id="DeleteLocationBtn"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    id="closelocation"
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      id="DeleteLocationBtn"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      id="closelocation"
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- delete location modal 1 end -->
 
-          <!-- delete2 when record cannot be deleted location modal(delete2LocationModal) start -->
+          <!-- delete location modal2 start -->
           <div class="modal fade" id="delete2LocationModal">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
@@ -903,22 +935,26 @@
                     aria-label="Close"
                   ></button>
                 </div>
+
                 <div class="modal-body">
-                  <p id="delete2Message" class="text-center text-danger"></p>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    id="Closelocation"
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
+                  <p id="delete2Message" class="text-center text-warning"></p>
+
+                  <div class="modal-footer">
+                    <button
+                      id="Closelocation"
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- delete location modal2 end -->
+
           <!-- -------------------------------Location page end ------------------------>
         </div>
         <!-- Location tab content div end -->

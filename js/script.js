@@ -348,7 +348,7 @@ $(document).ready(function () {
             result.data[i].name +
             "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
             result.data[i].id +
-            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete_depart_button' id='delete_depart_button' data-bs-toggle='modal' data-bs-target='#deleteDepartmentModal' title='Delete Record' data-depart_id1=" +
+            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete_depart_button' id='delete_depart_button' title='Delete Record' data-depart_id1=" +
             result.data[i].id +
             "><i class='fa-solid fa-trash'></i></button></td></tr>"
           );
@@ -545,11 +545,13 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         if (data.data > 0) {
-          $("#Message").html("Data can not be deleted.");
+          $("#DelMessage").html("Data can not be deleted.");
+          $("#delete2DepartmentModal").modal("show");
         } else {
           // adding event to delete record if there is no department in the location
-
+          $("#deleteDepartmentModal").modal("show");
           $("#deleteButton").click(function () {
+
             $.ajax({
               url: "php/deleteDepartmentByID.php",
               type: "POST",
@@ -559,6 +561,7 @@ $(document).ready(function () {
               },
               success: function (data) {
                 console.log(data);
+
                 $("#Message").html("Data deleted.");
                 $("#load-data").html("");
                 loadDeptTable();
@@ -580,6 +583,7 @@ $(document).ready(function () {
     $("#DeleteDeptForm").trigger("reset");
     $("#Message").html("");
   });
+
 
   //////////////////////////  Location page start from here///////////////////////////////
 
@@ -750,7 +754,7 @@ $(document).ready(function () {
     $("#msg").html("");
   });
 
-  //........DELETE location RECORD .......///
+  //........DELETE location RECORD ......./// 
 
   //adding event to get location id from delete button on page
 
@@ -775,27 +779,28 @@ $(document).ready(function () {
           $("#delete2LocationModal").modal("show");
 
         } else {
-          $.ajax({
-            url: "php/deleteLocationByID.php",
-            type: "POST",
-            dataType: "json",
-            data: {
-              id: locid,
-            },
-            success: function (data) {
-              console.log(data);
-              $("#deleteLocationModal").modal("show");
+          $("#deleteLocationModal").modal("show");
+          $("#DeleteLocationBtn").click(function () {
+            $.ajax({
+              url: "php/deleteLocationByID.php",
+              type: "POST",
+              dataType: "json",
+              data: {
+                id: locid,
+              },
+              success: function (data) {
+                console.log(data);
+                $("#deleteMessage").html("Data deleted.");
+                $("#row").html("");
+                loadLocation();
 
-              $("#deleteMessage").html("Data deleted.");
-              $("#row").html("");
-              loadLocation();
-
-              $("#deletelocForm").trigger("reset");
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-              console.log(jqXHR.textStatus);
-            },
-          });
+                $("#deletelocForm").trigger("reset");
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.textStatus);
+              },
+            });
+          })
 
         }
       },
@@ -810,13 +815,7 @@ $(document).ready(function () {
     $("#deleteMessage").html("");
   });
 
-  $(function () {
-    $("#DeleteLocationBtn").click(function () {
-      $("#deleteLocationModal").modal("show");
-      $("#deleteMessage").html("Data deleted.");
-    })
-  })
-
+  ///////////////////////////////////////
   //document ready()callback function end
 });
 
