@@ -34,9 +34,8 @@ if (mysqli_connect_errno()) {
 
 
 //  SQL does not accept parameters and so is not prepared
+$query = "SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department FROM personnel p LEFT JOIN department d ON ( p.departmentID = d.id)  ORDER BY lastName";
 
-// $query = 'SELECT * FROM personnel ORDER BY firstName LIMIT 10 OFFSET 0';
-$query = 'SELECT id, firstName, lastName, email, jobTitle, departmentID FROM personnel ORDER BY firstName';
 
 $result = $conn->query($query);
 

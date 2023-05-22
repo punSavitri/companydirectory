@@ -1,24 +1,30 @@
-body {
+body, html {
+  margin: 0;
+  padding:0;
   font-size: 16px;
 }
-#card {
-  box-shadow: 2px 2px 4px rgba(0,0,0,0.5), -2px -2px 4px rgba(128,120,64,0.5);
+
+.tableFixHead { 
+  overflow: auto; height: 500px; 
+  margin-top: 90px;
 }
-#card:hover{
-  box-shadow: 4px 4px 4px rgba(0,0,0,0.5);
-}
+.tableFixHead thead th { 
+  position: sticky; top: 0; z-index: 1;
+ }
+
+
 
 
 /* media query */
-@media (min-width:320px) and (max-width:1280px) {
+/* @media (min-width:320px) and (max-width:1280px) {
   
   #personnelTable {
     width:auto;
     text-align: center;
     font-size:16px;
-  }
+  } */
   /* #company {
     margin: 10px; ;
   } */
-}
+/* } */
  
