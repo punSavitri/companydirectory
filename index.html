@@ -78,15 +78,15 @@
         >
           <i class="fa fa-plus"></i>Add Employee
         </button>
-        <!-- add Location button -->
+        <!-- add department button -->
 
         <button
           type="button"
-          class="btn btn-outline-secondary btn-sm"
+          class="btn btn-outline-secondary"
           data-bs-toggle="modal"
-          data-bs-target="#addLocationModal"
+          data-bs-target="#adddepartmentModal"
         >
-          <i class="fa fa-plus"></i>Add Location
+          <i class="fa fa-plus"></i>Add Department
         </button>
 
         <!--  Employee name search box  -->
@@ -120,6 +120,25 @@
         <div id="search_term_output"></div>
         <div id="dataNotFound"></div>
 
+        <!-- Display Personnel Database table -->
+        <!-- show table -->
+
+        <div class="tableFixHead">
+          <table class="table mytable table-hover table-striped table-bordered">
+            <thead class="bg-light">
+              <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th class="">Job Title</th>
+                <th class="">Email</th>
+                <th class="">Department</th>
+                <!-- <th></th>
+                <th></th> -->
+              </tr>
+            </thead>
+            <tbody id="output"></tbody>
+          </table>
+        </div>
         <!-- Add Employee Modal -->
         <!-- modal -->
         <div
@@ -341,6 +360,15 @@
                       required
                     />
                   </div>
+                  <!-- <div class="form-floatting mb-3">
+                    <label for="department"> Department</label>
+                    <select
+                      class="form-select"
+                      id="department"
+                      aria-label="form-select-sm example"
+                      placeholder="Department"
+                    ></select>
+                  </div> -->
                   <div class="form-floatting mb-3">
                     <label for="select_department"> Department</label>
                     <select
@@ -418,27 +446,6 @@
         <!-- delete personnel modal end -->
         <div id="delete"></div>
         <div id="deletemsg"></div>
-
-        <!-- Display Personnel Database table -->
-        <!-- show table -->
-
-        <div class="tableFixHead">
-          <table
-            class="table table-responsive table-hover table-striped table-bordered"
-            id="personnelTable"
-          >
-            <thead class="bg-light">
-              <tr>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Job Title</th>
-                <th>Email</th>
-                <th>Department</th>
-              </tr>
-            </thead>
-            <tbody id="output"></tbody>
-          </table>
-        </div>
       </div>
 
       <!-- ----------------------------Contact page end ------------------------------->
@@ -451,20 +458,16 @@
         aria-labelledby="pills-department-tab"
         tabindex="0"
       >
-        <!-- add department button -->
-        <div class="container mt-3 mb-3">
-          <div class="row g-2">
-            <div class="col-md-4 col-lg-4">
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-                data-bs-toggle="modal"
-                data-bs-target="#adddepartmentModal"
-              >
-                <i class="fa fa-plus"></i>Add Department
-              </button>
-            </div>
-          </div>
+        <!-- display table of all department with location id -->
+        <div class="headingFixed">
+          <table class="table mytable table-hover table-striped table-bordered">
+            <thead class="bg-light">
+              <tr>
+                <th>Department</th>
+              </tr>
+            </thead>
+            <tbody id="load-data"></tbody>
+          </table>
         </div>
 
         <!-- add department modal -->
@@ -569,28 +572,6 @@
             </div>
           </div>
         </div>
-        <!-- display department card -->
-        <div class="container depart">
-          <div class="row" id="departRowId"></div>
-        </div>
-
-        <!-- display table of all department with location id -->
-        <!-- <div class="container">
-          <div class="row">
-            <div class="col-md-6 col-lg-12"> -->
-        <table
-          class="table table-responsive-md table-hover table-striped table-bordered"
-        >
-          <thead>
-            <tr>
-              <th>Department</th>
-            </tr>
-          </thead>
-          <tbody id="load-data"></tbody>
-        </table>
-        <!-- </div>
-          </div>
-        </div> -->
 
         <!-- Edit/Update department Modal for select option department -->
         <div
@@ -750,6 +731,29 @@
         aria-labelledby="pills-location-tab"
         tabindex="0"
       >
+        <!-- add Location button -->
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#addLocationModal"
+        >
+          <i class="fa fa-plus"></i>Add Location
+        </button>
+
+        <!-- show location in table -->
+        <div class="tableFixHead">
+          <table class="table table-hover table-striped table-bordered">
+            <thead class="bg-light">
+              <tr>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody id="loadlocation"></tbody>
+          </table>
+        </div>
+
         <!-- Add Location Modal -->
         <div
           class="modal fade"
@@ -841,20 +845,6 @@
               <div class="modal-footer"></div>
             </div>
           </div>
-        </div>
-
-        <!-- show location in table -->
-        <div class="scroll">
-          <table
-            class="table table-responsive-md table-hover table-striped table-bordered"
-          >
-            <thead>
-              <tr>
-                <th>Location</th>
-              </tr>
-            </thead>
-            <tbody id="loadlocation"></tbody>
-          </table>
         </div>
 
         <!--  Edit location modal -->

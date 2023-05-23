@@ -28,11 +28,11 @@ $(document).ready(function () {
             result.data[i].lastName +
             "</td><td>" +
             result.data[i].firstName +
-            "</td><td>" +
+            "</td><td class=''>" +
             result.data[i].jobTitle +
-            "</td><td>" +
+            "</td><td class=''>" +
             result.data[i].email +
-            "</td><td>" + result.data[i].department + "</td><td><button class='btn btn-success btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='Edit/Update Record' data-id=" +
+            "</td><td class=''>" + result.data[i].department + "</td><td><button class='btn btn-success btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='Edit/Update Record' data-id=" +
             result.data[i].id +
             "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger btn_delete' data-bs-toggle='modal' data-bs-target='#deleteModal'    title='Delete Record' id='btn_delete' data-id1=" +
             result.data[i].id +
@@ -126,58 +126,55 @@ $(document).ready(function () {
 
 
   //Read particualr  record by ID
+  $("#update_personnel_Modal").on('show.bs.modal', function (e) {
 
-  $(document).on("click", ".btn_edit", function () {
-    //Get id attribute
-    idpersonnel = $(this).attr("data-id");
-    console.log(idpersonnel);
+
     $.ajax({
       url: "php/getPersonnelByID.php",
       method: "POST",
       dataType: "json",
       data: {
-        id: idpersonnel,
+        id: $(e.relatedTarget).attr('data-id'),
       },
-      success: function (data) {
-        console.log(data);
+      success: function (result) {
+        console.log(result);
+        var resultCode = result.status.code;
 
-        $("#personnelId").val(data.data.personnel[0].id);
-        $("#fname").val(data.data.personnel[0].firstName);
-        $("#lname").val(data.data.personnel[0].lastName);
-        $("#jobTitle").val(data.data.personnel[0].jobTitle);
-        $("#email_id").val(data.data.personnel[0].email);
-        $(".update_select_department").val(
-          data.data.personnel[0].departmentID
-        );
+        if (resultCode == 200) {
+          $("#personnelId").val(result.data.personnel[0].id);
+          $("#fname").val(result.data.personnel[0].firstName);
+          $("#lname").val(result.data.personnel[0].lastName);
+          $("#jobTitle").val(result.data.personnel[0].jobTitle);
+          $("#email_id").val(result.data.personnel[0].email);
 
+          $(".update_select_department").val(
+            result.data.personnel[0].departmentID
+          );
+
+        } else {
+          $("#update_personnel_Modal .modal-title").replaceWith("Error retrieving data");
+        }
       },
       error: function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR.textStatus);
+        $('#update_personnel_Modal .modal-title').replaceWith("Error retrieving data");
       },
-    });
+    })
   });
 
-  // Department dropdown list for Edit  personnel
-  $.ajax({
-    type: "POST",
-    url: "php/getAllDepartments.php",
-    dataType: "json",
-    success: function (data) {
-      console.log(data);
-      for (var i = 0; i < data.data.length; i++) {
-        $(".update_select_department").append(
-          `<option value="${data.data[i].id}">${data.data[i].name}</option>`
-        );
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
+  $("#update_personnel_Modal").on('shown.bs.modal', function (e) {
+    $('#fname').focus();
+  })
+  $('#update_personnel_Modal').on('hidden.bs.modal', function () {
+
+    $('#updateForm')[0].reset();
+
   });
 
+  //// Executes when the form button with type="submit" is clicked
   // Edit Employee Record
 
-  $("#updateForm").on("submit", function () {
+  $("#updateForm").on("submit", function (e) {
+    e.preventDefault();
     var update_id = $("#personnelId").val();
     var update_firstname = $("#fname").val();
     var update_lastname = $("#lname").val();
@@ -223,6 +220,57 @@ $(document).ready(function () {
     $("#updateForm").trigger("reset");
     $("#update_message").append("");
   });
+
+
+
+  // $(document).on("click", ".btn_edit", function () {
+  //   //Get id attribute
+  //   idpersonnel = $(this).attr("data-id");
+  //   console.log(idpersonnel);
+  //   $.ajax({
+  //     url: "php/getPersonnelByID.php",
+  //     method: "POST",
+  //     dataType: "json",
+  //     data: {
+  //       id: idpersonnel,
+  //     },
+  //     success: function (data) {
+  //       console.log(data);
+
+  //       $("#personnelId").val(data.data.personnel[0].id);
+  //       $("#fname").val(data.data.personnel[0].firstName);
+  //       $("#lname").val(data.data.personnel[0].lastName);
+  //       $("#jobTitle").val(data.data.personnel[0].jobTitle);
+  //       $("#email_id").val(data.data.personnel[0].email);
+  //       $(".update_select_department").val(
+  //         data.data.personnel[0].departmentID
+  //       );
+
+  //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       console.log(jqXHR.textStatus);
+  //     },
+  //   });
+  // });
+
+  // Department dropdown list for Edit  personnel
+  $.ajax({
+    type: "POST",
+    url: "php/getAllDepartments.php",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      for (var i = 0; i < data.data.length; i++) {
+        $(".update_select_department").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}</option>`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
+
 
 
   //*******Delete Personnel record function*****//
