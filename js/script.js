@@ -13,7 +13,7 @@ var delete_id;
 
 $(document).ready(function () {
 
-  //View record personnel database table
+  //View  personnel database table
   function loadPersonnelTable() {
     $.ajax({
       url: "php/getAllPersonnel.php",
@@ -28,17 +28,18 @@ $(document).ready(function () {
             result.data[i].lastName +
             "</td><td>" +
             result.data[i].firstName +
-            "</td><td class=''>" +
+            "</td><td class='d-none d-sm-none d-md-inline' style='width: 50%'>" +
             result.data[i].jobTitle +
-            "</td><td class=''>" +
+            "</td><td class='d-none d-sm-none d-md-inline' style='width: 50%'>" +
             result.data[i].email +
-            "</td><td class=''>" + result.data[i].department + "</td><td><button class='btn btn-success btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='Edit/Update Record' data-id=" +
+            "</td><td class='d-none d-sm-none d-md-inline' style='width: 50%'>" + result.data[i].department + "</td><td><button type='button' class='btn btn-secondary btn-sm btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='edit' data-id=" +
             result.data[i].id +
-            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger btn_delete' data-bs-toggle='modal' data-bs-target='#deleteModal'    title='Delete Record' id='btn_delete' data-id1=" +
+            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button type='button' class='btn btn-secondary btn-sm btn_delete' data-bs-toggle='modal' data-bs-target='#areYouSureDeletePersonnelModal'    title='delete' id='btn_delete' data-id1=" +
             result.data[i].id +
-            "><i class='fa-solid fa-trash'></i></button></td></tr></tbody></table></div></div></div>"
+            "><i class='fa-solid fa-trash'></i></button></td></tr>"
           );
         }
+
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.textStatus);
@@ -78,10 +79,7 @@ $(document).ready(function () {
       },
       success: function (data) {
         console.log(data);
-        //display added data on table
-
-        $("#msgSuccess").append("*Data successfully inserted.");
-        $("#addpersonnelForm").trigger("reset");
+        $("#msgSuccess").html("Data successfully inserted.");
         $("#output").html("");
         loadPersonnelTable();
       },
@@ -89,12 +87,18 @@ $(document).ready(function () {
         console.log(jqXHR.textStatus);
       },
     });
-    // }
+
   });
-  $("#button_close").click(function () {
-    $("#addpersonnelForm").trigger("reset");
-    $("#msgSuccess").append("");
-  });
+
+
+  $("#addpersonnelModal").on('shown.bs.modal', function (e) {
+    $("#firstname").focus();
+  })
+
+  $("#addpersonnelModal").on('hidden.bs.modal', function () {
+    $("#addpersonnelForm")[0].reset();
+    $("#msgSuccess").html("");
+  })
 
 
   // // adding event to prevent automactically submit form
@@ -125,9 +129,8 @@ $(document).ready(function () {
   });
 
 
-  //Read particualr  record by ID
+  //Edit personnel record by id
   $("#update_personnel_Modal").on('show.bs.modal', function (e) {
-
 
     $.ajax({
       url: "php/getPersonnelByID.php",
@@ -164,11 +167,6 @@ $(document).ready(function () {
   $("#update_personnel_Modal").on('shown.bs.modal', function (e) {
     $('#fname').focus();
   })
-  $('#update_personnel_Modal').on('hidden.bs.modal', function () {
-
-    $('#updateForm')[0].reset();
-
-  });
 
   //// Executes when the form button with type="submit" is clicked
   // Edit Employee Record
@@ -205,8 +203,6 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         $("#update_message").html("Data has been successfully updated.");
-
-        $("#update_personnel_Modal").modal("show");
         $("#output").html("");
         loadPersonnelTable();
       },
@@ -214,44 +210,16 @@ $(document).ready(function () {
         console.log(jqXHR.textStatus);
       },
     });
-    // }
-  });
-  $("#update_close_btn").click(function () {
-    $("#updateForm").trigger("reset");
-    $("#update_message").append("");
+
   });
 
 
+  $('#update_personnel_Modal').on('hidden.bs.modal', function () {
 
-  // $(document).on("click", ".btn_edit", function () {
-  //   //Get id attribute
-  //   idpersonnel = $(this).attr("data-id");
-  //   console.log(idpersonnel);
-  //   $.ajax({
-  //     url: "php/getPersonnelByID.php",
-  //     method: "POST",
-  //     dataType: "json",
-  //     data: {
-  //       id: idpersonnel,
-  //     },
-  //     success: function (data) {
-  //       console.log(data);
+    $('#updateForm')[0].reset();
+    $("#update_message").html("");
 
-  //       $("#personnelId").val(data.data.personnel[0].id);
-  //       $("#fname").val(data.data.personnel[0].firstName);
-  //       $("#lname").val(data.data.personnel[0].lastName);
-  //       $("#jobTitle").val(data.data.personnel[0].jobTitle);
-  //       $("#email_id").val(data.data.personnel[0].email);
-  //       $(".update_select_department").val(
-  //         data.data.personnel[0].departmentID
-  //       );
-
-  //     },
-  //     error: function (jqXHR, textStatus, errorThrown) {
-  //       console.log(jqXHR.textStatus);
-  //     },
-  //   });
-  // });
+  });
 
   // Department dropdown list for Edit  personnel
   $.ajax({
@@ -275,41 +243,45 @@ $(document).ready(function () {
 
   //*******Delete Personnel record function*****//
 
-  //getting personnel id from delete button
-  $(document).on("click", "#btn_delete", function () {
-    console.log("testing btn");
+  $("#areYouSureDeletePersonnelModal").on("show.bs.modal", function (e) {
 
-    delete_id = $(this).attr("data-id1");
-    console.log(delete_id);
-  });
+    $.ajax({
+      url: "php/getPersonnelByID.php",
+      method: "POST",
+      dataType: "json",
+      data: {
+        id: $(e.relatedTarget).attr('data-id1'),
+      },
+      success: function (result) {
+        console.log(result);
+        $("#areYouSurePersonnelName").text(result.data.personnel[0].lastName + ", " + result.data.personnel[0].firstName);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    })
 
-  $("#delete_button").click(function () {
-    var id = delete_id;
-    console.log(id);
+  })
 
+
+  $(".deleteEmpBtn").click(function (e) {
     $.ajax({
       url: "php/deletePersonnelByID.php",
       method: "POST",
       dataType: "json",
       data: {
-        id: id,
+        id: $(this).attr('data-id1'),
       },
-      success: function (data) {
-        $("#delete_success_message").html("Data deleted.");
-        $("#deleteModal").modal("show");
-        $("#output").html("");
-        loadPersonnelTable();
+      success: function (result) {
+        console.log(result);
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.textStatus);
-      },
-    });
-  });
-  $("#closebtn").click(function () {
-    $("#delete_success_message").html("");
+      }
+
+    })
   });
 
-  //*******delete record function end*****//
 
   //Search personnel details by firstname and lastname from search box
 
@@ -329,7 +301,7 @@ $(document).ready(function () {
           console.log(data);
 
           $("#search_term_output").html(
-            "<div class='container'><div class='row g-2'>   <div class='col-md-6 col-lg-12'><table class='table table-responsive-md table-hover table-striped table-bordered text-center'><thead><tr><th class='th-sm'>First Name</th><th class='th-sm'>Last Name</th><th class='th-sm'>Job Title</th><th class='th-sm'>Email</th><th  class='th-sm'>Department</th><th class='th-sm'>Location</th></tr></thead><tbody><tr><td>" +
+            "<table class='table  table-hover table-striped table-bordered '><thead><tr><th>First Name</th><th >Last Name</th><th >Job Title</th><th >Email</th><th>Department</th><th >Location</th></tr></thead><tbody><tr><td>" +
             data.data[0].firstName +
             "</td><td>" +
             data.data[0].lastName +
@@ -341,7 +313,7 @@ $(document).ready(function () {
             data.data[0].department +
             "</td><td>" +
             data.data[0].location +
-            "</td></tr></tbody></table></div></div></div>"
+            "</td></tr></tbody></table>"
           );
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -361,8 +333,8 @@ $(document).ready(function () {
   //View all department in table as page load
   function loadDeptTable() {
     $.ajax({
-      type: "POST",
       url: "php/getAllDepartments.php",
+      type: "POST",
       dataType: "json",
       success: function (result) {
         console.log(result);
@@ -370,9 +342,9 @@ $(document).ready(function () {
           $("#load-data").append(
             "<tr><td>" +
             result.data[i].name +
-            "</td><td><button class='btn btn-success edit_depart_button'  title='Edit/Update Record'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
+            "</td><td><button type='button' class='btn btn-secondary btn-sm edit_depart_button'  title='edit'  data-bs-toggle='modal' data-bs-target='#editdepartmentModal' data-depart_id=" +
             result.data[i].id +
-            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button class='btn btn-danger delete_depart_button' id='delete_depart_button' title='Delete Record' data-depart_id1=" +
+            "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button type='button' class='btn btn-secondary btn-sm delete_depart_button' id='delete_depart_button' title='delete' data-depart_id1=" +
             result.data[i].id +
             "><i class='fa-solid fa-trash'></i></button></td></tr>"
           );
@@ -404,51 +376,44 @@ $(document).ready(function () {
       console.log(jqXHR.textStatus);
     },
   });
-  //Insert/Add Department on database
-  function insert_department() {
-    $("#add").on("click", function (e) {
-      e.preventDefault();
 
-      //get input value from user
+  //Add Department on database
 
-      var departName = $("#Department").val();
-      var locationid = $("#locationName").val();
+  $("#addDeptForm").on("submit", function (e) {
+    e.preventDefault();
 
-      //check form validation
-      if (departName == "") {
-        $("#error2").html("Department name is required.");
-        $("#errorModal2").modal("show");
-      } else if (locationid == "") {
-        $("#error2").html("Please select location.");
-        $("#errorModal2").modal("show");
-      } else {
-        $.ajax({
-          url: "php/insertDepartment.php",
-          type: "POST",
-          data: {
-            name: departName,
-            locationID: locationid,
-          },
-          success: function (data) {
-            console.log(data);
-            $("#message-success").append("*Data successfully inserted. ");
-            $("#form").trigger("reset");
-            $("#load-data").html("");
-            loadDeptTable();
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR.textStatus);
-          },
-        });
-      }
+    //get input value from user
+
+    var departName = $("#Department").val();
+    var locationid = $("#locationName").val();
+
+    $.ajax({
+      url: "php/insertDepartment.php",
+      type: "POST",
+      data: {
+        name: departName,
+        locationID: locationid,
+      },
+      success: function (data) {
+        console.log(data);
+        $("#message-success").html("Data successfully inserted.");
+        $("#load-data").html("");
+        loadDeptTable();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
     });
+  });
 
-    $("#depart_Close_btn").click(function () {
-      $("#form").trigger("reset");
-      $("#message-success").html("");
-    });
-  }
-  insert_department();
+  $("#adddepartmentModal").on('shown.bs.modal', function (e) {
+    $("#Department").focus();
+  })
+
+  $("#adddepartmentModal").on('hidden.bs.modal', function (e) {
+    $("#addDeptForm")[0].reset();
+    $("#message-success").html(" ");
+  })
 
   // ..pre-populate select department dropdown.......//
 
@@ -569,11 +534,11 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         if (data.data > 0) {
-          $("#DelMessage").html("Data can not be deleted.");
-          $("#delete2DepartmentModal").modal("show");
+
+          $("#cantDeleteDepartmentModal").modal("show");
         } else {
           // adding event to delete record if there is no department in the location
-          $("#deleteDepartmentModal").modal("show");
+          $("#areYouSureDeleteDepartmentModal").modal("show");
           $("#deleteButton").click(function () {
 
             $.ajax({
@@ -586,10 +551,6 @@ $(document).ready(function () {
               success: function (data) {
                 console.log(data);
 
-                $("#Message").html("Data deleted.");
-                $("#load-data").html("");
-                loadDeptTable();
-                $("#DeleteDeptForm").trigger("reset");
               },
               error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR.textStatus);
@@ -623,9 +584,9 @@ $(document).ready(function () {
         for (var i = 0; i < data.data.length; i++) {
 
           $("#loadlocation").append(
-            "<tr><td>" + data.data[i].name + "</td><td><button class='btn btn-success me-3 btnedit' id='btnedit' data-bs-toggle='modal' data-bs-target='#editLocationModal' title='Edit/Update Record' data-location-id=" +
+            "<tr><td>" + data.data[i].name + "</td><td><button type='button' class='btn btn-secondary btn-sm btnedit' id='btnedit' data-bs-toggle='modal' data-bs-target='#editLocationModal' title='edit' data-location-id=" +
             data.data[i].id +
-            "><i class='fa-solid fa-pen-to-square'></i></button><td><button class='btn btn-danger btndelete' id='btndelete' title='Delete Record' data-location-id1=" +
+            "><i class='fa-solid fa-pen-to-square'></i></button><td><button type='button' class='btn btn-secondary btn-sm btndelete' id='btndelete' title='delete' data-location-id1=" +
             data.data[i].id +
             "><i class='fa-solid fa-trash'></i></button></td></tr>");
         }
@@ -672,20 +633,7 @@ $(document).ready(function () {
     $("#msg-success").html("");
   });
 
-  // form validation
-  // $("#location_name").blur(function (e) {
-  //   e.preventDefault();
-  //   var locationName = $("#location_name").val();
-  //   console.log(locationName);
 
-  //   if ($.trim(locationName).length == 0) {
-  //     error_location = "Please enter location name";
-  //     $("#error_location").text(error_location);
-  //   } else {
-  //     error_location = "";
-  //     $("#error_location").text(error_location);
-  //   }
-  // });
 
   // Edit location
   //adding event to get id from edit location button
@@ -797,10 +745,10 @@ $(document).ready(function () {
         console.log(data);
         if (data.data > 0) {
           $("#delete2Message").html("Data cannot be deleted.");
-          $("#delete2LocationModal").modal("show");
+          $("#cantDeleteLocationModal").modal("show");
 
         } else {
-          $("#deleteLocationModal").modal("show");
+          $("#areYouSureDeleteLocationModal").modal("show");
           $("#DeleteLocationBtn").click(function () {
             $.ajax({
               url: "php/deleteLocationByID.php",

@@ -4,32 +4,53 @@ body, html {
   font-size: 16px;
 }
 
-#pills-tabContent{
-  margin-top: 8%;
+#pills-tabContent {
+  margin-top: 12%;
 }
 
-.tableFixHead          { overflow: auto; height: 100vh; }
-.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+table  { 
+  border-collapse: collapse;
+   width: 100%;
+   }
+th, td { 
+  padding: 8px 16px; 
+}
 
-/* Just common table stuff. Really. */
-table  { border-collapse: collapse; width: 100%; }
-th, td { padding: 8px 16px; }
+.tableFixHead { 
+  overflow: auto; 
+  height: 90vh; 
+}
+.tableFixHead thead th {
+   position: sticky; 
+   top: 0;
+    z-index: 1; 
+  }
 
 
 
-/* .tableFixHead thead th { 
-  margin-top: 90px;  
-  position: sticky;
-  top: 0; 
-   z-index: 1;
- }
- 
- .headingFixed thead th {
-  margin-top: 150px; 
-  position: sticky;
-  top:0;
-  z-index: 1;
- } */
+
+/* Hide scrollbar for Chrome, safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /*IE and Edge */
+  scrollbar-width: none; /*Firefox*/
+}
+
+@media only screen and (max-width: 840px){
+#pills-tabContent {
+  margin-top:38%;
+}
+}
+  
+
+
+
+
+
  
 
 

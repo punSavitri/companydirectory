@@ -54,6 +54,7 @@
               Department
             </button>
           </li>
+
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
@@ -72,21 +73,33 @@
         <!-- Add Employee button -->
         <button
           type="button"
-          class="btn btn-outline-secondary btn-sm me-4"
+          class="btn btn-outline-secondary btn-sm"
           data-bs-toggle="modal"
           data-bs-target="#addpersonnelModal"
+          title="add employee"
         >
-          <i class="fa fa-plus"></i>Add Employee
+          <i class="fa fa-plus"></i>
         </button>
-        <!-- add department button -->
-
+        <!-- Add department button -->
         <button
           type="button"
-          class="btn btn-outline-secondary"
+          class="btn btn-outline-secondary btn-sm"
           data-bs-toggle="modal"
           data-bs-target="#adddepartmentModal"
+          title="add department"
         >
-          <i class="fa fa-plus"></i>Add Department
+          <i class="fa fa-plus"></i>
+        </button>
+
+        <!-- add Location button -->
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#addLocationModal"
+          title="add location"
+        >
+          <i class="fa fa-plus"></i>
         </button>
 
         <!--  Employee name search box  -->
@@ -96,7 +109,7 @@
               class="form-control"
               id="live_search"
               type="search"
-              placeholder="Search Employee Name"
+              placeholder="Search employee name"
               aria-label="Search"
             />
           </form>
@@ -123,17 +136,21 @@
         <!-- Display Personnel Database table -->
         <!-- show table -->
 
-        <div class="tableFixHead">
-          <table class="table mytable table-hover table-striped table-bordered">
+        <div class="tableFixHead table-responsive-sm">
+          <table class="table table-sm table-hover table-striped">
             <thead class="bg-light">
               <tr>
                 <th>Last Name</th>
                 <th>First Name</th>
-                <th class="">Job Title</th>
-                <th class="">Email</th>
-                <th class="">Department</th>
-                <!-- <th></th>
-                <th></th> -->
+                <th class="d-none d-sm-none d-md-inline" style="width: 50%">
+                  Job Title
+                </th>
+                <th class="d-none d-sm-none d-md-inline" style="width: 50%">
+                  Email
+                </th>
+                <th class="d-none d-sm-none d-md-inline" style="width: 50%">
+                  Department
+                </th>
               </tr>
             </thead>
             <tbody id="output"></tbody>
@@ -142,8 +159,8 @@
         <!-- Add Employee Modal -->
         <!-- modal -->
         <div
-          class="modal fade"
           id="addpersonnelModal"
+          class="modal fade"
           tabindex="-1"
           data-bs-backdrop="false"
           data-bs-keyboard="false"
@@ -166,8 +183,6 @@
               <div class="modal-body">
                 <form id="addpersonnelForm">
                   <p id="msgSuccess"></p>
-                  <p id="msgError"></p>
-                  <small> Complete the form below to add employee </small>
 
                   <input
                     type="hidden"
@@ -223,6 +238,7 @@
                       id="select_department"
                       aria-label="form-select-sm example"
                       placeholder="Department"
+                      required
                     ></select>
                   </div>
                 </form>
@@ -287,7 +303,7 @@
         ></div>
         <!-- ***** -->
 
-        <!-- Personnel update modal -->
+        <!-- Personnel edit modal -->
         <div
           class="modal fade"
           id="update_personnel_Modal"
@@ -360,15 +376,7 @@
                       required
                     />
                   </div>
-                  <!-- <div class="form-floatting mb-3">
-                    <label for="department"> Department</label>
-                    <select
-                      class="form-select"
-                      id="department"
-                      aria-label="form-select-sm example"
-                      placeholder="Department"
-                    ></select>
-                  </div> -->
+
                   <div class="form-floatting mb-3">
                     <label for="select_department"> Department</label>
                     <select
@@ -403,12 +411,22 @@
         </div>
         <!-- end of personnel update modal -->
 
-        <!-- delete personnel modal start -->
-        <div class="modal fade" id="deleteModal">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+        <!-- areYouSureDeletePersonnelModal start   -->
+        <div
+          class="modal fade"
+          id="areYouSureDeletePersonnelModal"
+          tabindex="-1"
+          data-bs-backdrop="false"
+          data-bs-keyboard="false"
+          aria-labelledby="areYouSureDeletePersonnelModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+          >
+            <div class="modal-content shadow">
               <div class="modal-header">
-                <h5 class="modal-title">Delete Record</h5>
+                <h5 class="modal-title">Remove Employee Record?</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -418,31 +436,30 @@
               </div>
 
               <div class="modal-body">
-                <p
-                  id="delete_success_message"
-                  class="text-center text-warning"
-                ></p>
-                <input type="hidden" id="PersonnelID" />
-                <p>Do you want to delete the record ?</p>
+                Are you sure that you want to remove the entry record of
+                <span id="areYouSurePersonnelName" class="fw-bold"></span> ?
+              </div>
+
+              <div class="modal-footer">
                 <button
-                  type="button "
-                  class="btn btn-success"
-                  id="delete_button"
-                >
-                  Delete
-                </button>
-                <button
-                  id="closebtn"
                   type="button"
-                  class="btn btn-danger"
+                  class="btn btn-outline-secondary deleteEmpBtn"
                   data-bs-dismiss="modal"
                 >
-                  Close
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  No
                 </button>
               </div>
             </div>
           </div>
         </div>
+
         <!-- delete personnel modal end -->
         <div id="delete"></div>
         <div id="deletemsg"></div>
@@ -495,7 +512,7 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <form id="form">
+                <form id="addDeptForm">
                   <p id="message-success"></p>
                   <p id="message-error"></p>
                   <input
@@ -520,6 +537,7 @@
                       id="locationName"
                       aria-label="form-select-sm "
                       placeholder="location"
+                      required
                     ></select>
                   </div>
                 </form>
@@ -527,9 +545,8 @@
               <div class="modal-footer">
                 <button
                   type="submit"
-                  id="add"
                   class="btn btn-outline-secondary btn-sm"
-                  form="form"
+                  form="addDeptForm"
                 >
                   ADD
                 </button>
@@ -648,12 +665,22 @@
         </div>
         <!-- Edit/Update modal end -->
 
-        <!-- delete department modal1 start -->
-        <div class="modal fade" id="deleteDepartmentModal">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+        <!-- cantDeleteDepartmentModal 1 start -->
+        <div
+          id="cantDeleteDepartmentModal"
+          class="modal fade"
+          tabindex="-1"
+          data-bs-backdrop="false"
+          data-bs-keyboard="false"
+          aria-labelledby="cantDeleteDepartmentModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+          >
+            <div class="modal-content shadow">
               <div class="modal-header">
-                <h5 class="modal-title">Do you want to delete record ?</h5>
+                <h5 class="modal-title">Cannot remove department....</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -662,38 +689,41 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <p id="Message" class="text-center text-warning"></p>
-                <form action="" id="DeleteDeptForm">
-                  <input type="hidden" id="deptid" />
-                </form>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    id="deleteButton"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    id="closeBtn"
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
+                You cannot remove the entry for
+                <span id="cantDeleteDeptName" class="fw-bold"></span>because it
+                has <span id="pc" class="fw-bold"></span> employees assigned to
+                it.
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Ok
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <!-- delete department modal 1 end -->
 
-        <!-- delete department modal2 start -->
-        <div class="modal fade" id="delete2DepartmentModal">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+        <!-- areYouSureDeleteDepartmentModal 2 start -->
+        <div
+          id="areYouSureDeleteDepartmentModal"
+          class="modal fade"
+          tabindex="-1"
+          data-bs-backdrop="false"
+          data-bs-keyboard="false"
+          aria-labelledby="areYouSureDeleteDepartmentModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+          >
+            <div class="modal-content shadow">
               <div class="modal-header">
+                <h5 class="modal-title">Remove department?</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -703,18 +733,25 @@
               </div>
 
               <div class="modal-body">
-                <p id="DelMessage" class="text-center text-warning"></p>
+                Are you sure you want to permantely remove the entry for
+                <span id="areYouSureDeptName" class="fw-bold"></span>?
+              </div>
 
-                <div class="modal-footer">
-                  <button
-                    id="closeBtn"
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  No
+                </button>
               </div>
             </div>
           </div>
@@ -731,17 +768,6 @@
         aria-labelledby="pills-location-tab"
         tabindex="0"
       >
-        <!-- add Location button -->
-
-        <button
-          type="button"
-          class="btn btn-outline-secondary btn-sm"
-          data-bs-toggle="modal"
-          data-bs-target="#addLocationModal"
-        >
-          <i class="fa fa-plus"></i>Add Location
-        </button>
-
         <!-- show location in table -->
         <div class="tableFixHead">
           <table class="table table-hover table-striped table-bordered">
@@ -912,14 +938,23 @@
             </div>
           </div>
         </div>
-        <!-------End  of Edit location Modal -->
 
-        <!-- delete location modal 1 start -->
-        <div class="modal fade" id="deleteLocationModal">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+        <!-- cantDeleteLocationModal 1 start -->
+        <div
+          id="cantDeleteLocationModal"
+          class="modal fade"
+          tabindex="-1"
+          data-bs-backdrop="false"
+          data-bs-keyboard="false"
+          aria-labelledby="cantDeleteLocationModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+          >
+            <div class="modal-content shadow">
               <div class="modal-header">
-                <h5 class="modal-title">Do you want to delete record ?</h5>
+                <h5 class="modal-title">Cannot remove location...</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -928,38 +963,43 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <p id="deleteMessage" class="text-center text-warning"></p>
-                <form action="" id="deletelocForm">
-                  <input type="hidden" id="locationid" />
-                </form>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    id="DeleteLocationBtn"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    id="closelocation"
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
+                You cannot remove the entry for
+                <span id="cantDeleteLocationName" class="fw-bold"
+                  >deptnamehere...</span
+                >
+                because it has
+                <span id="pc" class="fw-bold">numofdept</span> department
+                assigned to it.
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data.bs.dismiss="modal"
+                >
+                  Ok
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <!-- delete location modal 1 end -->
 
-        <!-- delete location modal2 start -->
-        <div class="modal fade" id="delete2LocationModal">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+        <!-- areYouSureDeleteLocationModal  start -->
+        <div
+          id="areYouSureDeleteLocationModal"
+          class="modal fade"
+          tabindex="-1"
+          data-bs-backdrop="false"
+          data-bs-keyboard="false"
+          aria-labelledby="areYouSureDeleteLocationModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+          >
+            <div class="modal-content shadow">
               <div class="modal-header">
+                <h5 class="modal-title">Remove location ?</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -969,23 +1009,32 @@
               </div>
 
               <div class="modal-body">
-                <p id="delete2Message" class="text-center text-warning"></p>
+                Are you sure you want to permantely remove the entry for
+                <span id="areYouSureLocationName" class="fw-bold"
+                  >deptnamehere</span
+                >?
+              </div>
 
-                <div class="modal-footer">
-                  <button
-                    id="Closelocation"
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  id="Closelocation"
+                  class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  No
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <!-- delete location modal2 end -->
 
         <!-- -------------------------------Location page end ------------------------>
       </div>
