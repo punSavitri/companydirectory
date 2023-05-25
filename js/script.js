@@ -28,11 +28,11 @@ $(document).ready(function () {
             result.data[i].lastName +
             "</td><td>" +
             result.data[i].firstName +
-            "</td><td class='d-none d-sm-none d-md-inline' style='width: 50%'>" +
+            "</td><td class='d-none d-sm-table-cell>" +
             result.data[i].jobTitle +
-            "</td><td class='d-none d-sm-none d-md-inline' style='width: 50%'>" +
+            "</td><td class='d-none d-sm-table-cell>" +
             result.data[i].email +
-            "</td><td class='d-none d-sm-none d-md-inline' style='width: 50%'>" + result.data[i].department + "</td><td><button type='button' class='btn btn-secondary btn-sm btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='edit' data-id=" +
+            "</td><td class='d-none d-sm-table-cell>" + result.data[i].department + "</td><td><button type='button' class='btn btn-secondary btn-sm btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='edit' data-id=" +
             result.data[i].id +
             "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button type='button' class='btn btn-secondary btn-sm btn_delete' data-bs-toggle='modal' data-bs-target='#areYouSureDeletePersonnelModal'    title='delete' id='btn_delete' data-id1=" +
             result.data[i].id +
@@ -301,7 +301,7 @@ $(document).ready(function () {
           console.log(data);
 
           $("#search_term_output").html(
-            "<table class='table  table-hover table-striped table-bordered '><thead><tr><th>First Name</th><th >Last Name</th><th >Job Title</th><th >Email</th><th>Department</th><th >Location</th></tr></thead><tbody><tr><td>" +
+            "<table class='table table-sm table-hover table-striped  '><thead><tr><th>First Name</th><th >Last Name</th><th >Job Title</th><th >Email</th><th>Department</th><th >Location</th></tr></thead><tbody><tr><td>" +
             data.data[0].firstName +
             "</td><td>" +
             data.data[0].lastName +
@@ -434,68 +434,36 @@ $(document).ready(function () {
     },
   });
 
-  // adding click event to Edit button/icon on page
-
-  $(document).on("click", ".edit_depart_button", function () {
-    getdepartmentId = $(this).data("depart_id");
-    console.log(getdepartmentId);
-
-    // get department detail by id and show on modal
+  // Edit department 
+  $("#editdepartmentModal").on('show.bs.modal', function (e) {
 
     $.ajax({
       url: "php/getDepartmentByID.php",
       method: "POST",
       dataType: "json",
       data: {
-        id: getdepartmentId,
+        id: $(e.relatedTarget).data("depart_id"),
       },
-      success: function (data) {
-        console.log(data);
-        $("#update_id").val(data.data[0]["id"]);
-        $("#deptName").val(data.data[0]["name"]); //
-        $(".update_location_ID").val(data.data[0]["locationID"]);
-        $("#editdepartmentModal").modal("show");
+      success: function (output) {
+        console.log(output);
+        var outputCode = output.status.code;
+
+        if (outputCode == 200) {
+          $("#update_id").val(output.data[0].id);
+          $("#deptName").val(output.data[0].name); //
+          $(".update_location_ID").val(output.data[0].locationID);
+
+        } else {
+          $("#editdepartmentModal .modal-title").replaceWith("Error retrieving data");
+        }
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.textStatus);
+        $("#editdepartmentModal .modal-title").replaceWith("Error retrieving data");
       },
     });
-  });
-
-  //adding event to edit button to update details
-
-  $("#update_btn").click(function () {
-    var updateDepartmentName = $("#deptName").val();
-    var updateLocationID = $(".update_location_ID").val();
-
-    $.ajax({
-      url: "php/editDepartment.php",
-      method: "POST",
-      dataType: "json",
-      data: {
-        id: getdepartmentId,
-        name: updateDepartmentName,
-        locationID: updateLocationID,
-      },
-      success: function (data) {
-        console.log(data);
-
-        $("#message").html("Data has been successfully updated.");
-        $("#update_form").trigger("reset");
-        $("#load-data").html("");
-        loadDeptTable();
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR.textStatus);
-      },
-    });
-  });
-  $("#update_closeBtn").click(function () {
-    $("#update_form").trigger("reset");
-    $("#message").html("");
-  });
-
-  // update department dropdown select location id option
+  })
+  // pre-populate dropdown select all location options
 
   $.ajax({
     method: "POST",
@@ -514,60 +482,109 @@ $(document).ready(function () {
     },
   });
 
-  //...................................Delete  Department Record........................//
+  //As soon editdepartmentModal open first focused on first input element 
+  $("#editdepartmentModal").on('shown.bs.modal', function (e) {
+    $("#deptName").focus();
+  })
 
-  // adding event to delete button/icon on page to get dept id
+  //// Executes when the form submited
 
-  $(document).on("click", ".delete_depart_button", function () {
-    //deptId global variable
-    deptid = $(this).data("depart_id1");
-    console.log(deptid);
+  $("#update_form").on('submit', function (e) {
+    e.preventDefault();
 
-    //checking number of employees in the department before to delete department
+    var update_Id = $("#update_id").val();
+    console.log(update_Id);
+    var updateDepartmentName = $("#deptName").val();
+    console.log(updateDepartmentName);
+    var updateLocationID = $(".update_location_ID").val();
+    console.log(updateLocationID);
+
     $.ajax({
-      url: "php/countEmployeeInDepartment.php",
-      type: "POST",
+      url: "php/editDepartment.php",
+      method: "POST",
       dataType: "json",
       data: {
-        id: deptid,
+        id: update_Id,
+        name: updateDepartmentName,
+        locationID: updateLocationID,
       },
       success: function (data) {
         console.log(data);
-        if (data.data > 0) {
 
-          $("#cantDeleteDepartmentModal").modal("show");
-        } else {
-          // adding event to delete record if there is no department in the location
-          $("#areYouSureDeleteDepartmentModal").modal("show");
-          $("#deleteButton").click(function () {
-
-            $.ajax({
-              url: "php/deleteDepartmentByID.php",
-              type: "POST",
-              dataType: "json",
-              data: {
-                id: deptid,
-              },
-              success: function (data) {
-                console.log(data);
-
-              },
-              error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR.textStatus);
-              },
-            });
-          });
-        }
+        $("#message").html("Data has been successfully updated.");
+        $("#load-data").html("");
+        loadDeptTable();
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.textStatus);
       },
-    });
+    })
   });
-  $("#closeBtn").click(function () {
-    $("#DeleteDeptForm").trigger("reset");
-    $("#Message").html("");
-  });
+
+  //when editdepartmentModal hidden then reset the form for next submission 
+  //And clear the confirmation message 
+  $("#editdepartmentModal").on('hidden.bs.modal', function (e) {
+    $("#update_form")[0].reset();
+    $("#message").html("");
+  })
+
+
+
+
+
+  //   //.............................Delete  Department Record........................//
+
+
+
+
+  // adding event to delete button/icon on page to get dept id
+
+  // $(document).on("click", ".delete_depart_button", function () {
+  //   //deptId global variable
+  //   deptid = $(this).data("depart_id1");
+  //   console.log(deptid);
+
+  //   //checking number of employees in the department before to delete department
+  //   $.ajax({
+  //     url: "php/countEmployeeInDepartment.php",
+  //     type: "POST",
+  //     dataType: "json",
+  //     data: {
+  //       id: deptid,
+  //     },
+  //     success: function (data) {
+  //       console.log(data);
+  //       if (data.data > 0) {
+
+  //         $("#cantDeleteDepartmentModal").modal("show");
+  //       } else {
+  //         // adding event to delete record if there is no department in the location
+  //         $("#areYouSureDeleteDepartmentModal").modal("show");
+  //         $("#deleteButton").click(function () {
+
+  //           $.ajax({
+  //             url: "php/deleteDepartmentByID.php",
+  //             type: "POST",
+  //             dataType: "json",
+  //             data: {
+  //               id: deptid,
+  //             },
+  //             success: function (data) {
+  //               console.log(data);
+
+  //             },
+  //             error: function (jqXHR, textStatus, errorThrown) {
+  //               console.log(jqXHR.textStatus);
+  //             },
+  //           });
+  //         });
+  //       }
+  //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       console.log(jqXHR.textStatus);
+  //     },
+  //   });
+  // });
 
 
   //////////////////////////  Location page start from here///////////////////////////////
