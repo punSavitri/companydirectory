@@ -34,7 +34,7 @@ if (mysqli_connect_errno()) {
 // SQL does not accept parameters and so is not prepared
 $search_term = "%" . $_REQUEST['search_term'] . "%";
 
-$query = "SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON ( p.departmentID = d.id) LEFT JOIN location l ON (d.locationID = l.id)  WHERE (p.firstName LIKE '$search_term' OR p.lastName LIKE '$search_term')";
+$query = "SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON ( p.departmentID = d.id) LEFT JOIN location l ON (d.locationID = l.id)  WHERE (p.lastName LIKE '$search_term' OR p.firstName LIKE '$search_term')";
 
 
 $result = $conn->query($query);

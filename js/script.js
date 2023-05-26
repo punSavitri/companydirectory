@@ -117,7 +117,9 @@ $(document).ready(function () {
     dataType: "json",
     success: function (data) {
       console.log(data);
+
       for (var i = 0; i < data.data.length; i++) {
+
         $("#select_department").append(
           `<option value="${data.data[i].id}">${data.data[i].name}</option>`
         );
@@ -301,17 +303,17 @@ $(document).ready(function () {
           console.log(data);
 
           $("#search_term_output").html(
-            "<table class='table table-sm table-hover table-striped  '><thead><tr><th>First Name</th><th >Last Name</th><th >Job Title</th><th >Email</th><th>Department</th><th >Location</th></tr></thead><tbody><tr><td>" +
-            data.data[0].firstName +
-            "</td><td>" +
+            "<table class='table table-sm table-hover table-striped  '><thead><tr><th>Last Name</th><th>First Name</th><th class='d-none d-sm-table-cell' >Job Title</th><th class='d-none d-sm-table-cell'>Email</th><th>Department</th><th class='d-none d-sm-table-cell'>Location</th></tr></thead><tbody><tr><td>" +
             data.data[0].lastName +
             "</td><td>" +
+            data.data[0].firstName +
+            "</td><td class='d-none d-sm-table-cell'>" +
             data.data[0].jobTitle +
-            "</td><td>" +
+            "</td><td class='d-none d-sm-table-cell'>" +
             data.data[0].email +
             "</td><td>" +
             data.data[0].department +
-            "</td><td>" +
+            "</td><td class='d-none d-sm-table-cell'>" +
             data.data[0].location +
             "</td></tr></tbody></table>"
           );
