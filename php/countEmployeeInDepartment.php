@@ -32,17 +32,13 @@ if (mysqli_connect_errno()) {
     exit;
 }
 
-$query = $conn->prepare('SELECT COUNT(id)
+$query = $conn->prepare('SELECT count(p.id) as departmentCount, d.name as departmentName FROM personnel p LEFT JOIN department d ON ( d.id = p.departmentID) WHERE d.id =  ?');
 
-                             FROM personnel
-
-                             WHERE departmentID=?');
-
-$query->bind_param("i", $_REQUEST['id']);
+$query->bind_param("i", $_REQUEST['d.id']);
 
 $query->execute();
 
-$numEmployeeInDept = mysqli_fetch_assoc($query->get_result())["COUNT(id)"];
+$numEmployeeInDept = mysqli_fetch_assoc($query->get_result())["COUNT(p.id)"];
 
 if ($numEmployeeInDept > 0) {
 

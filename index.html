@@ -12,6 +12,8 @@
     ></script>
     <!-- bootstrap CSS file -->
     <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css" />
+    <!-- favicon -->
+    <link rel="stylesheet" href="libs/favicon_io/favicon.ico" />
     <!-- custom css file -->
     <link rel="stylesheet" href="css/custom.css" />
   </head>
@@ -73,7 +75,7 @@
         <!-- Add Employee button -->
         <button
           type="button"
-          class="btn btn-outline-secondary btn-sm"
+          class="btn btn-outline-secondary btn-sm addBtn"
           data-bs-toggle="modal"
           data-bs-target="#addpersonnelModal"
           title="add employee"
@@ -83,7 +85,7 @@
         <!-- Add department button -->
         <button
           type="button"
-          class="btn btn-outline-secondary btn-sm"
+          class="btn btn-outline-secondary btn-sm addBtn"
           data-bs-toggle="modal"
           data-bs-target="#adddepartmentModal"
           title="add department"
@@ -94,7 +96,7 @@
         <!-- add Location button -->
         <button
           type="button"
-          class="btn btn-outline-secondary btn-sm"
+          class="btn btn-outline-secondary btn-sm addBtn"
           data-bs-toggle="modal"
           data-bs-target="#addLocationModal"
           title="add location"
@@ -257,45 +259,6 @@
             </div>
           </div>
         </div>
-        <!-- custome modal to show validation error mesage -->
-        <div class="modal fade" id="errorModal">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title text-center">Warning</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <p id="error1"></p>
-
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                  id="button_close"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- show message to user  -->
-        <div
-          id="messageError"
-          class="text-danger text-center fs-5 mt-4 mb-3"
-        ></div>
-        <div
-          id="messageSuccess"
-          class="text-success text-center fs-5 mt-4 mb-3"
-        ></div>
-        <!-- ***** -->
 
         <!-- Personnel edit modal -->
         <div
@@ -439,6 +402,7 @@
                   type="button"
                   class="btn btn-outline-secondary deleteEmpBtn"
                   data-bs-dismiss="modal"
+                  id="deleteEmpBtn"
                 >
                   Yes
                 </button>
@@ -581,8 +545,8 @@
                 ></button>
               </div>
               <div class="modal-body">
+                <p id="message"></p>
                 <form id="update_form">
-                  <p id="message"></p>
                   <input
                     type="hidden"
                     class="form-control update_id my-1"
@@ -771,7 +735,7 @@
               </div>
               <div class="modal-body">
                 <p id="msg-success"></p>
-                <p id="msg-error"></p>
+
                 <form id="locationForm">
                   <input
                     type="hidden"
@@ -808,33 +772,6 @@
                   CANCEL
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
-        <!-- Modal3 to show error/warning message -->
-
-        <div
-          class="modal fade"
-          id="errorModal3"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header bg-danger">
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <p id="error3"></p>
-              </div>
-              <div class="modal-footer"></div>
             </div>
           </div>
         </div>
@@ -930,17 +867,15 @@
               </div>
               <div class="modal-body">
                 You cannot remove the entry for
-                <span id="cantDeleteLocationName" class="fw-bold"
-                  >deptnamehere...</span
-                >
+                <span id="cantDeleteLocationName" class="fw-bold">....</span>
                 because it has
-                <span id="pc" class="fw-bold">numofdept</span> department
-                assigned to it.
+                <span id="pc" class="fw-bold">....</span> department assigned to
+                it.
               </div>
               <div class="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-outline-secondary"
+                  class="btn btn-outline-secondary okBtnClose"
                   data.bs.dismiss="modal"
                 >
                   Ok
@@ -976,9 +911,7 @@
 
               <div class="modal-body">
                 Are you sure you want to permantely remove the entry for
-                <span id="areYouSureLocationName" class="fw-bold"
-                  >deptnamehere</span
-                >?
+                <span id="areYouSureLocationName" class="fw-bold">....</span>?
               </div>
 
               <div class="modal-footer">

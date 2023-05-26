@@ -40,10 +40,11 @@ body {
   scrollbar-width: none; /*Firefox*/
 }
 
-@media only screen and (max-width: 840px){
-#pills-tabContent {
-  margin-top:40%;
-}
+/* @media query */
+@media only screen and (max-width: 840px) {
+  #pills-tabContent {
+    margin-top:40%;
+  }
 }
   
 

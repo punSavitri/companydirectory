@@ -28,11 +28,11 @@ $(document).ready(function () {
             result.data[i].lastName +
             "</td><td>" +
             result.data[i].firstName +
-            "</td><td class='d-none d-sm-table-cell>" +
+            "</td><td class='d-none d-sm-table-cell'>" +
             result.data[i].jobTitle +
-            "</td><td class='d-none d-sm-table-cell>" +
+            "</td><td class='d-none d-sm-table-cell'>" +
             result.data[i].email +
-            "</td><td class='d-none d-sm-table-cell>" + result.data[i].department + "</td><td><button type='button' class='btn btn-secondary btn-sm btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='edit' data-id=" +
+            "</td><td class='d-none d-sm-table-cell'>" + result.data[i].department + "</td><td><button type='button' class='btn btn-secondary btn-sm btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='edit' data-id=" +
             result.data[i].id +
             "><i class='fa-solid fa-pen-to-square'></i></button></td><td><button type='button' class='btn btn-secondary btn-sm btn_delete' data-bs-toggle='modal' data-bs-target='#areYouSureDeletePersonnelModal'    title='delete' id='btn_delete' data-id1=" +
             result.data[i].id +
@@ -261,24 +261,24 @@ $(document).ready(function () {
       },
     })
 
-  })
+    $("#deleteEmpBtn").on('click', function () {
+      $.ajax({
+        url: "php/deletePersonnelByID.php",
+        method: "POST",
+        dataType: "json",
+        data: {
+          id: $(e.relatedTarget).attr('data-id1'),
+        },
+        success: function (result) {
+          console.log(result);
+          $("#output").html("");
+          loadPersonnelTable();
 
-
-  $(".deleteEmpBtn").click(function (e) {
-    $.ajax({
-      url: "php/deletePersonnelByID.php",
-      method: "POST",
-      dataType: "json",
-      data: {
-        id: $(this).attr('data-id1'),
-      },
-      success: function (result) {
-        console.log(result);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR.textStatus);
-      }
-
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR.textStatus);
+        }
+      })
     })
   });
 
@@ -528,69 +528,60 @@ $(document).ready(function () {
     $("#message").html("");
   })
 
-
-
-
-
   //   //.............................Delete  Department Record........................//
 
+  $(document).on("click", ".delete_depart_button", function (e) {
+    // deptId global variable
+    deptid = $(this).data("depart_id1");
+    console.log(deptid);
 
+    //checking number of employees in the department before to delete department
+    $.ajax({
+      url: "php/countEmployeeInDepartment.php",
+      type: "POST",
+      dataType: "json",
+      data: {
+        id: $(e.relatedTarget).data("depart_id1"),
+      },
+      success: function (result) {
+        console.log(result);
+        if (result.data > 0) {
 
+          $("#cantDeleteDepartmentModal").modal("show");
+        } else {
+          // adding event to delete record if there is no department in the location
+          $("#areYouSureDeleteDepartmentModal").modal("show");
 
-  // adding event to delete button/icon on page to get dept id
+          $("#deleteButton").click(function () {
 
-  // $(document).on("click", ".delete_depart_button", function () {
-  //   //deptId global variable
-  //   deptid = $(this).data("depart_id1");
-  //   console.log(deptid);
+            $.ajax({
+              url: "php/deleteDepartmentByID.php",
+              type: "POST",
+              dataType: "json",
+              data: {
+                id: deptid,
+              },
+              success: function (data) {
+                console.log(data);
 
-  //   //checking number of employees in the department before to delete department
-  //   $.ajax({
-  //     url: "php/countEmployeeInDepartment.php",
-  //     type: "POST",
-  //     dataType: "json",
-  //     data: {
-  //       id: deptid,
-  //     },
-  //     success: function (data) {
-  //       console.log(data);
-  //       if (data.data > 0) {
-
-  //         $("#cantDeleteDepartmentModal").modal("show");
-  //       } else {
-  //         // adding event to delete record if there is no department in the location
-  //         $("#areYouSureDeleteDepartmentModal").modal("show");
-  //         $("#deleteButton").click(function () {
-
-  //           $.ajax({
-  //             url: "php/deleteDepartmentByID.php",
-  //             type: "POST",
-  //             dataType: "json",
-  //             data: {
-  //               id: deptid,
-  //             },
-  //             success: function (data) {
-  //               console.log(data);
-
-  //             },
-  //             error: function (jqXHR, textStatus, errorThrown) {
-  //               console.log(jqXHR.textStatus);
-  //             },
-  //           });
-  //         });
-  //       }
-  //     },
-  //     error: function (jqXHR, textStatus, errorThrown) {
-  //       console.log(jqXHR.textStatus);
-  //     },
-  //   });
-  // });
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.textStatus);
+              },
+            });
+          });
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      },
+    });
+  });
 
 
   //////////////////////////  Location page start from here///////////////////////////////
 
-  //View location database on cards ones page load
-
+  //View location database on TABLE
   function loadLocation() {
     $.ajax({
       url: "php/getAllLocations.php",
@@ -621,7 +612,10 @@ $(document).ready(function () {
     event.preventDefault();
 
     //Get input field value from user
+
+
     var locationName = $("#location_name").val();
+    console.log(locationName);
 
 
     $.ajax({
@@ -635,9 +629,9 @@ $(document).ready(function () {
         console.log(data);
         //display on website
         $("#msg-success").html("Data has been successfully inserted.");
-        $("#row").html("");
+        $("#loadlocation").html("");
         loadLocation();
-        $("#locationForm").trigger("reset");
+
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.textStatus);
@@ -645,58 +639,58 @@ $(document).ready(function () {
     });
   });
 
-  $("#btnClose").click(function () {
-    $("#locationForm").trigger("reset");
-    $("#msg-success").html("");
-  });
+  //As soon addLocationModal shown it focused on first input element 
+  $("#addLocationModal").on('shown.bs.modal', function (e) {
+    $("#location_name").focus();
+  })
 
+
+  //when addLocationModal hidden then reset the form for next form submission 
+  //And clear the confirmation message 
+  $("#addLocationModal").on('hidden.bs.modal', function (e) {
+    $("#locationForm")[0].reset();
+    $("#msg-success").html("");
+  })
 
 
   // Edit location
-  //adding event to get id from edit location button
-  $(document).on("click", ".btnedit", function () {
-    location_id = $(this).data("location-id");
-    console.log(location_id);
+  $("#editLocationModal").on('show.bs.modal', function (e) {
 
-    //get location detail by id
     $.ajax({
       url: "php/getLocationByID.php",
       method: "POST",
       dataType: "json",
       data: {
-        id: location_id,
+        id: $(e.relatedTarget).data("location-id"),
       },
-      success: function (data) {
-        console.log(data);
-        $("#updateLocation").val(data.data.location[0]["id"]);
-        $("#selectLocation").val(data.data.location[0]["name"]);
-        $("#editLocationModal").modal("show");
+      success: function (result) {
+        console.log(result);
+
+        var resultCode = result.status.code;
+
+        if (resultCode == 200) {
+          $("#updateLocation").val(result.data.location[0].id);
+          $("#selectLocation").val(result.data.location[0].name);
+        } else {
+          $("#editLocationModal .modal-title").replaceWith("Error retrieving data");
+        }
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.textStatus);
-      },
-    });
-  });
-  //prepopulate select location name
-  $.ajax({
-    url: "php/getAllLocations.php",
-    method: "POST",
-    dataType: "json",
-    success: function (data) {
-      console.log(data);
-      for (var i = 0; i < data.data.length; i++) {
-        $("#selectLocation").append(
-          `<option value="${data.data[i].id}">${data.data[i].name}</option>`
-        );
+        $("#editLocationModal .modal-title").replaceWith("Error retrieving data");
       }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR.textStatus);
-    },
+    })
   });
 
-  //adding event to edit button
-  $(".editlocbtn").click(function () {
+  //As soon editLocationModal shown so focused on first input element 
+  $("#editLocationModal").on('shown.bs.modal', function (e) {
+    $("#selectLocation").focus();
+  })
+
+  //// Executes when the form submited
+  $("#locationform").on('submit', function (e) {
+    e.preventDefault();
+
     var location = $("#updateLocation").val();
     console.log(location);
 
@@ -715,17 +709,46 @@ $(document).ready(function () {
         console.log(data);
 
         $("#msg").html("Data has been successfully updated.");
-        $("#row").html("");
+        $("#loadlocation").html("");
         loadLocation();
-        $("#locationform").trigger("reset");
+
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.textStatus);
       },
-    });
+    })
   });
 
-  // // adding event to prevent automactically submit form
+  //when editLocationModal hidden then reset the form for next submission 
+  //And clear the confirmation message 
+  $("#editLocationModal").on('hidden.bs.modal', function (e) {
+    $("#locationform")[0].reset();
+    $("#msg").html("");
+
+  })
+
+  //prepopulate select location name
+  $.ajax({
+    url: "php/getAllLocations.php",
+    method: "POST",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      $("#selectLocation").html("");
+      for (var i = 0; i < data.data.length; i++) {
+
+        $("#selectLocation").append(
+          `<option value="${data.data[i].id}">${data.data[i].name}</option>`
+        );
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR.textStatus);
+    },
+  });
+
+
+  // // // adding event to prevent automactically submit form
   $("#locationform").on("keyup keypress", function (e) {
     var keyCode = e.keyCode || e.which;
     if (keyCode === 13) {
@@ -734,11 +757,7 @@ $(document).ready(function () {
     }
   });
 
-  //adding event to close edit form
-  $("#Close_Button").click(function () {
-    $("#locationform").trigger("reset");
-    $("#msg").html("");
-  });
+
 
   //........DELETE location RECORD ......./// 
 
@@ -761,7 +780,7 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         if (data.data > 0) {
-          $("#delete2Message").html("Data cannot be deleted.");
+
           $("#cantDeleteLocationModal").modal("show");
 
         } else {
@@ -776,11 +795,10 @@ $(document).ready(function () {
               },
               success: function (data) {
                 console.log(data);
-                $("#deleteMessage").html("Data deleted.");
-                $("#row").html("");
+
+                $("#loadlocation").html("");
                 loadLocation();
 
-                $("#deletelocForm").trigger("reset");
               },
               error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR.textStatus);
@@ -795,10 +813,11 @@ $(document).ready(function () {
     });
   });
 
-  $("#closelocation").click(function () {
-    $("#deletelocForm").trigger("reset");
-    $("#deleteMessage").html("");
-  });
+  $(".okBtnClose").click(function () {
+
+  })
+
+
 
   ///////////////////////////////////////
   //document ready()callback function end
