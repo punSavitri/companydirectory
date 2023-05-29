@@ -1,46 +1,58 @@
 <?php
-// remove next two lines for production   
+    // remove next two lines for production
 
-ini_set('display_errors', 'On');
+    ini_set('display_errors', 'On');
 
-error_reporting(E_ALL);
+    error_reporting(E_ALL); 
 
-$executionStartTime = microtime(true);
+    $executionStartTime = microtime(true); 
 
-include("config.php");
+    include("config.php");   
 
-$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
+    $conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
 
+ 
 
-if (mysqli_connect_errno()) {
+    if (mysqli_connect_errno()) {
 
+       
 
-    $output['status']['code'] = "300";
+        $output['status']['code'] = "300";
 
-    $output['status']['name'] = "failure";
+        $output['status']['name'] = "failure";
 
-    $output['status']['description'] = "database unavailable";
+        $output['status']['description'] = "database unavailable";
 
-    $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+        $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 
-    $output['data'] = [];
+        $output['data'] = []; 
 
-    mysqli_close($conn);
+        mysqli_close($conn); 
 
-    echo json_encode($output);
+        echo json_encode($output); 
 
-    exit;
-}
+        exit;
 
-$query = $conn->prepare('SELECT count(p.id) as departmentCount, d.name as departmentName FROM personnel p LEFT JOIN department d ON ( d.id = p.departmentID) WHERE d.id =  ?');
+    }  
 
-$query->bind_param("i", $_REQUEST['d.id']);
+    $query = $conn->prepare('SELECT COUNT(p.id) as numEmployees, d.name as departmentName
 
-$query->execute();
+                             FROM personnel p
 
-$numEmployeeInDept = mysqli_fetch_assoc($query->get_result())["COUNT(p.id)"];
+                             LEFT JOIN department d ON (d.id = p.departmentID)
 
-if ($numEmployeeInDept > 0) {
+                             WHERE p.departmentID=?');
+ 
+
+    $query->bind_param("i", $_REQUEST['id']); 
+
+    $query->execute(); 
+
+    $numEmployeeInDept = mysqli_fetch_assoc($query->get_result());
+
+ 
+
+    if($numEmployeeInDept > 0) {   
 
     // Create output telling the user they can’t delete   
 
@@ -48,49 +60,56 @@ if ($numEmployeeInDept > 0) {
 
     $output['status']['name'] = "forbidden";
 
-    $output['status']['description'] = "Cannot delete department.";
+    $output['status']['description'] = "Cannot delete location.";
 
     $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 
-    $output['data'] = $numEmployeeInDept;
+    $output['data'] = $numEmployeeInDept; 
+
+        echo json_encode($output);
+
+        exit;
+    }    
+    
+
+    if (false === $query) {
+
+ 
+
+        $output['status']['code'] = "400";
+
+        $output['status']['name'] = "executed";
+
+        $output['status']['description'] = "query failed";  
+
+        $output['data'] = []; 
+
+        mysqli_close($conn); 
+
+        echo json_encode($output); 
+
+        exit;
+
+    }
+
+ 
+
+    $output['status']['code'] = "200";
+
+    $output['status']['name'] = "ok";
+
+    $output['status']['description'] = "success";
+
+    $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+
+    $output['data'] = $numEmployeeWithLoc;   
+
+    mysqli_close($conn); 
+
+    header('Content-Type: application/json; charset=UTF-8'); 
 
     echo json_encode($output);
 
-    exit;
-}
+       
 
-if (false === $query) {
-
-    $output['status']['code'] = "400";
-
-    $output['status']['name'] = "executed";
-
-    $output['status']['description'] = "query failed";
-
-    $output['data'] = [];
-
-    mysqli_close($conn);
-
-    echo json_encode($output);
-
-    exit;
-}
-
-
-
-$output['status']['code'] = "200";
-
-$output['status']['name'] = "ok";
-
-$output['status']['description'] = "success";
-
-$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-
-$output['data'] = $numEmployeeInDept;
-
-mysqli_close($conn);
-
-
-header('Content-Type: application/json; charset=UTF-8');
-
-echo json_encode($output);
+ 

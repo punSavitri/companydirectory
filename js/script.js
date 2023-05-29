@@ -543,44 +543,32 @@ $(document).ready(function () {
       type: "POST",
       dataType: "json",
       data: {
-        id: $(e.relatedTarget).data("depart_id1"),
+        id: deptid,
       },
       success: function (result) {
         console.log(result);
-        if (result.data > 0) {
 
-          $("#cantDeleteDepartmentModal").modal("show");
-        } else {
-          // adding event to delete record if there is no department in the location
+        if (result.data.numEmployees == 0
+        ) {
+          $("#areYouSureDeptName").text(result.data.departmentName
+          );
           $("#areYouSureDeleteDepartmentModal").modal("show");
 
-          $("#deleteButton").click(function () {
-
-            $.ajax({
-              url: "php/deleteDepartmentByID.php",
-              type: "POST",
-              dataType: "json",
-              data: {
-                id: deptid,
-              },
-              success: function (data) {
-                console.log(data);
-
-              },
-              error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR.textStatus);
-              },
-            });
-          });
         }
+        else {
+
+          $("#cantDeleteDeptName").text(result.data.departmentName);
+          $("#pc").text(result.data.numEmployees);
+          $("#cantDeleteDepartmentModal").modal("show");
+        }
+
       },
       error: function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR.textStatus);
-      },
-    });
-  });
-
-
+        $('#cantDeleteDepartmentModal .modal-title').replaceWith("Error retrieving data");
+      }
+    })
+  })
+  // 
   //////////////////////////  Location page start from here///////////////////////////////
 
   //View location database on TABLE
@@ -736,7 +724,7 @@ $(document).ready(function () {
     dataType: "json",
     success: function (data) {
       console.log(data);
-      $("#selectLocation").html("");
+
       for (var i = 0; i < data.data.length; i++) {
 
         $("#selectLocation").append(
@@ -765,8 +753,9 @@ $(document).ready(function () {
 
   //adding event to get location id from delete button on page
 
-  $(document).on("click", ".btndelete", function () {
+  $(document).on("click", ".btndelete", function (e) {
     // get the location id ones click on delete button/icon
+    e.preventDefault();
     locid = $(this).data("location-id1");
     console.log(locid);
 
@@ -779,34 +768,17 @@ $(document).ready(function () {
       data: {
         id: locid,
       },
-      success: function (data) {
-        console.log(data);
-        if (data.data > 0) {
+      success: function (result) {
+        console.log(result);
 
-          $("#cantDeleteLocationModal").modal("show");
+        if (result.data.departmentCount == 0) {
 
-        } else {
+          $("#areYouSureLocationName").text(result.data.locationName);
           $("#areYouSureDeleteLocationModal").modal("show");
-          $("#DeleteLocationBtn").click(function () {
-            $.ajax({
-              url: "php/deleteLocationByID.php",
-              type: "POST",
-              dataType: "json",
-              data: {
-                id: locid,
-              },
-              success: function (data) {
-                console.log(data);
-
-                $("#loadlocation").html("");
-                loadLocation();
-
-              },
-              error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR.textStatus);
-              },
-            });
-          })
+        } else {
+          $("#cantDeleteLocation").text(result.data.locationName);
+          $("#lc").text(result.data.departmentCount);
+          $("#cantDeleteLocationModal").modal("show");
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -815,9 +787,7 @@ $(document).ready(function () {
     });
   });
 
-  $(".okBtnClose").click(function () {
 
-  })
 
 
 

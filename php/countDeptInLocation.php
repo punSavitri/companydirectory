@@ -32,17 +32,20 @@ if (mysqli_connect_errno()) {
     exit;
 }
 
-$query = $conn->prepare('SELECT COUNT(id)
+$query = $conn->prepare('SELECT COUNT(d.id) as departmentCount, l.name as locationName
 
-                             FROM department
+                            FROM department d
+                             LEFT JOIN location l ON (l.id = d.locationID)
+                             
+                             WHERE d.locationID=?');
 
-                             WHERE locationID=?');
+
 
 $query->bind_param("i", $_REQUEST['id']);
 
 $query->execute();
 
-$numDeptInLocation = mysqli_fetch_assoc($query->get_result())["COUNT(id)"];
+$numDeptInLocation = mysqli_fetch_assoc($query->get_result());
 
 if ($numDeptInLocation > 0) {
 

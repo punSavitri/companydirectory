@@ -494,7 +494,6 @@
                       id="locationName"
                       aria-label="form-select-sm "
                       placeholder="location"
-                      required
                     ></select>
                   </div>
                 </form>
@@ -618,10 +617,14 @@
                 ></button>
               </div>
               <div class="modal-body">
-                You cannot remove the entry for
-                <span id="cantDeleteDeptName" class="fw-bold"></span>because it
-                has <span id="pc" class="fw-bold"></span> employees assigned to
-                it.
+                You cannot remove the entry for &nbsp;<span
+                  id="cantDeleteDeptName"
+                  class="fw-bold"
+                ></span
+                >&nbsp;because it has &nbsp;<span id="pc" class="fw-bold"
+                  >&nbsp;</span
+                >
+                employees assigned to it.
               </div>
 
               <div class="modal-footer">
@@ -866,16 +869,15 @@
               </div>
               <div class="modal-body">
                 You cannot remove the entry for
-                <span id="cantDeleteLocationName" class="fw-bold">....</span>
-                because it has
-                <span id="pc" class="fw-bold">....</span> department assigned to
-                it.
+                <span id="cantDeleteLocation" class="fw-bold"></span>
+                because it has <span id="lc" class="fw-bold"></span> department
+                assigned to it.
               </div>
               <div class="modal-footer">
                 <button
                   type="button"
                   class="btn btn-outline-secondary okBtnClose"
-                  data.bs.dismiss="modal"
+                  data-bs-dismiss="modal"
                 >
                   Ok
                 </button>
