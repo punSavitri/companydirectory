@@ -41,7 +41,7 @@
 
                              LEFT JOIN department d ON (d.id = p.departmentID)
 
-                             WHERE p.departmentID=?');
+                             WHERE (d.id=?)');
  
 
     $query->bind_param("i", $_REQUEST['id']); 
@@ -102,7 +102,7 @@
 
     $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 
-    $output['data'] = $numEmployeeWithLoc;   
+    $output['data'] = $numEmployeeInDept;   
 
     mysqli_close($conn); 
 

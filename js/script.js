@@ -568,6 +568,26 @@ $(document).ready(function () {
       }
     })
   })
+
+  $("#deletedeptBTn").click(function () {
+    $.ajax({
+      url: "php/deleteDepartmentByID.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {
+        id: deptid
+      },
+      success: function (result) {
+        console.log(result);
+        $("#load-data").html("");
+        loadDeptTable();
+
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR.textStatus);
+      }
+    })
+  })
   // 
   //////////////////////////  Location page start from here///////////////////////////////
 
