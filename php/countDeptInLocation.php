@@ -34,10 +34,10 @@ if (mysqli_connect_errno()) {
 
 $query = $conn->prepare('SELECT COUNT(d.id) as departmentCount, l.name as locationName
 
-                            FROM department d
-                             LEFT JOIN location l ON (l.id = d.locationID)
+                        FROM department d
+                        LEFT JOIN location l ON (l.id = d.locationID)
                              
-                             WHERE d.locationID=?');
+                        WHERE (l.id=?)');
 
 
 

@@ -807,6 +807,37 @@ $(document).ready(function () {
     });
   });
 
+  $("#deletelocationBtn").click(function () {
+    $.ajax({
+      url: "php/deleteLocationByID.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {
+        id: locid
+      },
+      success: function (result) {
+        console.log(result);
+        $("#loadlocation").html("");
+        loadLocation();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(result);
+      }
+    })
+  })
+
+  $(".addBtn").click(function () {
+    $('button[data-toggle="pill"]').on('show.bs.tab', function (e) {
+      localStorage.setItem('activeTab', $(e.target).attr('data-bs-target'));
+    })
+    var activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+      $('#pills-tab button[data-bs-target="' + activeTab + '"]').tab('show');
+      $("#addpersonnelModal").modal("show");
+    }
+
+  })
+
 
 
 
