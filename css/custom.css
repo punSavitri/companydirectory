@@ -40,6 +40,8 @@ body {
   scrollbar-width: none; /*Firefox*/
 }
 
+
+
 /* @media query */
 @media only screen and (max-width: 840px) {
   #pills-tabContent {

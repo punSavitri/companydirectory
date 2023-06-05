@@ -13,7 +13,7 @@
     <!-- bootstrap CSS file -->
     <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css" />
     <!-- favicon -->
-    <link rel="stylesheet" href="libs/favicon_io/favicon.ico" />
+    <link rel="icon" href="libs/favicon_io/favicon.ico" />
     <!-- custom css file -->
     <link rel="stylesheet" href="css/custom.css" />
   </head>
@@ -72,16 +72,17 @@
             </button>
           </li>
         </ul>
+
         <!-- add button -->
         <button type="button" class="btn btn-outline-secondary btn-sm addBtn">
           <i class="fa fa-plus"></i>
         </button>
 
-        <!--  Employee name search box  -->
-        <div class="col-md-3 col-lg-6">
+        <!--  employee name search bar  -->
+        <div class="search-container">
           <form class="d-flex" id="searchForm" role="search">
             <input
-              class="form-control"
+              class="form-control form-control-sm w-auto"
               id="live_search"
               type="search"
               placeholder="Search employee name"
@@ -125,7 +126,7 @@
           </table>
         </div>
         <!-- Add Employee Modal -->
-        <!-- modal -->
+
         <div
           id="addpersonnelModal"
           class="modal fade"
@@ -207,7 +208,9 @@
                       aria-label="form-select-sm example"
                       placeholder="Department"
                       required
-                    ></select>
+                    >
+                      <option value="">Select department</option>
+                    </select>
                   </div>
                 </form>
               </div>
@@ -389,10 +392,6 @@
             </div>
           </div>
         </div>
-
-        <!-- delete personnel modal end -->
-        <div id="delete"></div>
-        <div id="deletemsg"></div>
       </div>
 
       <!-- ----------------------------Contact page end ------------------------------->
@@ -467,7 +466,9 @@
                       id="locationName"
                       aria-label="form-select-sm "
                       placeholder="location"
-                    ></select>
+                    >
+                      <option value="">select location</option>
+                    </select>
                   </div>
                 </form>
               </div>

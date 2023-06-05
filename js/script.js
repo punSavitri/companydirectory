@@ -329,30 +329,20 @@ $(document).ready(function () {
     }
   });
 
-  $("#searchForm").click(function () {
-    let tabID = $('.nav-link.active').attr('data-bs-target');
-    console.log(tabID);
 
-    switch (tabID) {
-      case '#pills-contact':
-        $("#searchForm").show();
-        break;
 
-      case '#pills-department':
-        $("#searchForm").hide();
-        break;
-
-      case '#pills-location':
-        $("#searchForm").hide();
-        break;
-      default:
-        break;
-    }
+  // employee search bar event handler show() and hide()
+  $("#pills-contact-tab").click(function () {
+    $(".search-container").show();
   })
 
+  $("#pills-department-tab").click(function () {
+    $(".search-container").hide();
+  })
 
-
-
+  $("#pills-location-tab").click(function () {
+    $(".search-container").hide();
+  })
 
   //********************End of contact page******************************************//
 
