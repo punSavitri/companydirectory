@@ -2,10 +2,15 @@ body, html {
   margin: 0;
   padding:0;
   font-size: 16px;
-}
+  font-family: 'Courier New', Courier, monospace;
+  }
 
-#pills-tabContent {
-  margin-top: 12%;
+#pills-tabContent{
+  margin-top: 5%;
+}
+#searchForm input {
+  width: 300px;
+  margin-right: 60px;
 }
 
 table  { 
@@ -24,10 +29,8 @@ th, td {
    position: sticky; 
    top: 0;
     z-index: 1; 
+    background-color: #F0F0F0;
   }
-
-
-
 
 /* Hide scrollbar for Chrome, safari and Opera */
 body::-webkit-scrollbar {
@@ -42,12 +45,25 @@ body {
 
 
 
+
 /* @media query */
-@media only screen and (max-width: 840px) {
+@media screen and (max-width: 320px) {
+  
   #pills-tabContent {
-    margin-top:40%;
+    margin-top: 45%;
+    position: relative;
+    
   }
+  #searchForm input {    
+      
+    width:200px;
+    margin-right: 50px;
+    
+  }
+  
 }
+
+
   
 
 
