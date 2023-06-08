@@ -28,11 +28,11 @@ $(document).ready(function () {
             result.data[i].lastName +
             "</td><td>" +
             result.data[i].firstName +
-            "</td><td class='d-none d-sm-table-cell'>" +
+            "</td><td class='d-none  d-sm-table-cell'>" +
             result.data[i].jobTitle +
-            "</td><td class='d-none d-sm-table-cell'>" +
+            "</td><td class='d-none  d-sm-table-cell'>" +
             result.data[i].email +
-            "</td><td class='d-none d-sm-table-cell'>" + result.data[i].department + "</td><td><button type='button' class='btn btn-secondary btn-sm btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='edit' data-id=" +
+            "</td><td class='d-none  d-sm-table-cell'>" + result.data[i].department + "</td><td><button type='button' class='btn btn-secondary btn-sm btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='edit' data-id=" +
             result.data[i].id +
             "><i class='fa-solid fa-pen-to-square '></i></button></td><td><button type='button' class='btn btn-secondary btn-sm btn_delete' data-bs-toggle='modal' data-bs-target='#areYouSureDeletePersonnelModal'    title='delete' id='btn_delete' data-id1=" +
             result.data[i].id +

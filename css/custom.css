@@ -18,7 +18,8 @@ table  {
    width: 100%;
    }
 th, td { 
-  padding: 8px 16px; 
+  /* padding: 8px 16px;  */
+  padding: 2px; 
 }
 
 .tableFixHead { 
@@ -49,16 +50,55 @@ body {
 
 /* @media query */
 
-
-@media only screen and (max-width:480px) {
-  
+/* for mobile device */
+@media  screen and (max-width:480px) { 
   #pills-tabContent {
-    margin-top: 45%;
+    margin-top: 40%;
     position: relative;
     
-  }
+  }  
+ }
+
+ 
+ @media  screen and (max-width:575.98px) {
+  
+  #pills-tabContent {
+    margin-top: 30%;
+    position: relative;    
+  }   
+} 
+
+/* for tablet or ipads */
+@media  screen and  (max-width:767.98px) {
+  
+  #pills-tabContent {
+    margin-top: 20%;
+    position: relative;    
+  }   
+} 
+@media  screen and  (max-width:991.98px) {
+  
+  #pills-tabContent {
+    margin-top: 40%;
+    position: relative;    
+  }   
+} 
+
+/* for desktop */
+@media  screen and  (max-width:1199.98px) {
+  
+  #pills-tabContent {
+    margin-top: 6%;
+    position: relative;    
+  }   
+} 
+
+
+
+ /* for searchbox and nav-item  */
+ @media screen and (max-width:480px) {
   #searchForm input {    
-      
+    
     width:200px;
     margin-right: 50px;
     
@@ -66,45 +106,17 @@ body {
   .nav-link {
     padding:14px 5px;
   }
-  
 }
+ 
 
-/* Low resolution Tablets and iPads */
-  @media only screen and (min-width: 480px) and (max-width: 768px) {
-  
-  #pills-tabContent {
-    margin-top: 10%;
-    position: relative;
-    
-  } 
-  
-} 
-       
-/* Tablets iPads (Portrait) */
- @media only screen and (min-width: 768px) and (max-width: 1024px){
-  #pills-tabContent {
-    margin-top: 10%;
-    position: relative;
-    
-  }
-} 
-  
-  
-
-
-
-
-
-  
-
-
-
-
-
+ 
+ 
  
 
 
 
 
 
- 
+
+
+
