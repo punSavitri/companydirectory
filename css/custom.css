@@ -6,7 +6,7 @@ body, html {
   }
 
 #pills-tabContent{
-  margin-top: 5%;
+  margin-top: 8%;
 }
 #searchForm input {
   width: 300px;
@@ -18,8 +18,8 @@ table  {
    width: 100%;
    }
 th, td { 
-  /* padding: 8px 16px;  */
-  padding: 2px; 
+  padding: 8px 16px; 
+   
 }
 
 .tableFixHead { 
@@ -27,10 +27,10 @@ th, td {
   height: 90vh; 
 }
 .tableFixHead thead th {
-   position: sticky; 
-   top: 0;
-    z-index: 1; 
-    background-color: #F0F0F0;
+  position: sticky; 
+  top: 0;
+  z-index: 1; 
+  background-color: #F0F0F0;
   }
 
 /* Hide scrollbar for Chrome, safari and Opera */
@@ -43,57 +43,264 @@ body {
   -ms-overflow-style: none;  /*IE and Edge */
   scrollbar-width: none; /*Firefox*/
 }
+.navbar {
+  width: 100%;
+  height: 115px;
+}
 
-
+ 
 
 
 
 /* @media query */
 
-/* for mobile device */
-@media  screen and (max-width:480px) { 
-  #pills-tabContent {
-    margin-top: 40%;
-    position: relative;
+/* MOBILE DEVICE FROM SMALL TO LARGE SCREEN  */
+/* for small mobile */
+@media only screen and (min-width:320px){
+  #pills-tabContent{
     
-  }  
+    margin-top:35%;      
+
+  } 
+  
+  body {
+    background-color:pink;
+  }
+   
+}
+/* for mobile medium device   */
+@media only screen and  (min-width:375px) { 
+  #pills-tabContent{
+    
+    margin-top:30%;    
+
+  } 
+  
+  body {
+    background-color:green;
+  }   
+ }
+ /* for large mobile device screen */
+ @media only screen and (min-width:425px)  { 
+  #pills-tabContent{
+    
+    margin-top:24%;  
+
+  } 
+  
+  body {
+    background-color:brown;
+  }
+ } 
+ @media only screen and (min-width:575.98px) { 
+  #pills-tabContent {
+    
+    margin-top:18%;    
+     
+  } 
+  
+  body {
+    background-color:rgb(26, 136, 158);
+  }
  }
 
+ /* FOR TABLET AND IPADS */
+
+ @media only screen and (min-width:768px) { 
+  #pills-tabContent {
+    
+    margin-top:12%;    
+  } 
+.navbar {
+    width: 100%;
+    height: 90px;
+  }
+  table {
+    width:100%;
+  }
+  
+  body {
+    background-color:rgb(208, 94, 13);
+  }
+ }
+ @media only screen and (min-width:800px) { 
+  #pills-tabContent {
+    
+    margin-top:11%;    
+  } 
+  
+  body {
+    background-color:rgb(230, 246, 103);
+  }
+ }
+ @media only screen and (min-width:822px) { 
+  #pills-tabContent {
+    
+    margin-top:13%;    
+  }
+  .navbar {
+    width: 100%;
+    height: 90px;
+  } 
+  
+  body {
+    background-color:rgb(158, 159, 153);
+  }
+ }
+ @media only screen and (min-width:850px) { 
+  #pills-tabContent {
+    
+    margin-top:10%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  }
+  
+  body {
+    background-color:rgb(92, 13, 190);
+  }
+ }
+ @media only screen and (min-width:898.98px) { 
+  #pills-tabContent {
+    
+    margin-top:10%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  }
+
+  
+  body {
+    background-color:rgb(174, 83, 174);
+  }
+ }
+ @media only screen and (min-width:900.98px) { 
+  #pills-tabContent {
+    
+    margin-top:10%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  }
+
+  
+  body {
+    background-color:rgb(9, 129, 163);
+  }
+ }
  
- @media  screen and (max-width:575.98px) {
-  
+ 
+ /* FOR LAPTOP AND DESKTOP DEVICE */
+ 
+ @media only screen and (min-width:1000.98px) { 
   #pills-tabContent {
-    margin-top: 30%;
-    position: relative;    
-  }   
-} 
+    
+    margin-top:10%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  }
 
-/* for tablet or ipads */
-@media  screen and  (max-width:767.98px) {
   
+  body {
+    background-color:rgb(149, 171, 24);
+  }
+ }
+ @media only screen and (min-width:1024px) { 
   #pills-tabContent {
-    margin-top: 20%;
-    position: relative;    
-  }   
-} 
-@media  screen and  (max-width:991.98px) {
+    
+    margin-top:9%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  }
   
-  #pills-tabContent {
-    margin-top: 40%;
-    position: relative;    
-  }   
-} 
-
-/* for desktop */
-@media  screen and  (max-width:1199.98px) {
   
+  body {
+    background-color:lightcoral;
+  }
+ }
+ @media only screen and (min-width:1030px) { 
   #pills-tabContent {
-    margin-top: 6%;
-    position: relative;    
-  }   
-} 
+    
+    margin-top:10%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  }
+  
+  
+  body {
+    background-color:lightcoral;
+  }
+ }
+ @media only screen and (min-width:1200px) { 
+  #pills-tabContent {
+    
+    margin-top:7%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  }
+  
+  
+  body {
+    background-color:rgb(174, 112, 112);
+  }
+ } 
+ @media only screen and (min-width:1400px) { 
+  #pills-tabContent {
+    
+    margin-top:7%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  } 
+  
+  body {
+    background-color:lightcoral;
+  }
+ }
+ 
 
-
+ 
+ /* FOR EXTRA LARGE DESKTOP DEVICE */
+ @media only screen and (min-width:2400px) { 
+  #pills-tabContent {
+    
+    margin-top:4%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  }
+  
+  body {
+    background-color:rgb(50, 160, 160);
+  }
+ } 
+ @media only screen and (min-width:2560px) { 
+  #pills-tabContent {
+    
+    margin-top:4%;    
+  } 
+  .navbar {
+    width: 100%;
+    height: 90px;
+  }
+  
+  body {
+    background-color:lightcyan;
+  }
+ } 
 
  /* for searchbox and nav-item  */
  @media screen and (max-width:480px) {
