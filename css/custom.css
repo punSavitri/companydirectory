@@ -2,16 +2,37 @@ body, html {
   margin: 0;
   padding:0;
   font-size: 16px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
   }
 
 #pills-tabContent{
   margin-top: 8%;
 }
-#searchForm input {
-  width: 300px;
-  margin-right: 60px;
+.search-container {
+  float:right;
 }
+
+
+ #searchForm input { 
+  
+  width:200px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  border-color: rgb(195, 68, 46);
+  padding: 5px;
+  
+}  
+.addBtn {
+    position:fixed;
+    left:450px;    
+    top:20px;
+    
+  }  
+#pills-tab { 
+    position:fixed;
+    top:10px;
+    left:10px;
+    font-size: 14px;
+  }
 
 table  { 
   border-collapse: collapse;
@@ -21,17 +42,20 @@ th, td {
   padding: 8px 16px; 
    
 }
-
 .tableFixHead { 
   overflow: auto; 
   height: 90vh; 
 }
+
+
 .tableFixHead thead th {
   position: sticky; 
   top: 0;
   z-index: 1; 
-  background-color: #F0F0F0;
+  background-color: #A9A9A9;
   padding:10px 8px;
+  color:white;
+  
   }
 
 /* Hide scrollbar for Chrome, safari and Opera */
@@ -49,7 +73,7 @@ body {
   height: 115px;
 }
 
- 
+
 
 
 
@@ -58,18 +82,29 @@ body {
 /* MOBILE DEVICE FROM SMALL TO LARGE SCREEN  */
 /* for small mobile */
 @media only screen and (min-width:320px){
-  #pills-tabContent{
+  #pills-tabContent
+  {
     
     margin-top:35%;      
 
-  }    
+  } 
+  .addBtn 
+  {
+    
+    position:fixed;
+    left:250px;   
+    top:70px;  
+  
+  }
 }
 /* for mobile medium device   */
 @media only screen and  (min-width:375px) { 
   #pills-tabContent{
     
     margin-top:30%; 
-  }   
+  } 
+  
+   
      
  }
  /* for large mobile device screen */
@@ -77,47 +112,67 @@ body {
   #pills-tabContent{
     
     margin-top:26%;  
-  }  
+  } 
+  
   
  } 
  @media only screen and (min-width:426px)  { 
   #pills-tabContent{
     
-    margin-top:23%;  
+    margin-top:23%; 
 
-  }  
+  } 
   
- } 
+  
+  
+}
+  
  @media only screen and (min-width:575.98px) { 
   #pills-tabContent {
     
     margin-top:23%;    
      
-  }  
+  } 
+  
+  
+
   
  }
 
  /* FOR TABLET AND IPADS */
 
  @media only screen and (min-width:768px) { 
-  #pills-tabContent {
+#pills-tabContent 
+  {
     
     margin-top:12%;    
      
   } 
-.navbar {
+.navbar 
+  {
     width: 100%;
     height: 90px;
+  }
+
+  .addBtn 
+  {
+    
+    position:fixed;
+    left:500px;   
+    top:25px;  
+  
   } 
   
  }
+
  @media only screen and (min-width:800px) { 
   #pills-tabContent {
     
     margin-top:11%;    
-  }  
+  }
   
  }
+
  @media only screen and (min-width:822px) { 
   #pills-tabContent {
     
@@ -315,17 +370,23 @@ body {
   
  } 
 
- /* for searchbox and nav-item  */
- @media screen and (max-width:480px) {
-  #searchForm input {    
-    
-    width:200px;
-    margin-right: 50px;
-    
+ /* for searchbox and nav-item  */ 
+ 
+ @media screen and (max-width:600px) {
+  
+  
+  .search-container {
+    margin-top: 60px;
+    margin-right: 300px;
   }
+  
+  
+  
   .nav-link {
     padding:14px 5px;
   }
+
+  
 }
  
 

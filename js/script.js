@@ -32,9 +32,9 @@ $(document).ready(function () {
             result.data[i].jobTitle +
             "</td><td class='d-none  d-sm-table-cell'>" +
             result.data[i].email +
-            "</td><td class='d-none  d-sm-table-cell'>" + result.data[i].department + "</td><td><button type='button' class='btn btn-secondary btn-sm btn_edit' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='edit' data-id=" +
+            "</td><td class='d-none  d-sm-table-cell'>" + result.data[i].department + "</td><td><button type='button' class='btn btn-secondary  btn-sm btn_edit ' id='btn_edit' data-bs-toggle='modal' data-bs-target='#update_personnel_Modal' title='edit' data-id=" +
             result.data[i].id +
-            "><i class='fa-solid fa-pen-to-square '></i></button></td><td><button type='button' class='btn btn-secondary btn-sm btn_delete' data-bs-toggle='modal' data-bs-target='#areYouSureDeletePersonnelModal'    title='delete' id='btn_delete' data-id1=" +
+            "><i class='fa-solid fa-pen-to-square '></i></button></td><td><button type='button' class='btn btn-secondary btn-sm  btn_delete ' data-bs-toggle='modal' data-bs-target='#areYouSureDeletePersonnelModal'    title='delete' id='btn_delete' data-id1=" +
             result.data[i].id +
             "><i class='fa-solid fa-trash'></i></button></td></tr>"
           );
@@ -329,21 +329,6 @@ $(document).ready(function () {
     }
   });
 
-
-
-  // employee search bar event handler show() and hide()
-  $("#pills-contact-tab").click(function () {
-    $(".search-container").show();
-  })
-
-  $("#pills-department-tab").click(function () {
-    $(".search-container").hide();
-  })
-
-  $("#pills-location-tab").click(function () {
-    $(".search-container").hide();
-  })
-
   //********************End of contact page******************************************//
 
   ////////////////////// Department page start /////////////////////////////////////////
@@ -618,9 +603,9 @@ $(document).ready(function () {
         for (var i = 0; i < data.data.length; i++) {
 
           $("#loadlocation").append(
-            "<tr><td>" + data.data[i].name + "</td><td><button type='button' class='btn btn-secondary btn-sm btnedit' id='btnedit' data-bs-toggle='modal' data-bs-target='#editLocationModal' title='edit' data-location-id=" +
+            "<tr><td>" + data.data[i].name + "</td><td><button type='button' class='btn btn-secondary btn-sm btnedit ' id='btnedit' data-bs-toggle='modal' data-bs-target='#editLocationModal' title='edit' data-location-id=" +
             data.data[i].id +
-            "><i class='fa-solid fa-pen-to-square'></i></button><td><button type='button' class='btn btn-secondary btn-sm btndelete' id='btndelete' title='delete' data-location-id1=" +
+            "><i class='fa-solid fa-pen-to-square'></i></button><td><button type='button' class='btn btn-secondary btn-sm btndelete ' id='btndelete' title='delete' data-location-id1=" +
             data.data[i].id +
             "><i class='fa-solid fa-trash'></i></button></td></tr>");
         }
@@ -865,6 +850,22 @@ $(document).ready(function () {
         break;
     }
   });
+
+  // employee search bar event handler show() and hide()
+  $("#pills-contact-tab").click(function () {
+    $(".search-container").show();
+
+  })
+
+  $("#pills-department-tab").click(function () {
+    $(".search-container").hide();
+    
+  })
+
+  $("#pills-location-tab").click(function () {
+    $(".search-container").hide();
+
+  })
 
 
 

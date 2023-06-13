@@ -74,13 +74,16 @@
         </ul>
 
         <!-- add button -->
-        <button type="button" class="btn btn-outline-secondary btn-sm addBtn">
-          <i class="fa fa-plus"></i>
-        </button>
 
+        <div>
+          <button type="button" class="btn btn-outline-secondary btn-sm addBtn">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
         <!--  employee name search bar  -->
+
         <div class="search-container">
-          <form class="d-flex" id="searchForm" role="search">
+          <form id="searchForm" role="search">
             <input
               class="form-control form-control-sm"
               id="live_search"
@@ -119,7 +122,8 @@
                 <th>First Name</th>
                 <th class="d-none d-sm-table-cell">Job Title</th>
                 <th class="d-none d-sm-table-cell">Email</th>
-                <th class="d-none d-sm-table-cell" >Department</th>
+                <th class="d-none d-sm-table-cell">Department</th>
+                <th colspan="2"></th>
               </tr>
             </thead>
             <tbody id="output"></tbody>
@@ -410,6 +414,7 @@
             <thead>
               <tr>
                 <th>Department</th>
+                <th colspan="2"></th>
               </tr>
             </thead>
             <tbody id="load-data"></tbody>
@@ -681,6 +686,7 @@
             <thead>
               <tr>
                 <th>Location</th>
+                <th colspan="2"></th>
               </tr>
             </thead>
             <tbody id="loadlocation"></tbody>
